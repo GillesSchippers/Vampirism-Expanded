@@ -2,7 +2,6 @@ package com.gustavoschip.expanded.skill;
 
 import com.gustavoschip.expanded.skill.handler.HunterSkillHandlers;
 import com.gustavoschip.expanded.skill.handler.VampireSkillHandlers;
-import com.gustavoschip.expanded.skill.handler.WerewolfSkillHandlers;
 import com.gustavoschip.expanded.skill.type.ActionFactionSkill;
 import com.gustavoschip.expanded.skill.type.FactionSkillBase;
 import com.mojang.datafixers.util.Either;
@@ -24,7 +23,6 @@ import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 public final class ModSkills {
     private static final ResourceLocation HUNTER_FACTION_ID = fromNamespaceAndPath("vampirism", "hunter");
     private static final ResourceLocation VAMPIRE_FACTION_ID = fromNamespaceAndPath("vampirism", "vampire");
-    private static final ResourceLocation WEREWOLF_FACTION_ID = fromNamespaceAndPath("werewolves", "werewolf");
 
     public static final DeferredRegister<ISkill<?>> SKILLS = DeferredRegister.create(VampirismRegistries.Keys.SKILL, MOD_ID);
 
@@ -38,14 +36,6 @@ public final class ModSkills {
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = SKILLS.register("vampire/root",
             () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 0, false)
-                    .setToggleActions(
-                            HunterSkillHandlers.doToggle(true),
-                            HunterSkillHandlers.doToggle(false)
-                    )
-    );
-
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> WEREWOLF_ROOT = SKILLS.register("werewolf/root",
-            () -> new FactionSkillBase<>(Either.left(Trees.WEREWOLF_LEVEL), WEREWOLF_FACTION_ID, 0, false)
                     .setToggleActions(
                             HunterSkillHandlers.doToggle(true),
                             HunterSkillHandlers.doToggle(false)
@@ -81,22 +71,6 @@ public final class ModSkills {
                     .setToggleActions(
                             VampireSkillHandlers.doToggle(true),
                             VampireSkillHandlers.doToggle(false)
-                    )
-    );
-
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> WEREWOLF_MOON_SENSE = SKILLS.register("werewolf/moon_sense",
-            () -> new FactionSkillBase<>(Either.left(Trees.WEREWOLF_LEVEL), WEREWOLF_FACTION_ID, 1, true)
-                    .setToggleActions(
-                            WerewolfSkillHandlers.doToggle(true),
-                            WerewolfSkillHandlers.doToggle(false)
-                    )
-    );
-
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> WEREWOLF_PACK_INSTINCT = SKILLS.register("werewolf/pack_instinct",
-            () -> new FactionSkillBase<>(Either.left(Trees.WEREWOLF_LEVEL), WEREWOLF_FACTION_ID, 1, true)
-                    .setToggleActions(
-                            WerewolfSkillHandlers.doToggle(true),
-                            WerewolfSkillHandlers.doToggle(false)
                     )
     );
 

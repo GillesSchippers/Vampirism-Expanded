@@ -1,7 +1,6 @@
 {
   "tree.expanded.hunter": "Expanded Hunters",
   "tree.expanded.vampire": "Expanded Vampires",
-  "tree.expanded.werewolf": "Expanded Werewolves",
   "skill.expanded.hunter.root": "Expanded Hunters",
   "skill.expanded.hunter.poisonous_blood": "Poisonous Blood",
   "skill.expanded.hunter.poisonous_blood.desc": "Your blood becomes toxic to vampires that try to drink it.",
@@ -11,10 +10,5 @@
   "skill.expanded.vampire.blood_focus": "Blood Focus",
   "skill.expanded.vampire.blood_focus.desc": "Study the finer points of blood manipulation.",
   "skill.expanded.vampire.shadow_sense": "Shadow Sense",
-  "skill.expanded.vampire.shadow_sense.desc": "Sharpen your senses in the dark.",
-  "skill.expanded.werewolf.root": "Expanded Werewolves",
-  "skill.expanded.werewolf.moon_sense": "Moon Sense",
-  "skill.expanded.werewolf.moon_sense.desc": "Attune yourself to the rhythm of the moon.",
-  "skill.expanded.werewolf.pack_instinct": "Pack Instinct",
-  "skill.expanded.werewolf.pack_instinct.desc": "Move and fight with instinctive pack coordination."
+  "skill.expanded.vampire.shadow_sense.desc": "Sharpen your senses in the dark."
 }

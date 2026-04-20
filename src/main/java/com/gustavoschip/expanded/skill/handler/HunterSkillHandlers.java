@@ -17,8 +17,10 @@ public final class HunterSkillHandlers {
     public static <T extends IFactionPlayer<T>> Consumer<T> doToggle(boolean toggle) {
         return player -> {
             if (player.asEntity() instanceof ServerPlayer serverPlayer) {
+                LOGGER.debug("Toggling hunter skill to {} for {}", toggle, serverPlayer.getName().getString());
                 return;
             }
+            LOGGER.debug("Skipped hunter skill toggle {} for non-server entity {}", toggle, player.asEntity().getName().getString());
         };
     }
 

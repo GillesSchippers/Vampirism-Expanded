@@ -32,11 +32,6 @@ repositories {
     }
 
     maven {
-        name = "Werewolves"
-        url = "https://maven.paube.de/releases"
-    }
-
-    maven {
         name = "JEI"
         url = "https://maven.blamejared.com/"
     }
@@ -125,8 +120,10 @@ dependencies {
     //at runtime (in your development environment) use the full Vampirism jar
     //runtimeOnly "de.teamlapen.vampirism:Vampirism:${vampirism_version}"
 
-    implementation "de.teamlapen.vampirism:Vampirism:${vampirism_version}"
-    implementation "de.teamlapen.werewolves:Werewolves:${werewolves_version}"
+    implementation("de.teamlapen.vampirism:Vampirism:${vampirism_version}") {
+        exclude group: "mezz.jei", module: "jei-1.21-neoforge"
+        exclude group: "com.github.glitchfiend", module: "TerraBlender-neoforge"
+    }
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
@@ -139,16 +136,15 @@ dependencies {
 // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
 tasks.withType(ProcessResources).configureEach {
     var replaceProperties = [
-            minecraft_version       : minecraft_version,
-            minecraft_version_range : minecraft_version_range,
-            vampirism_version_range : vampirism_version_range,
-            werewolves_version_range : werewolves_version_range,
-            neo_version             : neo_version,
-            loader_version_range    : loader_version_range,
-            mod_id                  : mod_id,
-            mod_name                : mod_name,
-            mod_license             : mod_license,
-            mod_version             : mod_version,
+            minecraft_version        : minecraft_version,
+            minecraft_version_range  : minecraft_version_range,
+            vampirism_version_range  : vampirism_version_range,
+            neo_version              : neo_version,
+            loader_version_range     : loader_version_range,
+            mod_id                   : mod_id,
+            mod_name                 : mod_name,
+            mod_license              : mod_license,
+            mod_version              : mod_version,
     ]
     inputs.properties replaceProperties
 
@@ -180,5 +176,11 @@ idea {
     module {
         downloadSources = true
         downloadJavadoc = true
+    }
+
+    project {
+        runs {
+            useArgsFile = false
+        }
     }
 }
