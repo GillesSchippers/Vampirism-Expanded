@@ -52,7 +52,7 @@ public final class ModSkills {
                     )
     );
 
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SKILLS.register("poisonous/blood",
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SKILLS.register("hunter/poisonous_blood",
             () -> new ActionFactionSkill<>(Either.left(Trees.HUNTER_LEVEL), HUNTER_FACTION_ID, 1, true)
                     .setToggleActions(
                             HunterSkillHandlers.poisonousBloodToggle(true),
