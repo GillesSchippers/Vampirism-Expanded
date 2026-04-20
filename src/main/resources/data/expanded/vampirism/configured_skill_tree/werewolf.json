@@ -1,0 +1,13 @@
+{
+  "children": [
+    {
+      "node": "expanded:werewolf_moon_sense"
+    },
+    {
+      "node": "expanded:werewolf_pack_instinct"
+    }
+  ],
+  "node": "expanded:werewolf_root",
+  "skill_tree": "expanded:werewolf/level"
+}
+

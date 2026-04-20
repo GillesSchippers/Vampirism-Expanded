@@ -1,0 +1,21 @@
+{
+  "display": {
+    "count": 1,
+    "id": "vampirism:vampire_book"
+  },
+  "faction": {
+    "id": "vampirism:hunter"
+  },
+  "name": {
+    "translate": "text.expanded.skill_tree.hunter"
+  },
+  "unlock_predicate": {
+    "type_specific": {
+      "type": "vampirism:player_faction",
+      "faction": {
+        "id": "vampirism:hunter"
+      }
+    }
+  }
+}
+

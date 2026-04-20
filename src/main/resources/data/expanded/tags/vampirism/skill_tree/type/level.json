@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "expanded:hunter/level",
+    "expanded:vampire/level",
+    "expanded:werewolf/level"
+  ]
+}
+
