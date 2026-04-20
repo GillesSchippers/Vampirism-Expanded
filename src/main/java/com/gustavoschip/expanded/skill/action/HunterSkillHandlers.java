@@ -1,4 +1,4 @@
-package com.gustavoschip.expanded.skill.actions.hunter;
+package com.gustavoschip.expanded.skill.action;
 
 import com.gustavoschip.expanded.service.PoisonousBloodService;
 import com.mojang.logging.LogUtils;
@@ -12,6 +12,14 @@ public final class HunterSkillHandlers {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private HunterSkillHandlers() {
+    }
+
+    public static <T extends IFactionPlayer<T>> Consumer<T> doToggle(boolean toggle) {
+        return player -> {
+            if (player.asEntity() instanceof ServerPlayer serverPlayer) {
+                return;
+            }
+        };
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> poisonousBloodToggle(boolean poisonous) {

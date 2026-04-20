@@ -7,7 +7,7 @@
     "id": "vampirism:hunter"
   },
   "name": {
-    "translate": "text.expanded.skill_tree.hunter"
+    "translate": "tree.expanded.hunter"
   },
   "unlock_predicate": {
     "type_specific": {
