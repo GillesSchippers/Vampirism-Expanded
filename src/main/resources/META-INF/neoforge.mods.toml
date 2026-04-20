@@ -14,13 +14,14 @@ displayName = "${mod_name}"
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
-logoFile = "assets/poisonousblood/icon.png"
+logoFile = "assets/expanded/icon.png"
 # A text field displayed in the mod UI
 #credits="" #optional
 # The authors of the mod, displayed in the mod UI (optional)
 authors = "GustavoSchip"
 # The description text for the mod (multi line!) (#mandatory)
 description = '''
+An expansion mod for Vampirism, adding new features and content to the base mod.
 '''
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
 [[mixins]]
@@ -48,6 +49,13 @@ side = "BOTH"
 modId = "vampirism"
 type = "required"
 versionRange = "${vampirism_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "werewolves"
+type = "optional"
+versionRange = "${werewolves_version_range}"
 ordering = "NONE"
 side = "BOTH"
 

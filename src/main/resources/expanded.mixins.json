@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8.7",
-  "package": "com.gustavoschip.poisonousblood.mixin",
+  "package": "com.gustavoschip.expanded.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "VampirePlayerMixin"

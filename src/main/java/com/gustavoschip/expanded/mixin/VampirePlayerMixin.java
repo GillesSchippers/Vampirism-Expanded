@@ -1,6 +1,6 @@
-package com.gustavoschip.poisonousblood.mixin;
+package com.gustavoschip.expanded.mixin;
 
-import com.gustavoschip.poisonousblood.service.PoisonousBloodService;
+import com.gustavoschip.expanded.service.PoisonousBloodService;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class VampirePlayerMixin {
 
     @Inject(method = "determineBiteType", at = @At("RETURN"), cancellable = true)
-    private void poisonousblood$treatPoisonousPlayersAsHunterCreatures(LivingEntity entity, CallbackInfoReturnable<IVampirePlayer.BITE_TYPE> cir) {
+    private void expanded$treatPoisonousPlayersAsHunterCreatures(LivingEntity entity, CallbackInfoReturnable<IVampirePlayer.BITE_TYPE> cir) {
         if (cir.getReturnValue() != IVampirePlayer.BITE_TYPE.SUCK_BLOOD_PLAYER) {
             return;
         }

@@ -32,6 +32,11 @@ repositories {
     }
 
     maven {
+        name = "Werewolves"
+        url = "https://maven.paube.de/releases"
+    }
+
+    maven {
         name = "JEI"
         url = "https://maven.blamejared.com/"
     }
@@ -121,6 +126,7 @@ dependencies {
     //runtimeOnly "de.teamlapen.vampirism:Vampirism:${vampirism_version}"
 
     implementation "de.teamlapen.vampirism:Vampirism:${vampirism_version}"
+    implementation "de.teamlapen.werewolves:Werewolves:${werewolves_version}"
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
@@ -136,6 +142,7 @@ tasks.withType(ProcessResources).configureEach {
             minecraft_version       : minecraft_version,
             minecraft_version_range : minecraft_version_range,
             vampirism_version_range : vampirism_version_range,
+            werewolves_version_range : werewolves_version_range,
             neo_version             : neo_version,
             loader_version_range    : loader_version_range,
             mod_id                  : mod_id,
@@ -159,7 +166,7 @@ publishing {
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/repo"
+            url = "file://${project.projectDir}/repo"
         }
     }
 }

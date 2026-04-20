@@ -1,6 +1,6 @@
-package com.gustavoschip.poisonousblood.mixin.client;
+package com.gustavoschip.expanded.mixin.client;
 
-import com.gustavoschip.poisonousblood.attachment.ModAttachments;
+import com.gustavoschip.expanded.attachment.ModAttachments;
 import de.teamlapen.vampirism.entity.player.VampirismPlayerAttributes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
@@ -17,11 +17,11 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(targets = "de.teamlapen.vampirism.client.renderer.RenderHandler", remap = false)
 public abstract class VampirismRenderHandlerMixin {
     @Unique
-    private Entity poisonousblood$currentBloodVisionEntity;
+    private Entity expanded$currentBloodVisionEntity;
 
     @Inject(method = "onRenderLivingPost", at = @At("HEAD"))
-    private void poisonousblood$captureBloodVisionEntity(RenderLivingEvent.Post<?, ?> event, CallbackInfo ci) {
-        this.poisonousblood$currentBloodVisionEntity = event.getEntity();
+    private void expanded$captureBloodVisionEntity(RenderLivingEvent.Post<?, ?> event, CallbackInfo ci) {
+        this.expanded$currentBloodVisionEntity = event.getEntity();
     }
 
     @ModifyArgs(
@@ -32,8 +32,8 @@ public abstract class VampirismRenderHandlerMixin {
                     remap = false
             )
     )
-    private void poisonousblood$setGreenBloodVisionColorForPoisonousPlayers(Args args) {
-        Entity entity = this.poisonousblood$currentBloodVisionEntity;
+    private void expanded$setGreenBloodVisionColorForPoisonousPlayers(Args args) {
+        Entity entity = this.expanded$currentBloodVisionEntity;
         if (!(entity instanceof Player player) || !player.getData(ModAttachments.POISONOUS_BLOOD_ATTACHMENT)) {
             return;
         }
@@ -49,7 +49,7 @@ public abstract class VampirismRenderHandlerMixin {
     }
 
     @Inject(method = "onRenderLivingPost", at = @At("RETURN"))
-    private void poisonousblood$clearBloodVisionEntity(RenderLivingEvent.Post<?, ?> event, CallbackInfo ci) {
-        this.poisonousblood$currentBloodVisionEntity = null;
+    private void expanded$clearBloodVisionEntity(RenderLivingEvent.Post<?, ?> event, CallbackInfo ci) {
+        this.expanded$currentBloodVisionEntity = null;
     }
 }

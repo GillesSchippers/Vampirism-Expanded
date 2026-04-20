@@ -1,6 +1,6 @@
-package com.gustavoschip.poisonousblood.mixin.client;
+package com.gustavoschip.expanded.mixin.client;
 
-import com.gustavoschip.poisonousblood.attachment.ModAttachments;
+import com.gustavoschip.expanded.attachment.ModAttachments;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +19,7 @@ public abstract class VampirismHUDOverlayMixin {
             argsOnly = true,
             ordinal = 2
     )
-    private int poisonousblood$forceGreenFangsForPoisonousPlayers(int color) {
+    private int expanded$forceGreenFangsForPoisonousPlayers(int color) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.hitResult == null || mc.hitResult.getType() != HitResult.Type.ENTITY) {
             return color;

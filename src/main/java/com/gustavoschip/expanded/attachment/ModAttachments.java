@@ -1,4 +1,4 @@
-package com.gustavoschip.poisonousblood.attachment;
+package com.gustavoschip.expanded.attachment;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -8,7 +8,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
-import static com.gustavoschip.poisonousblood.PoisonousBlood.MOD_ID;
+import static com.gustavoschip.expanded.PoisonousBlood.MOD_ID;
 
 public class ModAttachments {
     public static final String POISONOUS_BLOOD_ATTACHMENT_ID = "poisonous_blood";
