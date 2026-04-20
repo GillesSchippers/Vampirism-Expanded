@@ -1,4 +1,4 @@
-package com.gustavoschip.expanded.skill.action;
+package com.gustavoschip.expanded.skill.handler;
 
 import com.gustavoschip.expanded.service.PoisonousBloodService;
 import com.mojang.logging.LogUtils;

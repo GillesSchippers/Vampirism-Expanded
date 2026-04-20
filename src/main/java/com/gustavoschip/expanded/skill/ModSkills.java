@@ -1,8 +1,8 @@
 package com.gustavoschip.expanded.skill;
 
-import com.gustavoschip.expanded.skill.action.HunterSkillHandlers;
-import com.gustavoschip.expanded.skill.action.VampireSkillHandlers;
-import com.gustavoschip.expanded.skill.action.WerewolfSkillHandlers;
+import com.gustavoschip.expanded.skill.handler.HunterSkillHandlers;
+import com.gustavoschip.expanded.skill.handler.VampireSkillHandlers;
+import com.gustavoschip.expanded.skill.handler.WerewolfSkillHandlers;
 import com.gustavoschip.expanded.skill.type.ActionFactionSkill;
 import com.gustavoschip.expanded.skill.type.FactionSkillBase;
 import com.mojang.datafixers.util.Either;
@@ -30,14 +30,26 @@ public final class ModSkills {
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = SKILLS.register("hunter/root",
             () -> new FactionSkillBase<>(Either.left(Trees.HUNTER_LEVEL), HUNTER_FACTION_ID, 0, false)
+                    .setToggleActions(
+                            HunterSkillHandlers.doToggle(true),
+                            HunterSkillHandlers.doToggle(false)
+                    )
     );
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = SKILLS.register("vampire/root",
             () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 0, false)
+                    .setToggleActions(
+                            HunterSkillHandlers.doToggle(true),
+                            HunterSkillHandlers.doToggle(false)
+                    )
     );
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> WEREWOLF_ROOT = SKILLS.register("werewolf/root",
             () -> new FactionSkillBase<>(Either.left(Trees.WEREWOLF_LEVEL), WEREWOLF_FACTION_ID, 0, false)
+                    .setToggleActions(
+                            HunterSkillHandlers.doToggle(true),
+                            HunterSkillHandlers.doToggle(false)
+                    )
     );
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SKILLS.register("poisonous/blood",
