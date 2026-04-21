@@ -14,8 +14,8 @@ import static com.gustavoschip.expanded.attachment.ModAttachments.GARLIC_BLOOD_A
 import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
 
 public final class GarlicBloodService {
-    private static final Logger LOGGER = LogUtils.getLogger();
     public static final int GARLIC_EFFECT_DURATION_TICKS = 20 * 10;
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     private GarlicBloodService() {
     }

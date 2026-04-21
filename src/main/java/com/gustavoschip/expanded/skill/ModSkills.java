@@ -21,11 +21,8 @@ import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 @SuppressWarnings("unused")
 public final class ModSkills {
-    private static final ResourceLocation HUNTER_FACTION_ID = fromNamespaceAndPath("vampirism", "hunter");
-    private static final ResourceLocation VAMPIRE_FACTION_ID = fromNamespaceAndPath("vampirism", "vampire");
-
     public static final DeferredRegister<ISkill<?>> SKILLS = DeferredRegister.create(VampirismRegistries.Keys.SKILL, MOD_ID);
-
+    private static final ResourceLocation HUNTER_FACTION_ID = fromNamespaceAndPath("vampirism", "hunter");
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = SKILLS.register("hunter_root",
             () -> new FactionSkillBase<>(Either.left(Trees.HUNTER_LEVEL), HUNTER_FACTION_ID, 0, false)
                     .setToggleActions(
@@ -33,15 +30,6 @@ public final class ModSkills {
                             HunterSkillHandlers.doToggle(false)
                     )
     );
-
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = SKILLS.register("vampire_root",
-            () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 0, false)
-                    .setToggleActions(
-                            HunterSkillHandlers.doToggle(true),
-                            HunterSkillHandlers.doToggle(false)
-                    )
-    );
-
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SKILLS.register("poisonous_blood",
             () -> new ActionFactionSkill<>(Either.left(Trees.HUNTER_LEVEL), HUNTER_FACTION_ID, 1, true)
                     .setToggleActions(
@@ -49,7 +37,6 @@ public final class ModSkills {
                             HunterSkillHandlers.poisonousBloodToggle(false)
                     )
     );
-
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> GARLIC_BLOOD = SKILLS.register("garlic_blood",
             () -> new FactionSkillBase<>(Either.left(Trees.HUNTER_LEVEL), HUNTER_FACTION_ID, 1, true)
                     .setToggleActions(
@@ -57,7 +44,14 @@ public final class ModSkills {
                             HunterSkillHandlers.garlicBloodToggle(false)
                     )
     );
-
+    private static final ResourceLocation VAMPIRE_FACTION_ID = fromNamespaceAndPath("vampirism", "vampire");
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = SKILLS.register("vampire_root",
+            () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 0, false)
+                    .setToggleActions(
+                            HunterSkillHandlers.doToggle(true),
+                            HunterSkillHandlers.doToggle(false)
+                    )
+    );
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BLOOD_FOCUS = SKILLS.register("blood_focus",
             () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 1, true)
                     .setToggleActions(

@@ -1,7 +1,7 @@
 package com.gustavoschip.expanded.service;
 
-import com.mojang.logging.LogUtils;
 import com.gustavoschip.expanded.skill.ModSkills;
+import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.event.BloodDrinkEvent;
 import de.teamlapen.vampirism.core.ModEffects;
 import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
@@ -15,8 +15,8 @@ import static com.gustavoschip.expanded.attachment.ModAttachments.POISONOUS_BLOO
 import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
 
 public final class PoisonousBloodService {
-    private static final Logger LOGGER = LogUtils.getLogger();
     public static final int POISONOUS_BLOOD_EFFECT_DURATION_TICKS = 60;
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     private PoisonousBloodService() {
     }
@@ -47,7 +47,6 @@ public final class PoisonousBloodService {
     }
 
     public static void syncFromHunterSkill(ServerPlayer player) {
-        // Ensures old attachment data is corrected to match current skill state.
         setPoisonousBlood(player, hasPoisonousBloodSkill(player));
     }
 
