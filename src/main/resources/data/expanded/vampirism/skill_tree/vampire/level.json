@@ -1,7 +1,7 @@
 {
   "display": {
     "count": 1,
-    "id": "vampirism:vampire_book"
+    "id": "vampirism:soul_orb_vampire"
   },
   "faction": {
     "id": "vampirism:vampire"
@@ -14,7 +14,9 @@
       "type": "vampirism:player_faction",
       "faction": {
         "id": "vampirism:vampire"
-      }
+      },
+      "lord_level": 5,
+      "level": 14
     }
   }
 }

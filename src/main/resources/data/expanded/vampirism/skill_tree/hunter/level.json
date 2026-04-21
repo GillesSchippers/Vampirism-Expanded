@@ -1,7 +1,7 @@
 {
   "display": {
     "count": 1,
-    "id": "vampirism:vampire_book"
+    "id": "vampirism:purified_garlic"
   },
   "faction": {
     "id": "vampirism:hunter"
@@ -14,7 +14,9 @@
       "type": "vampirism:player_faction",
       "faction": {
         "id": "vampirism:hunter"
-      }
+      },
+      "lord_level": 5,
+      "level": 14
     }
   }
 }

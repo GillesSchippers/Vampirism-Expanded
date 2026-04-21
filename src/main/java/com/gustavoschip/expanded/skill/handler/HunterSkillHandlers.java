@@ -1,5 +1,6 @@
 package com.gustavoschip.expanded.skill.handler;
 
+import com.gustavoschip.expanded.service.GarlicBloodService;
 import com.gustavoschip.expanded.service.PoisonousBloodService;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
@@ -32,6 +33,17 @@ public final class HunterSkillHandlers {
                 return;
             }
             LOGGER.debug("Skipped poisonous blood toggle {} for non-server entity {}", poisonous, player.asEntity().getName().getString());
+        };
+    }
+
+    public static <T extends IFactionPlayer<T>> Consumer<T> garlicBloodToggle(boolean garlicBlood) {
+        return player -> {
+            if (player.asEntity() instanceof ServerPlayer serverPlayer) {
+                LOGGER.debug("Toggling garlic blood to {} for {}", garlicBlood, serverPlayer.getName().getString());
+                GarlicBloodService.setGarlicBlood(serverPlayer, garlicBlood);
+                return;
+            }
+            LOGGER.debug("Skipped garlic blood toggle {} for non-server entity {}", garlicBlood, player.asEntity().getName().getString());
         };
     }
 }

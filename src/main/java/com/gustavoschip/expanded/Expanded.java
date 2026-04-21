@@ -9,11 +9,11 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 
 
-@Mod(PoisonousBlood.MOD_ID)
-public class PoisonousBlood {
+@Mod(Expanded.MOD_ID)
+public class Expanded {
     public static final String MOD_ID = "expanded";
 
-    public PoisonousBlood(IEventBus modEventBus) {
+    public Expanded(IEventBus modEventBus) {
         ModAttachments.register(modEventBus);
         ModSkills.register(modEventBus);
 

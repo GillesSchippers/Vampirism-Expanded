@@ -1,14 +1,14 @@
 {
   "tree.expanded.hunter": "Expanded Hunters",
   "tree.expanded.vampire": "Expanded Vampires",
-  "skill.expanded.hunter.root": "Expanded Hunters",
-  "skill.expanded.hunter.poisonous_blood": "Poisonous Blood",
-  "skill.expanded.hunter.poisonous_blood.desc": "Your blood becomes toxic to vampires that try to drink it.",
-  "skill.expanded.hunter.resolve": "Hunter Resolve",
-  "skill.expanded.hunter.resolve.desc": "Strengthens your resolve against hostile blood magic.",
-  "skill.expanded.vampire.root": "Expanded Vampires",
-  "skill.expanded.vampire.blood_focus": "Blood Focus",
-  "skill.expanded.vampire.blood_focus.desc": "Study the finer points of blood manipulation.",
-  "skill.expanded.vampire.shadow_sense": "Shadow Sense",
-  "skill.expanded.vampire.shadow_sense.desc": "Sharpen your senses in the dark."
+  "skill.expanded.hunter_root": "Expanded Hunters",
+  "skill.expanded.poisonous_blood": "Poisonous Blood",
+  "skill.expanded.poisonous_blood.desc": "Your blood becomes toxic to vampires that try to drink it.",
+  "skill.expanded.garlic_blood": "Garlic Blood",
+  "skill.expanded.garlic_blood.desc": "Your blood carries the stench of garlic. Vampires who drink from you become affected by Garlic for 10 seconds.",
+  "skill.expanded.vampire_root": "Expanded Vampires",
+  "skill.expanded.blood_focus": "Blood Focus",
+  "skill.expanded.blood_focus.desc": "Study the finer points of blood manipulation.",
+  "skill.expanded.shadow_sense": "Shadow Sense",
+  "skill.expanded.shadow_sense.desc": "Sharpen your senses in the dark."
 }

@@ -16,7 +16,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static com.gustavoschip.expanded.PoisonousBlood.MOD_ID;
+import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 @SuppressWarnings("unused")
@@ -26,7 +26,7 @@ public final class ModSkills {
 
     public static final DeferredRegister<ISkill<?>> SKILLS = DeferredRegister.create(VampirismRegistries.Keys.SKILL, MOD_ID);
 
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = SKILLS.register("hunter/root",
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = SKILLS.register("hunter_root",
             () -> new FactionSkillBase<>(Either.left(Trees.HUNTER_LEVEL), HUNTER_FACTION_ID, 0, false)
                     .setToggleActions(
                             HunterSkillHandlers.doToggle(true),
@@ -34,7 +34,7 @@ public final class ModSkills {
                     )
     );
 
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = SKILLS.register("vampire/root",
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = SKILLS.register("vampire_root",
             () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 0, false)
                     .setToggleActions(
                             HunterSkillHandlers.doToggle(true),
@@ -42,7 +42,7 @@ public final class ModSkills {
                     )
     );
 
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SKILLS.register("hunter/poisonous_blood",
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SKILLS.register("poisonous_blood",
             () -> new ActionFactionSkill<>(Either.left(Trees.HUNTER_LEVEL), HUNTER_FACTION_ID, 1, true)
                     .setToggleActions(
                             HunterSkillHandlers.poisonousBloodToggle(true),
@@ -50,15 +50,15 @@ public final class ModSkills {
                     )
     );
 
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_RESOLVE = SKILLS.register("hunter/resolve",
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> GARLIC_BLOOD = SKILLS.register("garlic_blood",
             () -> new FactionSkillBase<>(Either.left(Trees.HUNTER_LEVEL), HUNTER_FACTION_ID, 1, true)
                     .setToggleActions(
-                            HunterSkillHandlers.doToggle(true),
-                            HunterSkillHandlers.doToggle(false)
+                            HunterSkillHandlers.garlicBloodToggle(true),
+                            HunterSkillHandlers.garlicBloodToggle(false)
                     )
     );
 
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_BLOOD_FOCUS = SKILLS.register("vampire/blood_focus",
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BLOOD_FOCUS = SKILLS.register("blood_focus",
             () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 1, true)
                     .setToggleActions(
                             VampireSkillHandlers.doToggle(true),
@@ -66,7 +66,7 @@ public final class ModSkills {
                     )
     );
 
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_SHADOW_SENSE = SKILLS.register("vampire/shadow_sense",
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> SHADOW_SENSE = SKILLS.register("shadow_sense",
             () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 1, true)
                     .setToggleActions(
                             VampireSkillHandlers.doToggle(true),
@@ -84,7 +84,6 @@ public final class ModSkills {
     public static final class Trees {
         public static final ResourceKey<ISkillTree> HUNTER_LEVEL = tree("hunter/level");
         public static final ResourceKey<ISkillTree> VAMPIRE_LEVEL = tree("vampire/level");
-        public static final ResourceKey<ISkillTree> WEREWOLF_LEVEL = tree("werewolf/level");
 
         private Trees() {
         }
@@ -95,17 +94,13 @@ public final class ModSkills {
     }
 
     public static final class Nodes {
-        public static final ResourceKey<ISkillNode> HUNTER_ROOT = node("hunter/root");
-        public static final ResourceKey<ISkillNode> HUNTER_POISONOUS_BLOOD = node("hunter/poisonous_blood");
-        public static final ResourceKey<ISkillNode> HUNTER_RESOLVE = node("hunter/resolve");
+        public static final ResourceKey<ISkillNode> HUNTER_ROOT = node("hunter_root");
+        public static final ResourceKey<ISkillNode> POISONOUS_BLOOD = node("poisonous_blood");
+        public static final ResourceKey<ISkillNode> GARLIC_BLOOD = node("garlic_blood");
 
-        public static final ResourceKey<ISkillNode> VAMPIRE_ROOT = node("vampire/root");
-        public static final ResourceKey<ISkillNode> VAMPIRE_BLOOD_FOCUS = node("vampire/blood_focus");
-        public static final ResourceKey<ISkillNode> VAMPIRE_SHADOW_SENSE = node("vampire/shadow_sense");
-
-        public static final ResourceKey<ISkillNode> WEREWOLF_ROOT = node("werewolf/root");
-        public static final ResourceKey<ISkillNode> WEREWOLF_MOON_SENSE = node("werewolf/moon_sense");
-        public static final ResourceKey<ISkillNode> WEREWOLF_PACK_INSTINCT = node("werewolf/pack_instinct");
+        public static final ResourceKey<ISkillNode> VAMPIRE_ROOT = node("vampire_root");
+        public static final ResourceKey<ISkillNode> BLOOD_FOCUS = node("blood_focus");
+        public static final ResourceKey<ISkillNode> SHADOW_SENSE = node("shadow_sense");
 
         private Nodes() {
         }

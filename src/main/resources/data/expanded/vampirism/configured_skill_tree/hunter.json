@@ -1,13 +1,15 @@
 {
   "children": [
     {
-      "node": "expanded:hunter/poisonous_blood"
-    },
-    {
-      "node": "expanded:hunter/resolve"
+      "node": "expanded:garlic_blood",
+      "children": [
+        {
+          "node": "expanded:poisonous_blood"
+        }
+      ]
     }
   ],
-  "node": "expanded:hunter/root",
+  "node": "expanded:hunter_root",
   "skill_tree": "expanded:hunter/level"
 }
 
