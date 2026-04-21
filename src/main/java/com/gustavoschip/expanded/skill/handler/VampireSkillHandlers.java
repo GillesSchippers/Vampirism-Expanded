@@ -12,15 +12,5 @@ public final class VampireSkillHandlers {
 
     private VampireSkillHandlers() {
     }
-
-    public static <T extends IFactionPlayer<T>> Consumer<T> doToggle(boolean toggle) {
-        return player -> {
-            if (player.asEntity() instanceof ServerPlayer serverPlayer) {
-                LOGGER.debug("Toggling vampire skill to {} for {}", toggle, serverPlayer.getName().getString());
-                return;
-            }
-            LOGGER.debug("Skipped vampire skill toggle {} for non-server entity {}", toggle, player.asEntity().getName().getString());
-        };
-    }
 }
 

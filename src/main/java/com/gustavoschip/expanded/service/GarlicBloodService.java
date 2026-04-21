@@ -20,7 +20,7 @@ public final class GarlicBloodService {
     private GarlicBloodService() {
     }
 
-    public static boolean hasGarlicBloodSkill(Player player) {
+    public static boolean hasGarlicBloodSkill(ServerPlayer player) {
         return factionPlayerHandler(player)
                 .getCurrentFactionPlayer()
                 .map(factionPlayer -> factionPlayer.getSkillHandler().isSkillEnabled(ModSkills.GARLIC_BLOOD.get()))
@@ -32,10 +32,18 @@ public final class GarlicBloodService {
     }
 
     public static boolean hasGarlicBlood(ServerPlayer player) {
+        if (!canSyncAttachment(player)) {
+            return false;
+        }
         return hasGarlicBlood((Player) player);
     }
 
     public static void setGarlicBlood(ServerPlayer player, boolean garlicBlood) {
+        if (!canSyncAttachment(player)) {
+            LOGGER.debug("Deferred garlic blood update for {} until login sync", player.getName().getString());
+            return;
+        }
+
         if (hasGarlicBlood(player) == garlicBlood) {
             LOGGER.debug("Garlic blood already {} for {}", garlicBlood, player.getName().getString());
             return;
@@ -47,6 +55,10 @@ public final class GarlicBloodService {
 
     public static void syncFromHunterSkill(ServerPlayer player) {
         setGarlicBlood(player, hasGarlicBloodSkill(player));
+    }
+
+    public static boolean canSyncAttachment(ServerPlayer player) {
+        return player.connection != null;
     }
 
     public static boolean isGarlicBloodTarget(Entity entity) {

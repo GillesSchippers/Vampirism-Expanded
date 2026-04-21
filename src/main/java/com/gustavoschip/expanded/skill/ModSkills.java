@@ -25,10 +25,6 @@ public final class ModSkills {
     private static final ResourceLocation HUNTER_FACTION_ID = fromNamespaceAndPath("vampirism", "hunter");
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = SKILLS.register("hunter_root",
             () -> new FactionSkillBase<>(Either.left(Trees.HUNTER_LEVEL), HUNTER_FACTION_ID, 0, false)
-                    .setToggleActions(
-                            HunterSkillHandlers.doToggle(true),
-                            HunterSkillHandlers.doToggle(false)
-                    )
     );
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SKILLS.register("poisonous_blood",
             () -> new ActionFactionSkill<>(Either.left(Trees.HUNTER_LEVEL), HUNTER_FACTION_ID, 1, true)
@@ -47,25 +43,6 @@ public final class ModSkills {
     private static final ResourceLocation VAMPIRE_FACTION_ID = fromNamespaceAndPath("vampirism", "vampire");
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = SKILLS.register("vampire_root",
             () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 0, false)
-                    .setToggleActions(
-                            HunterSkillHandlers.doToggle(true),
-                            HunterSkillHandlers.doToggle(false)
-                    )
-    );
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BLOOD_FOCUS = SKILLS.register("blood_focus",
-            () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 1, true)
-                    .setToggleActions(
-                            VampireSkillHandlers.doToggle(true),
-                            VampireSkillHandlers.doToggle(false)
-                    )
-    );
-
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> SHADOW_SENSE = SKILLS.register("shadow_sense",
-            () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 1, true)
-                    .setToggleActions(
-                            VampireSkillHandlers.doToggle(true),
-                            VampireSkillHandlers.doToggle(false)
-                    )
     );
 
     private ModSkills() {
@@ -93,8 +70,6 @@ public final class ModSkills {
         public static final ResourceKey<ISkillNode> GARLIC_BLOOD = node("garlic_blood");
 
         public static final ResourceKey<ISkillNode> VAMPIRE_ROOT = node("vampire_root");
-        public static final ResourceKey<ISkillNode> BLOOD_FOCUS = node("blood_focus");
-        public static final ResourceKey<ISkillNode> SHADOW_SENSE = node("shadow_sense");
 
         private Nodes() {
         }

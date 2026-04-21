@@ -1,12 +1,5 @@
 {
-  "children": [
-    {
-      "node": "expanded:blood_focus"
-    },
-    {
-      "node": "expanded:shadow_sense"
-    }
-  ],
+  "children": [],
   "node": "expanded:vampire_root",
   "skill_tree": "expanded:vampire/level"
 }

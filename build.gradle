@@ -103,6 +103,12 @@ dependencies {
         exclude group: "mezz.jei", module: "jei-1.21-neoforge"
         exclude group: "com.github.glitchfiend", module: "TerraBlender-neoforge"
     }
+    compileOnly("de.maxanier.guideapi:Guide-API-VP:${guideapi_version}") {
+        exclude group: "mezz.jei", module: "jei-1.21-neoforge"
+    }
+    localRuntime("de.maxanier.guideapi:Guide-API-VP:${guideapi_version}") {
+        exclude group: "mezz.jei", module: "jei-1.21-neoforge"
+    }
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -112,6 +118,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             minecraft_version      : minecraft_version,
             minecraft_version_range: minecraft_version_range,
             vampirism_version_range: vampirism_version_range,
+            guideapi_version_range : guideapi_version_range,
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
@@ -128,6 +135,10 @@ neoForge.ideSyncTask generateModMetadata
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+tasks.named('jar', Jar).configure {
+    archiveFileName = "VampirismExpanded-${project.version}.jar"
 }
 
 idea {

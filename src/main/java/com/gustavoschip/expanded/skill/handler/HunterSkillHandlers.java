@@ -15,19 +15,13 @@ public final class HunterSkillHandlers {
     private HunterSkillHandlers() {
     }
 
-    public static <T extends IFactionPlayer<T>> Consumer<T> doToggle(boolean toggle) {
-        return player -> {
-            if (player.asEntity() instanceof ServerPlayer serverPlayer) {
-                LOGGER.debug("Toggling hunter skill to {} for {}", toggle, serverPlayer.getName().getString());
-                return;
-            }
-            LOGGER.debug("Skipped hunter skill toggle {} for non-server entity {}", toggle, player.asEntity().getName().getString());
-        };
-    }
-
     public static <T extends IFactionPlayer<T>> Consumer<T> poisonousBloodToggle(boolean poisonous) {
         return player -> {
             if (player.asEntity() instanceof ServerPlayer serverPlayer) {
+                if (!PoisonousBloodService.canSyncAttachment(serverPlayer)) {
+                    LOGGER.debug("Deferred poisonous blood toggle {} for {} until login sync", poisonous, serverPlayer.getName().getString());
+                    return;
+                }
                 LOGGER.debug("Toggling poisonous blood to {} for {}", poisonous, serverPlayer.getName().getString());
                 PoisonousBloodService.setPoisonousBlood(serverPlayer, poisonous);
                 return;
@@ -39,6 +33,10 @@ public final class HunterSkillHandlers {
     public static <T extends IFactionPlayer<T>> Consumer<T> garlicBloodToggle(boolean garlicBlood) {
         return player -> {
             if (player.asEntity() instanceof ServerPlayer serverPlayer) {
+                if (!GarlicBloodService.canSyncAttachment(serverPlayer)) {
+                    LOGGER.debug("Deferred garlic blood toggle {} for {} until login sync", garlicBlood, serverPlayer.getName().getString());
+                    return;
+                }
                 LOGGER.debug("Toggling garlic blood to {} for {}", garlicBlood, serverPlayer.getName().getString());
                 GarlicBloodService.setGarlicBlood(serverPlayer, garlicBlood);
                 return;

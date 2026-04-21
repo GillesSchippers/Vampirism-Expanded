@@ -9,6 +9,7 @@ version = "${mod_version}"
 displayName = "${mod_name}"
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 logoFile = "assets/expanded/icon.png"
+#updateJSONURL="" #optional
 #credits="" #optional
 authors = "GustavoSchip"
 description = '''
@@ -35,5 +36,12 @@ side = "BOTH"
 modId = "vampirism"
 type = "required"
 versionRange = "${vampirism_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "guideapi_vp"
+type = "optional"
+versionRange = "${guideapi_version_range}"
 ordering = "NONE"
 side = "BOTH"

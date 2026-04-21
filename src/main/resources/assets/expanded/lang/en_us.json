@@ -1,11 +1,26 @@
 {
+  "guide.expanded.title": "Expanded",
+  "guide.expanded.overview": "Overview",
+  "guide.expanded.overview.text": "Expanded adds new hunter and vampire skill branches that build on Vampirism's blood systems.\nHunters can turn their blood into a deterrent against hungry vampires, while vampires gain tools that improve blood interaction and awareness.\nUse the other entries in this chapter to learn how each part works in practice.",
+
   "tree.expanded.hunter": "Expanded Hunters",
-  "tree.expanded.vampire": "Expanded Vampires",
+  "guide.expanded.hunter": "Hunter Branch",
+  "guide.expanded.hunter.text": "The Expanded hunter branch focuses on blood that punishes vampires when they try to feed from you.\nIt is a defensive style best used by hunters who expect close-range encounters and want their own blood to become a weapon.",
+
   "skill.expanded.hunter_root": "Expanded Hunters",
   "skill.expanded.poisonous_blood": "Poisonous Blood",
   "skill.expanded.poisonous_blood.desc": "Your blood becomes toxic to vampires that try to drink it.",
+  "guide.expanded.poisonous_blood": "Poisonous Blood",
+  "guide.expanded.poisonous_blood.text": "Poisonous Blood makes your blood toxic to vampires. When a vampire attempts to drink from you, the feeding is interrupted and they are briefly poisoned.\nThis skill works best when you can force enemies into risky feeding attempts.",
   "skill.expanded.garlic_blood": "Garlic Blood",
   "skill.expanded.garlic_blood.desc": "Your blood carries the stench of garlic. Vampires who drink from you become affected by Garlic for 10 seconds.",
+  "guide.expanded.garlic_blood": "Garlic Blood",
+  "guide.expanded.garlic_blood.text": "Garlic Blood makes your blood smell and taste like garlic to vampires. If a vampire successfully drinks from you, they gain Garlic for 10 seconds after the sip.\nUnlike Poisonous Blood, this effect triggers after the feeding succeeds.",
+
+  "tree.expanded.vampire": "Expanded Vampires",
+  "guide.expanded.vampire": "Vampire Branch",
+  "guide.expanded.vampire.text": "The Expanded vampire branch currently starts with the core vampire root skill.\nIt lays the foundation for blood-focused progression and future vampire-side additions, while keeping the chapter style consistent with the rest of Vampirism's guidebook.",
+
   "skill.expanded.vampire_root": "Expanded Vampires",
   "skill.expanded.blood_focus": "Blood Focus",
   "skill.expanded.blood_focus.desc": "Study the finer points of blood manipulation.",

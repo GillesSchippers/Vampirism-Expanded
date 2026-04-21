@@ -26,10 +26,18 @@ public final class PoisonousBloodService {
     }
 
     public static boolean hasPoisonousBlood(ServerPlayer player) {
+        if (!canSyncAttachment(player)) {
+            return false;
+        }
         return hasPoisonousBlood((Player) player);
     }
 
     public static void setPoisonousBlood(ServerPlayer player, boolean poisonous) {
+        if (!canSyncAttachment(player)) {
+            LOGGER.debug("Deferred poisonous blood update for {} until login sync", player.getName().getString());
+            return;
+        }
+
         if (hasPoisonousBlood(player) == poisonous) {
             LOGGER.debug("Poisonous blood already {} for {}", poisonous, player.getName().getString());
             return;
@@ -48,6 +56,10 @@ public final class PoisonousBloodService {
 
     public static void syncFromHunterSkill(ServerPlayer player) {
         setPoisonousBlood(player, hasPoisonousBloodSkill(player));
+    }
+
+    public static boolean canSyncAttachment(ServerPlayer player) {
+        return player.connection != null;
     }
 
     public static boolean isPoisonousBloodTarget(Entity entity) {
