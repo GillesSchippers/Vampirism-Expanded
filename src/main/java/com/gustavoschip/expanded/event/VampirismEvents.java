@@ -19,6 +19,10 @@ public class VampirismEvents {
     @SubscribeEvent
     public void onActionActivated(ActionEvent.ActionActivatedEvent event) {
         VampiricGroundingService.handleBatActionActivated(event);
+    }
+
+    @SubscribeEvent
+    public void onActionUpdateEvent(ActionEvent.ActionUpdateEvent event) {
         AdvancedFlightService.handleBatActionActivated(event);
     }
 }

@@ -100,7 +100,7 @@ public final class AdvancedFlightService {
         setFlightSpeed(player, getAdvancedFlightSpeed());
     }
 
-    public static void handleBatActionActivated(ActionEvent.ActionActivatedEvent event) {
+    public static void handleBatActionActivated(ActionEvent.ActionUpdateEvent event) {
         if (event.getAction() != VampireActions.BAT.get()) {
             return;
         }
