@@ -1,7 +1,7 @@
 package com.gustavoschip.expanded.skill.handler;
 
-import com.gustavoschip.expanded.service.AdvancedFlightService;
-import com.gustavoschip.expanded.service.VampiricGroundingService;
+import com.gustavoschip.expanded.service.skill.AdvancedFlightService;
+import com.gustavoschip.expanded.service.skill.VampiricGroundingService;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import net.minecraft.server.level.ServerPlayer;

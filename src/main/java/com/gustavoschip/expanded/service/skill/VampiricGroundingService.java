@@ -1,26 +1,28 @@
-package com.gustavoschip.expanded.service;
+package com.gustavoschip.expanded.service.skill;
 
-import com.gustavoschip.expanded.skill.ModSkills;
+import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
+import com.gustavoschip.expanded.service.ModServices;
+import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
-import de.teamlapen.vampirism.api.event.ActionEvent;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
+import de.teamlapen.vampirism.api.event.ActionEvent;
 import de.teamlapen.vampirism.core.ModAttributes;
 import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
 import de.teamlapen.vampirism.entity.player.vampire.actions.VampireActions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import org.slf4j.Logger;
 
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
-import static com.gustavoschip.expanded.attachment.ModAttachments.VAMPIRIC_GROUNDING_ATTACHMENT;
-import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
-public final class VampiricGroundingService {
+public final class VampiricGroundingService extends ModServices {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final ResourceLocation SUNDAMAGE_REDUCTION_ID = fromNamespaceAndPath(MOD_ID, "vampiric_grounding_sundamage");
@@ -32,25 +34,19 @@ public final class VampiricGroundingService {
     }
 
     public static boolean canSyncAttachment(ServerPlayer player) {
-        return player != null && player.connection != null;
+        return ModServices.canSyncAttachment(player);
     }
 
     public static boolean hasVampiricGrounding(Player player) {
-        return player.getData(VAMPIRIC_GROUNDING_ATTACHMENT);
+        return hasBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT);
     }
 
     public static boolean hasVampiricGrounding(ServerPlayer player) {
-        if (!canSyncAttachment(player)) {
-            return false;
-        }
-        return hasVampiricGrounding((Player) player);
+        return hasBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT);
     }
 
     public static boolean hasVampiricGroundingSkill(ServerPlayer player) {
-        return factionPlayerHandler(player)
-                .getCurrentFactionPlayer()
-                .map(factionPlayer -> factionPlayer.getSkillHandler().isSkillEnabled(ModSkills.VAMPIRIC_GROUNDING.get()))
-                .orElse(false);
+        return hasSkillEnabled(player, SkillHolders.VAMPIRIC_GROUNDING);
     }
 
     public static void setVampiricGrounding(ServerPlayer player, boolean vampiricGrounding) {
@@ -63,7 +59,7 @@ public final class VampiricGroundingService {
             return;
         }
 
-        player.setData(VAMPIRIC_GROUNDING_ATTACHMENT, vampiricGrounding);
+        setBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT, vampiricGrounding, "vampiric grounding", LOGGER);
         if (vampiricGrounding) {
             applyAttributeBonuses(player);
             deactivateBatMode(player);
@@ -74,6 +70,16 @@ public final class VampiricGroundingService {
 
     public static void syncFromVampireSkill(ServerPlayer player) {
         setVampiricGrounding(player, hasVampiricGroundingSkill(player));
+    }
+
+    public static void clearSunDisorientation(ServerPlayer player) {
+        if (!hasVampiricGrounding(player)) {
+            return;
+        }
+
+        if (player.hasEffect(MobEffects.CONFUSION)) {
+            player.removeEffect(MobEffects.CONFUSION);
+        }
     }
 
     public static void handleBatActionActivated(ActionEvent.ActionActivatedEvent event) {
@@ -89,6 +95,21 @@ public final class VampiricGroundingService {
 
         event.setCanceled(true);
         player.displayClientMessage(Component.translatable("text.expanded.vampiric_grounding.bat_disabled"), true);
+    }
+
+    public static void handleLivingKnockback(LivingKnockBackEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !VampiricGroundingService.hasVampiricGrounding(player)) {
+            return;
+        }
+
+        if (!(event.getEntity() instanceof LivingEntitySunDamageTracker tracker) || !tracker.expanded$isLastDamageWasSun()) {
+            return;
+        }
+
+        event.setStrength(0.0F);
+        event.setRatioX(0.0D);
+        event.setRatioZ(0.0D);
+        event.setCanceled(true);
     }
 
     private static void deactivateBatMode(ServerPlayer player) {
@@ -132,6 +153,12 @@ public final class VampiricGroundingService {
         }
         attribute.addPermanentModifier(new AttributeModifier(id, amount, operation));
     }
+
+    // TODO: Create separate interface module
+    public interface LivingEntitySunDamageTracker {
+        boolean expanded$isLastDamageWasSun();
+    }
 }
+
 
 

@@ -1,6 +1,6 @@
 package com.gustavoschip.expanded.mixin.client;
 
-import com.gustavoschip.expanded.attachment.ModAttachments;
+import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +29,7 @@ public abstract class VampirismHUDOverlayMixin {
         }
 
         Entity target = ((EntityHitResult) mc.hitResult).getEntity();
-        if (target instanceof Player player && !target.isInvisible() && player.getData(ModAttachments.POISONOUS_BLOOD_ATTACHMENT)) {
+        if (target instanceof Player player && !target.isInvisible() && player.getData(SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT)) {
             return POISONOUS_BLOOD_FANGS_COLOR;
         }
         return color;

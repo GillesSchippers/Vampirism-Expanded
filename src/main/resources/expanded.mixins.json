@@ -4,6 +4,7 @@
   "package": "com.gustavoschip.expanded.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "LivingEntitySunDamageTrackerMixin",
     "VampirePlayerMixin"
   ],
   "client": [

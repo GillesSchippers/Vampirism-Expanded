@@ -1,7 +1,7 @@
 package com.gustavoschip.expanded.skill.handler;
 
-import com.gustavoschip.expanded.service.GarlicBloodService;
-import com.gustavoschip.expanded.service.PoisonousBloodService;
+import com.gustavoschip.expanded.service.skill.GarlicBloodService;
+import com.gustavoschip.expanded.service.skill.PoisonousBloodService;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import net.minecraft.server.level.ServerPlayer;

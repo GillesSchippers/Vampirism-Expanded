@@ -1,6 +1,8 @@
-package com.gustavoschip.expanded.service;
+package com.gustavoschip.expanded.service.skill;
 
-import com.gustavoschip.expanded.skill.ModSkills;
+import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
+import com.gustavoschip.expanded.service.ModServices;
+import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.event.BloodDrinkEvent;
 import de.teamlapen.vampirism.core.ModEffects;
@@ -10,10 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
-import static com.gustavoschip.expanded.attachment.ModAttachments.GARLIC_BLOOD_ATTACHMENT;
-import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
-
-public final class GarlicBloodService {
+public final class GarlicBloodService extends ModServices {
     public static final int GARLIC_EFFECT_DURATION_TICKS = 20 * 10;
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -21,36 +20,19 @@ public final class GarlicBloodService {
     }
 
     public static boolean hasGarlicBloodSkill(ServerPlayer player) {
-        return factionPlayerHandler(player)
-                .getCurrentFactionPlayer()
-                .map(factionPlayer -> factionPlayer.getSkillHandler().isSkillEnabled(ModSkills.GARLIC_BLOOD.get()))
-                .orElse(false);
+        return hasSkillEnabled(player, SkillHolders.GARLIC_BLOOD);
     }
 
     public static boolean hasGarlicBlood(Player player) {
-        return player.getData(GARLIC_BLOOD_ATTACHMENT);
+        return hasBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT);
     }
 
     public static boolean hasGarlicBlood(ServerPlayer player) {
-        if (!canSyncAttachment(player)) {
-            return false;
-        }
-        return hasGarlicBlood((Player) player);
+        return hasBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT);
     }
 
     public static void setGarlicBlood(ServerPlayer player, boolean garlicBlood) {
-        if (!canSyncAttachment(player)) {
-            LOGGER.debug("Deferred garlic blood update for {} until login sync", player.getName().getString());
-            return;
-        }
-
-        if (hasGarlicBlood(player) == garlicBlood) {
-            LOGGER.debug("Garlic blood already {} for {}", garlicBlood, player.getName().getString());
-            return;
-        }
-
-        player.setData(GARLIC_BLOOD_ATTACHMENT, garlicBlood);
-        LOGGER.debug("Set garlic blood for {} to {}", player.getName().getString(), garlicBlood);
+        setBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT, garlicBlood, "garlic blood", LOGGER);
     }
 
     public static void syncFromHunterSkill(ServerPlayer player) {
@@ -58,7 +40,7 @@ public final class GarlicBloodService {
     }
 
     public static boolean canSyncAttachment(ServerPlayer player) {
-        return player.connection != null;
+        return ModServices.canSyncAttachment(player);
     }
 
     public static boolean isGarlicBloodTarget(Entity entity) {
@@ -91,4 +73,5 @@ public final class GarlicBloodService {
         applyGarlicEffect(vampire, sourcePlayer);
     }
 }
+
 

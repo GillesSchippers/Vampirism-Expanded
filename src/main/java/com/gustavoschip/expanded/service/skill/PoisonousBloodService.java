@@ -1,6 +1,8 @@
-package com.gustavoschip.expanded.service;
+package com.gustavoschip.expanded.service.skill;
 
-import com.gustavoschip.expanded.skill.ModSkills;
+import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
+import com.gustavoschip.expanded.service.ModServices;
+import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.event.BloodDrinkEvent;
 import de.teamlapen.vampirism.core.ModEffects;
@@ -11,10 +13,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
-import static com.gustavoschip.expanded.attachment.ModAttachments.POISONOUS_BLOOD_ATTACHMENT;
-import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
-
-public final class PoisonousBloodService {
+public final class PoisonousBloodService extends ModServices {
     public static final int POISONOUS_BLOOD_EFFECT_DURATION_TICKS = 60;
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -22,36 +21,19 @@ public final class PoisonousBloodService {
     }
 
     public static boolean hasPoisonousBlood(Player player) {
-        return player.getData(POISONOUS_BLOOD_ATTACHMENT);
+        return hasBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT);
     }
 
     public static boolean hasPoisonousBlood(ServerPlayer player) {
-        if (!canSyncAttachment(player)) {
-            return false;
-        }
-        return hasPoisonousBlood((Player) player);
+        return hasBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT);
     }
 
     public static void setPoisonousBlood(ServerPlayer player, boolean poisonous) {
-        if (!canSyncAttachment(player)) {
-            LOGGER.debug("Deferred poisonous blood update for {} until login sync", player.getName().getString());
-            return;
-        }
-
-        if (hasPoisonousBlood(player) == poisonous) {
-            LOGGER.debug("Poisonous blood already {} for {}", poisonous, player.getName().getString());
-            return;
-        }
-
-        player.setData(POISONOUS_BLOOD_ATTACHMENT, poisonous);
-        LOGGER.debug("Set poisonous blood for {} to {}", player.getName().getString(), poisonous);
+        setBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT, poisonous, "poisonous blood", LOGGER);
     }
 
     public static boolean hasPoisonousBloodSkill(ServerPlayer player) {
-        return factionPlayerHandler(player)
-                .getCurrentFactionPlayer()
-                .map(factionPlayer -> factionPlayer.getSkillHandler().isSkillEnabled(ModSkills.POISONOUS_BLOOD.get()))
-                .orElse(false);
+        return hasSkillEnabled(player, SkillHolders.POISONOUS_BLOOD);
     }
 
     public static void syncFromHunterSkill(ServerPlayer player) {
@@ -59,7 +41,7 @@ public final class PoisonousBloodService {
     }
 
     public static boolean canSyncAttachment(ServerPlayer player) {
-        return player.connection != null;
+        return ModServices.canSyncAttachment(player);
     }
 
     public static boolean isPoisonousBloodTarget(Entity entity) {
@@ -92,4 +74,5 @@ public final class PoisonousBloodService {
         event.setUseRemaining(false);
     }
 }
+
 

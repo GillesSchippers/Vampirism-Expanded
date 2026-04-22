@@ -2,10 +2,8 @@
   "guide.expanded.title": "Vampirism Expanded",
   "guide.expanded.overview": "Overview",
   "guide.expanded.overview.text": "Expanded adds new hunter and vampire skill trees that build on Vampirism's existing systems.\nUse the other entries in this chapter to learn how each part works in practice.",
-
   "tree.expanded.hunter": "Expanded Hunters",
   "skill.expanded.hunter_root": "Expanded Hunters",
-
   "skill.expanded.poisonous_blood": "Poisonous Blood",
   "skill.expanded.poisonous_blood.desc": "Your blood becomes toxic to vampires that try to drink it.",
   "guide.expanded.poisonous_blood": "Poisonous Blood",
@@ -14,19 +12,15 @@
   "skill.expanded.garlic_blood.desc": "Your blood carries the stench of garlic. Vampires who drink from you become affected by Garlic for 10 seconds.",
   "guide.expanded.garlic_blood": "Garlic Blood",
   "guide.expanded.garlic_blood.text": "Garlic Blood makes your blood smell and taste like garlic to vampires. If a vampire successfully drinks from you, they gain Garlic for 10 seconds after the sip.\nUnlike Poisonous Blood, this effect triggers after the feeding succeeds.",
-
   "tree.expanded.vampire": "Expanded Vampires",
   "skill.expanded.vampire_root": "Expanded Vampires",
-
   "skill.expanded.vampiric_grounding": "Vampiric Grounding",
   "skill.expanded.vampiric_grounding.desc": "Embrace a relentless combat form. Gain speed, strength and resistance, suffer far less sun damage, but bat mode is disabled and blood drains faster.",
   "guide.expanded.vampiric_grounding": "Vampiric Grounding",
   "guide.expanded.vampiric_grounding.text": "Vampiric Grounding turns your vampire into a front-line duelist. While active, you gain Speed, Strength and Resistance and your sun damage is heavily reduced.\nAs trade-offs, bat mode is disabled and your blood exhaustion is increased, so you must feed more often.",
-
   "skill.expanded.advanced_flight": "Advanced Flight",
   "skill.expanded.advanced_flight.desc": "Your bat form loses the armor and toughness penalties and flies faster.",
   "guide.expanded.advanced_flight": "Advanced Flight",
   "guide.expanded.advanced_flight.text": "Advanced Flight improves your bat form. The usual armor and armor toughness penalties are removed, and your bat flight speed is increased.\nIt is a strong mobility pick for vampires that want to stay airborne while staying resilient.",
-
   "text.expanded.vampiric_grounding.bat_disabled": "Vampiric Grounding prevents bat mode."
 }

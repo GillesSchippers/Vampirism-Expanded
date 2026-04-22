@@ -1,6 +1,6 @@
 package com.gustavoschip.expanded.mixin.client;
 
-import com.gustavoschip.expanded.attachment.ModAttachments;
+import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
 import de.teamlapen.vampirism.entity.player.VampirismPlayerAttributes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
@@ -41,7 +41,7 @@ public abstract class VampirismRenderHandlerMixin {
     )
     private void expanded$setGreenBloodVisionColorForPoisonousPlayers(Args args) {
         Entity entity = this.expanded$currentBloodVisionEntity;
-        if (!(entity instanceof Player player) || !player.getData(ModAttachments.POISONOUS_BLOOD_ATTACHMENT)) {
+        if (!(entity instanceof Player player) || !player.getData(SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT)) {
             return;
         }
 

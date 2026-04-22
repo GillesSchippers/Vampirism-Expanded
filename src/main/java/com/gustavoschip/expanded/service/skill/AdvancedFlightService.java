@@ -1,9 +1,11 @@
-package com.gustavoschip.expanded.service;
+package com.gustavoschip.expanded.service.skill;
 
-import com.gustavoschip.expanded.skill.ModSkills;
+import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
+import com.gustavoschip.expanded.service.ModServices;
+import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
-import de.teamlapen.vampirism.api.event.ActionEvent;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
+import de.teamlapen.vampirism.api.event.ActionEvent;
 import de.teamlapen.vampirism.core.ModRegistries;
 import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
 import de.teamlapen.vampirism.entity.player.vampire.actions.VampireActions;
@@ -15,11 +17,9 @@ import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
-import static com.gustavoschip.expanded.attachment.ModAttachments.ADVANCED_FLIGHT_ATTACHMENT;
-import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
-public final class AdvancedFlightService {
+public final class AdvancedFlightService extends ModServices {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final float ADVANCED_FLIGHT_SPEED_MULTIPLIER = 1.5F;
@@ -30,25 +30,19 @@ public final class AdvancedFlightService {
     }
 
     public static boolean canSyncAttachment(ServerPlayer player) {
-        return player != null && player.connection != null;
+        return ModServices.canSyncAttachment(player);
     }
 
     public static boolean hasAdvancedFlight(Player player) {
-        return player.getData(ADVANCED_FLIGHT_ATTACHMENT);
+        return hasBooleanAttachment(player, SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT);
     }
 
     public static boolean hasAdvancedFlight(ServerPlayer player) {
-        if (!canSyncAttachment(player)) {
-            return false;
-        }
-        return hasAdvancedFlight((Player) player);
+        return hasBooleanAttachment(player, SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT);
     }
 
     public static boolean hasAdvancedFlightSkill(ServerPlayer player) {
-        return factionPlayerHandler(player)
-                .getCurrentFactionPlayer()
-                .map(factionPlayer -> factionPlayer.getSkillHandler().isSkillEnabled(ModSkills.ADVANCED_FLIGHT.get()))
-                .orElse(false);
+        return hasSkillEnabled(player, SkillHolders.ADVANCED_FLIGHT);
     }
 
     public static void setAdvancedFlight(ServerPlayer player, boolean advancedFlight) {
@@ -61,7 +55,7 @@ public final class AdvancedFlightService {
             return;
         }
 
-        player.setData(ADVANCED_FLIGHT_ATTACHMENT, advancedFlight);
+        setBooleanAttachment(player, SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT, advancedFlight, "advanced flight", LOGGER);
         if (advancedFlight) {
             applyAdvancedFlight(player);
         }
@@ -100,7 +94,7 @@ public final class AdvancedFlightService {
         setFlightSpeed(player, getAdvancedFlightSpeed());
     }
 
-    public static void handleBatActionActivated(ActionEvent.ActionUpdateEvent event) {
+    public static void handleBatActionActivated(ActionEvent.ActionActivatedEvent event) {
         if (event.getAction() != VampireActions.BAT.get()) {
             return;
         }
@@ -123,6 +117,8 @@ public final class AdvancedFlightService {
         return de.teamlapen.vampirism.config.VampirismConfig.BALANCE.vaBatFlightSpeed.get().floatValue() * ADVANCED_FLIGHT_SPEED_MULTIPLIER;
     }
 }
+
+
 
 
 
