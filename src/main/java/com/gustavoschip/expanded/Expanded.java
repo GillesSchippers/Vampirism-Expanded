@@ -16,6 +16,7 @@ import net.neoforged.neoforge.common.NeoForge;
 public class Expanded {
     public static final String MOD_ID = "expanded";
 
+    @SuppressWarnings("unused")
     public Expanded(IEventBus modEventBus) {
         ModAttachments.register(modEventBus);
         ModSkills.register(modEventBus);

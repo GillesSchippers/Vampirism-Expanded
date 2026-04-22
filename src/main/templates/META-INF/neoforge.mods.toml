@@ -1,16 +1,16 @@
 modLoader = "javafml"
 loaderVersion = "${loader_version_range}"
 license = "${mod_license}"
-#issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
+issueTrackerURL="https://github.com/GillesSchippers/Vampirism-Expanded/issues"
 
 [[mods]]
 modId = "${mod_id}"
 version = "${mod_version}"
 displayName = "${mod_name}"
-#displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
+displayURL="https://github.com/GillesSchippers/Vampirism-Expanded"
 logoFile = "assets/expanded/icon.png"
-#updateJSONURL="" #optional
-#credits="" #optional
+#updateJSONURL=""
+#credits=""
 authors = "GustavoSchip"
 description = '''
 An expansion mod for Vampirism, adding new features and content to the base mod.
