@@ -107,9 +107,11 @@ public final class AdvancedFlightService {
         if (!(event.getFactionPlayer() instanceof IVampirePlayer vampirePlayer)) {
             return;
         }
-        if (vampirePlayer.asEntity() instanceof ServerPlayer player) {
-            applyAdvancedFlight(player);
+        if (!(vampirePlayer.asEntity() instanceof ServerPlayer player) || !hasAdvancedFlight(player)) {
+            return;
         }
+
+        applyAdvancedFlight(player);
     }
 
     private static void setFlightSpeed(Player player, float speed) {
