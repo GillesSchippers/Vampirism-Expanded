@@ -68,6 +68,7 @@ public class ExpandedGuideBook {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<>();
 
         entries.put(entry("overview"), new EntryText(textPage(helper, "guide.expanded.overview.text"), translateComponent("guide.expanded.overview")));
+        entries.put(entry("tasks"), new EntryText(textPage(helper, "guide.expanded.tasks.text"), translateComponent("guide.expanded.tasks")));
         entries.put(SkillHolders.POISONOUS_BLOOD.getId(), new EntryText(imagePage(helper, "guide.expanded.poisonous_blood.text", POISONOUS_BLOOD_TEXTURE), translateComponent("guide.expanded.poisonous_blood")));
         entries.put(SkillHolders.GARLIC_BLOOD.getId(), new EntryText(imagePage(helper, "guide.expanded.garlic_blood.text", GARLIC_BLOOD_TEXTURE), translateComponent("guide.expanded.garlic_blood")));
         entries.put(SkillHolders.VAMPIRIC_GROUNDING.getId(), new EntryText(imagePage(helper, "guide.expanded.vampiric_grounding.text", VAMPIRIC_GROUNDING_TEXTURE), translateComponent("guide.expanded.vampiric_grounding")));

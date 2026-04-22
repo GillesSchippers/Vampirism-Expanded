@@ -5,6 +5,7 @@ import com.gustavoschip.expanded.compat.guideapi.ExpandedGuideBook;
 import com.gustavoschip.expanded.event.ModEvents;
 import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.skill.ModSkills;
+import com.gustavoschip.expanded.task.ModTasks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
@@ -18,6 +19,7 @@ public class Expanded {
     @SuppressWarnings("unused")
     public Expanded(IEventBus modEventBus) {
         ModAttachments.register(modEventBus);
+        ModTasks.register(modEventBus);
         ModSkills.register(modEventBus);
         ModEvents.register(modEventBus);
         ModServices.register(modEventBus);

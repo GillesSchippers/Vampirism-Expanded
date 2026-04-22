@@ -3,11 +3,14 @@ package com.gustavoschip.expanded.skill;
 import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.gustavoschip.expanded.skill.holder.SkillNodeHolders;
 import com.gustavoschip.expanded.skill.holder.SkillTreeHolders;
+import com.gustavoschip.expanded.task.ModTasks;
 import de.teamlapen.vampirism.api.VampirismRegistries;
 import de.teamlapen.vampirism.api.entity.factions.ISkillNode;
 import de.teamlapen.vampirism.api.entity.factions.ISkillTree;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
+import de.teamlapen.vampirism.api.entity.player.skills.ISkillPointProvider;
+import de.teamlapen.vampirism.api.entity.player.skills.SkillPointProviders;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -22,6 +25,7 @@ public final class ModSkills {
     public static final DeferredRegister<ISkill<?>> SKILLS = DeferredRegister.create(VampirismRegistries.Keys.SKILL, MOD_ID);
     public static final ResourceLocation HUNTER_FACTION_ID = fromNamespaceAndPath("vampirism", "hunter");
     public static final ResourceLocation VAMPIRE_FACTION_ID = fromNamespaceAndPath("vampirism", "vampire");
+    public static final ISkillPointProvider TASK_SKILL_POINTS = SkillPointProviders.register(fromNamespaceAndPath(MOD_ID, "task_skill_points"), ModTasks.TaskSkillPointStorage::getSkillPoints);
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = SkillHolders.HUNTER_ROOT;
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SkillHolders.POISONOUS_BLOOD;
