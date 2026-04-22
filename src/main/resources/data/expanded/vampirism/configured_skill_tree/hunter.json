@@ -1,12 +1,7 @@
 {
   "children": [
     {
-      "node": "expanded:garlic_blood",
-      "children": [
-        {
-          "node": "expanded:poisonous_blood"
-        }
-      ]
+      "node": "expanded:hunter_1"
     }
   ],
   "node": "expanded:hunter_root",

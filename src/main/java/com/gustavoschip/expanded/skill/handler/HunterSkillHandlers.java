@@ -24,9 +24,7 @@ public final class HunterSkillHandlers {
                 }
                 LOGGER.debug("Toggling poisonous blood to {} for {}", poisonous, serverPlayer.getName().getString());
                 PoisonousBloodService.setPoisonousBlood(serverPlayer, poisonous);
-                return;
             }
-            LOGGER.debug("Skipped poisonous blood toggle {} for non-server entity {}", poisonous, player.asEntity().getName().getString());
         };
     }
 
@@ -39,9 +37,7 @@ public final class HunterSkillHandlers {
                 }
                 LOGGER.debug("Toggling garlic blood to {} for {}", garlicBlood, serverPlayer.getName().getString());
                 GarlicBloodService.setGarlicBlood(serverPlayer, garlicBlood);
-                return;
             }
-            LOGGER.debug("Skipped garlic blood toggle {} for non-server entity {}", garlicBlood, player.asEntity().getName().getString());
         };
     }
 }

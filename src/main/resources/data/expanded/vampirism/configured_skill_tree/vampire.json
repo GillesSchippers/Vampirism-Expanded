@@ -1,5 +1,9 @@
 {
-  "children": [],
+  "children": [
+    {
+      "node": "expanded:vampire_1"
+    }
+  ],
   "node": "expanded:vampire_root",
   "skill_tree": "expanded:vampire/level"
 }

@@ -17,6 +17,13 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(targets = "de.teamlapen.vampirism.client.renderer.RenderHandler", remap = false)
 public abstract class VampirismRenderHandlerMixin {
     @Unique
+    private static final int POISONOUS_BLOOD_VISION_RED = 0x07;
+    @Unique
+    private static final int POISONOUS_BLOOD_VISION_GREEN = 0xE0;
+    @Unique
+    private static final int POISONOUS_BLOOD_VISION_BLUE = 0x07;
+
+    @Unique
     private Entity expanded$currentBloodVisionEntity;
 
     @Inject(method = "onRenderLivingPost", at = @At("HEAD"))
@@ -43,9 +50,9 @@ public abstract class VampirismRenderHandlerMixin {
             return;
         }
 
-        args.set(0, 0x07);
-        args.set(1, 0xE0);
-        args.set(2, 0x07);
+        args.set(0, POISONOUS_BLOOD_VISION_RED);
+        args.set(1, POISONOUS_BLOOD_VISION_GREEN);
+        args.set(2, POISONOUS_BLOOD_VISION_BLUE);
     }
 
     @Inject(method = "onRenderLivingPost", at = @At("RETURN"))

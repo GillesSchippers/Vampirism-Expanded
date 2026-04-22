@@ -7,11 +7,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(targets = "de.teamlapen.vampirism.client.gui.overlay.VampirismHUDOverlay", remap = false)
 public abstract class VampirismHUDOverlayMixin {
+    @Unique
+    private static final int POISONOUS_BLOOD_FANGS_COLOR = 0x099022;
 
     @ModifyVariable(
             method = "renderBloodFangs",
@@ -27,7 +30,7 @@ public abstract class VampirismHUDOverlayMixin {
 
         Entity target = ((EntityHitResult) mc.hitResult).getEntity();
         if (target instanceof Player player && !target.isInvisible() && player.getData(ModAttachments.POISONOUS_BLOOD_ATTACHMENT)) {
-            return 0x099022;
+            return POISONOUS_BLOOD_FANGS_COLOR;
         }
         return color;
     }

@@ -44,6 +44,20 @@ public final class ModSkills {
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = SKILLS.register("vampire_root",
             () -> new FactionSkillBase<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 0, false)
     );
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRIC_GROUNDING = SKILLS.register("vampiric_grounding",
+            () -> new ActionFactionSkill<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 1, true)
+                    .setToggleActions(
+                            VampireSkillHandlers.vampiricGroundingToggle(true),
+                            VampireSkillHandlers.vampiricGroundingToggle(false)
+                    )
+    );
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> ADVANCED_FLIGHT = SKILLS.register("advanced_flight",
+            () -> new ActionFactionSkill<>(Either.left(Trees.VAMPIRE_LEVEL), VAMPIRE_FACTION_ID, 1, true)
+                    .setToggleActions(
+                            VampireSkillHandlers.advancedFlightToggle(true),
+                            VampireSkillHandlers.advancedFlightToggle(false)
+                    )
+    );
 
     private ModSkills() {
     }
@@ -66,10 +80,10 @@ public final class ModSkills {
 
     public static final class Nodes {
         public static final ResourceKey<ISkillNode> HUNTER_ROOT = node("hunter_root");
-        public static final ResourceKey<ISkillNode> POISONOUS_BLOOD = node("poisonous_blood");
-        public static final ResourceKey<ISkillNode> GARLIC_BLOOD = node("garlic_blood");
+        public static final ResourceKey<ISkillNode> HUNTER_1 = node("hunter_1");
 
         public static final ResourceKey<ISkillNode> VAMPIRE_ROOT = node("vampire_root");
+        public static final ResourceKey<ISkillNode> VAMPIRE_1 = node("vampire_1");
 
         private Nodes() {
         }

@@ -44,6 +44,8 @@ public class ExpandedGuideBook {
 
     private static final ResourceLocation POISONOUS_BLOOD_TEXTURE = fromNamespaceAndPath(MOD_ID, "textures/skills/poisonous_blood.png");
     private static final ResourceLocation GARLIC_BLOOD_TEXTURE = fromNamespaceAndPath(MOD_ID, "textures/skills/garlic_blood.png");
+    private static final ResourceLocation VAMPIRIC_GROUNDING_TEXTURE = fromNamespaceAndPath(MOD_ID, "textures/skills/vampiric_grounding.png");
+    private static final ResourceLocation ADVANCED_FLIGHT_TEXTURE = fromNamespaceAndPath(MOD_ID, "textures/skills/advanced_flight.png");
 
     @SubscribeEvent
     public void onVampirismGuideBookCategories(VampirismGuideBookCategoriesEvent event) {
@@ -62,18 +64,22 @@ public class ExpandedGuideBook {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<>();
 
         entries.put(entry("overview"), new EntryText(textPage(helper, "guide.expanded.overview.text"), translateComponent("guide.expanded.overview")));
-        entries.put(ModSkills.Nodes.POISONOUS_BLOOD.location(), new EntryText(imagePage(helper, "guide.expanded.poisonous_blood.text", POISONOUS_BLOOD_TEXTURE), translateComponent("guide.expanded.poisonous_blood")));
-        entries.put(ModSkills.Nodes.GARLIC_BLOOD.location(), new EntryText(imagePage(helper, "guide.expanded.garlic_blood.text", GARLIC_BLOOD_TEXTURE), translateComponent("guide.expanded.garlic_blood")));
+        entries.put(ModSkills.POISONOUS_BLOOD.getId(), new EntryText(imagePage(helper, "guide.expanded.poisonous_blood.text", POISONOUS_BLOOD_TEXTURE), translateComponent("guide.expanded.poisonous_blood")));
+        entries.put(ModSkills.GARLIC_BLOOD.getId(), new EntryText(imagePage(helper, "guide.expanded.garlic_blood.text", GARLIC_BLOOD_TEXTURE), translateComponent("guide.expanded.garlic_blood")));
+        entries.put(ModSkills.VAMPIRIC_GROUNDING.getId(), new EntryText(imagePage(helper, "guide.expanded.vampiric_grounding.text", VAMPIRIC_GROUNDING_TEXTURE), translateComponent("guide.expanded.vampiric_grounding")));
+        entries.put(ModSkills.ADVANCED_FLIGHT.getId(), new EntryText(imagePage(helper, "guide.expanded.advanced_flight.text", ADVANCED_FLIGHT_TEXTURE), translateComponent("guide.expanded.advanced_flight")));
 
         return entries;
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static List<IPage> textPage(BookHelper helper, String translationKey) {
         return helper.addLinks(new ArrayList<>(List.of(new PageText(
                 translateComponent(translationKey)
         ))));
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static List<IPage> imagePage(BookHelper helper, String translationKey, ResourceLocation image) {
         return helper.addLinks(new ArrayList<>(List.of(new ScaledPageTextImage(
                 translateComponent(translationKey),
@@ -86,6 +92,7 @@ public class ExpandedGuideBook {
         ))));
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static ResourceLocation entry(String path) {
         return fromNamespaceAndPath(MOD_ID, path);
     }
