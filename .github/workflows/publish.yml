@@ -1,10 +1,10 @@
-name: Publish to CurseForge
+name: Publish
 
 on:
   workflow_dispatch:
     inputs:
       release_type:
-        description: CurseForge release channel
+        description: Release channel
         type: choice
         required: true
         default: stable
@@ -13,12 +13,12 @@ on:
           - beta
           - alpha
       changelog:
-        description: Release notes shown on CurseForge
+        description: Release notes
         type: string
         required: true
 
 concurrency:
-  group: curseforge-publish
+  group: publish
   cancel-in-progress: false
 
 jobs:
@@ -64,10 +64,14 @@ jobs:
       - name: Build and publish to CurseForge
         run: ./gradlew build publishMods
 
+      - name: Read mod version
+        id: get_version
+        run: echo "mod_version=$(grep '^mod_version=' gradle.properties | cut -d'=' -f2)" >> "$GITHUB_OUTPUT"
+
       - name: Upload built jar as workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: VampirismExpanded-${{ github.run_number }}
+          name: VampirismExpanded-${{ steps.get_version.outputs.mod_version }}
           path: build/libs/*.jar
           if-no-files-found: error
 
