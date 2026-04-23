@@ -21,14 +21,3 @@ updates:
       all:
         patterns:
           - "*"
-
-  - package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "15:00"
-    groups:
-      all:
-        patterns:
-          - "*"
