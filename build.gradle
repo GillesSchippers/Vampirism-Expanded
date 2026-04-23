@@ -164,7 +164,6 @@ if (curseforgeToken.isPresent() && curseforgeProjectId.isPresent()) {
             projectId = curseforgeProjectId.get()
             accessToken = curseforgeToken
             minecraftVersions.add(minecraft_version)
-            requires("vampirism")
         }
     }
 }
