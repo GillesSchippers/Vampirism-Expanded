@@ -11,11 +11,14 @@ import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkillPointProvider;
 import de.teamlapen.vampirism.api.entity.player.skills.SkillPointProviders;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.Collection;
 
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
@@ -68,6 +71,35 @@ public final class ModSkills {
         private Nodes() {
         }
 
+    }
+
+    public static final class ExpandedSkillPointHelper {
+        private ExpandedSkillPointHelper() {
+        }
+
+        public static boolean usesExpandedPoints(ISkill<?> skill) {
+            return skill.allowedSkillTrees().map(ExpandedSkillPointHelper::isExpandedTree, tag -> false);
+        }
+
+        public static boolean isExpandedTree(Holder<ISkillTree> tree) {
+            return tree.is(SkillTreeHolders.HUNTER_LEVEL) || tree.is(SkillTreeHolders.VAMPIRE_LEVEL);
+        }
+
+        public static boolean isExpandedTree(ResourceKey<ISkillTree> tree) {
+            return SkillTreeHolders.HUNTER_LEVEL.equals(tree) || SkillTreeHolders.VAMPIRE_LEVEL.equals(tree);
+        }
+
+        public static int getRemainingExpandedPoints(IFactionPlayer<?> player, Collection<? extends ISkill<?>> enabledSkills) {
+            if (de.teamlapen.vampirism.config.VampirismConfig.SERVER.unlockAllSkills.get() && player.getLevel() == player.getMaxLevel()) {
+                return Integer.MAX_VALUE;
+            }
+
+            int spentPoints = enabledSkills.stream()
+                    .filter(ExpandedSkillPointHelper::usesExpandedPoints)
+                    .mapToInt(ISkill::getSkillPointCost)
+                    .sum();
+            return Math.max(0, ModTasks.TaskSkillPointStorage.getSkillPoints(player) - spentPoints);
+        }
     }
 }
 

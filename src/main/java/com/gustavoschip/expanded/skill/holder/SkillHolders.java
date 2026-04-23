@@ -16,7 +16,7 @@ public final class SkillHolders {
     );
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = ModSkills.SKILLS.register("poisonous_blood",
-            () -> new ActionFactionSkill<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 3, true)
+            () -> new ActionFactionSkill<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 9, true)
                     .setToggleActions(
                             HunterSkillHandlers.poisonousBloodToggle(true),
                             HunterSkillHandlers.poisonousBloodToggle(false)
@@ -24,7 +24,7 @@ public final class SkillHolders {
     );
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> GARLIC_BLOOD = ModSkills.SKILLS.register("garlic_blood",
-            () -> new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 3, true)
+            () -> new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 9, true)
                     .setToggleActions(
                             HunterSkillHandlers.garlicBloodToggle(true),
                             HunterSkillHandlers.garlicBloodToggle(false)
@@ -36,7 +36,7 @@ public final class SkillHolders {
     );
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRIC_GROUNDING = ModSkills.SKILLS.register("vampiric_grounding",
-            () -> new ActionFactionSkill<>(Either.left(SkillTreeHolders.VAMPIRE_LEVEL), ModSkills.VAMPIRE_FACTION_ID, 3, true)
+            () -> new ActionFactionSkill<>(Either.left(SkillTreeHolders.VAMPIRE_LEVEL), ModSkills.VAMPIRE_FACTION_ID, 9, true)
                     .setToggleActions(
                             VampireSkillHandlers.vampiricGroundingToggle(true),
                             VampireSkillHandlers.vampiricGroundingToggle(false)
@@ -44,7 +44,7 @@ public final class SkillHolders {
     );
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> ADVANCED_FLIGHT = ModSkills.SKILLS.register("advanced_flight",
-            () -> new ActionFactionSkill<>(Either.left(SkillTreeHolders.VAMPIRE_LEVEL), ModSkills.VAMPIRE_FACTION_ID, 3, true)
+            () -> new ActionFactionSkill<>(Either.left(SkillTreeHolders.VAMPIRE_LEVEL), ModSkills.VAMPIRE_FACTION_ID, 9, true)
                     .setToggleActions(
                             VampireSkillHandlers.advancedFlightToggle(true),
                             VampireSkillHandlers.advancedFlightToggle(false)
