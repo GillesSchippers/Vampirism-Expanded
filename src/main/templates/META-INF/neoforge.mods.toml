@@ -13,7 +13,7 @@ logoFile = "assets/expanded/icon.png"
 #credits=""
 authors = "Gilles Schippers"
 description = '''
-An expansion mod for Vampirism, adding new features and content to the base mod.
+An exciting expansion to the Vampirism mod that introduces new mechanics, features, and a deeper gameplay experience for players.
 '''
 [[mixins]]
 config = "${mod_id}.mixins.json"
