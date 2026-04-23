@@ -21,7 +21,12 @@ sourceSets.main.resources {
 
 repositories {
     maven {
-        name = 'Vampirism'
+        name = "conditional-mixin"
+        url = "https://maven.fallenbreath.me/releases"
+    }
+
+    maven {
+        name = "Vampirism"
         url = "https://maven.maxanier.de/releases"
     }
 
@@ -100,6 +105,18 @@ configurations {
 }
 
 dependencies {
+    implementation(jarJar("io.github.llamalad7:mixinextras-neoforge:${mixinextras_version}")) {
+        version {
+            strictly "${mixinextras_version_range}"
+            prefer   "${mixinextras_version}"
+        }
+    }
+    jarJar(implementation("me.fallenbreath:conditional-mixin-neoforge:${conditional_mixin_version}")) {
+        version {
+            strictly "${conditional_mixin_version_range}"
+            prefer   "${conditional_mixin_version}"
+        }
+    }
     implementation("de.teamlapen.vampirism:Vampirism:${vampirism_version}") {
         exclude group: "mezz.jei", module: "jei-1.21-neoforge"
         exclude group: "com.github.glitchfiend", module: "TerraBlender-neoforge"

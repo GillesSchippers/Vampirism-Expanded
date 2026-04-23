@@ -31,6 +31,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import java.util.ArrayList;
 
+@SuppressWarnings({"unused", "UnusedMixin"})
 @Mixin(targets = "de.teamlapen.vampirism.entity.player.skills.SkillHandler", remap = false)
 public interface SkillHandlerAccessorMixin {
     @Accessor("enabledSkills")

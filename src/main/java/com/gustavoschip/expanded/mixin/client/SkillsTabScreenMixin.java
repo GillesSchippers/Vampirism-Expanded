@@ -40,6 +40,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 
+@SuppressWarnings({"unused", "UnusedMixin"})
 @Mixin(targets = "de.teamlapen.vampirism.client.gui.screens.skills.SkillsTabScreen", remap = false)
 public abstract class SkillsTabScreenMixin {
     @Shadow

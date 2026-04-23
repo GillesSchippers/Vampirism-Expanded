@@ -33,6 +33,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
+@SuppressWarnings({"unused", "UnusedMixin"})
 @Mixin(targets = "de.teamlapen.vampirism.client.gui.overlay.SunOverlay", remap = false)
 public abstract class SunOverlayMixin {
     @Unique

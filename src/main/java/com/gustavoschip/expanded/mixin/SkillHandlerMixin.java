@@ -35,6 +35,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.ArrayList;
 
+@SuppressWarnings({"unused", "UnusedMixin"})
 @Mixin(targets = "de.teamlapen.vampirism.entity.player.skills.SkillHandler", remap = false)
 public abstract class SkillHandlerMixin<T extends IFactionPlayer<T>> {
     @Shadow

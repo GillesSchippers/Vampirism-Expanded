@@ -37,6 +37,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
@@ -115,7 +116,7 @@ public final class AdvancedFlightService extends ModServices {
             toughness.removeModifier(BAT_TOUGHNESS_PENALTY_ID);
         }
 
-        setFlightSpeed(player, getAdvancedFlightSpeed());
+        setFlightSpeed(player);
     }
 
     public static void handleBatActionActivated(ActionEvent.ActionActivatedEvent event) {
@@ -132,13 +133,11 @@ public final class AdvancedFlightService extends ModServices {
         applyAdvancedFlight(player);
     }
 
-    private static void setFlightSpeed(Player player, float speed) {
-        player.getAbilities().setFlyingSpeed(speed);
+    private static void setFlightSpeed(Player player) {
+        Abilities abilities = player.getAbilities();
+        float speed = abilities.getFlyingSpeed() * ADVANCED_FLIGHT_SPEED_MULTIPLIER;
+        abilities.setFlyingSpeed(speed);
         player.onUpdateAbilities();
-    }
-
-    private static float getAdvancedFlightSpeed() {
-        return de.teamlapen.vampirism.config.VampirismConfig.BALANCE.vaBatFlightSpeed.get().floatValue() * ADVANCED_FLIGHT_SPEED_MULTIPLIER;
     }
 }
 

@@ -35,6 +35,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
+@SuppressWarnings({"unused", "UnusedMixin"})
 @Mixin(targets = "de.teamlapen.vampirism.client.gui.overlay.VampirismHUDOverlay", remap = false)
 public abstract class VampirismHUDOverlayMixin {
     @Unique
