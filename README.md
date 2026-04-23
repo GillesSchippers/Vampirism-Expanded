@@ -13,7 +13,7 @@ An exciting expansion to the Vampirism mod that introduces new mechanics, featur
 
 ## Compatibility Information
 - **Vampirism Version:** 1.10.x
-- **GuideAPI Version:** 2.3.x
+- **Guide-API Version:** 2.3.x
 
 ## Installation
 To install, simply add the Vampirism Expanded mod to your mods folder alongside Vampirism. Once installed, launch the game and enjoy the new features and abilities that enhance your Vampirism experience!
