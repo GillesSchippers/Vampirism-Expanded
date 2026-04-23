@@ -7,10 +7,10 @@
     "LivingEntitySunDamageTrackerMixin",
     "SkillHandlerAccessorMixin",
     "SkillHandlerMixin",
-    "SkillsTabScreenMixin",
     "VampirePlayerMixin"
   ],
   "client": [
+    "client.SkillsTabScreenMixin",
     "client.SunOverlayMixin",
     "client.VampirismHUDOverlayMixin",
     "client.VampirismRenderHandlerMixin"

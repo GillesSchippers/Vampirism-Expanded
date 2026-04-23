@@ -1,5 +1,6 @@
-package com.gustavoschip.expanded.mixin;
+package com.gustavoschip.expanded.mixin.client;
 
+import com.gustavoschip.expanded.mixin.SkillHandlerAccessorMixin;
 import com.gustavoschip.expanded.skill.ModSkills;
 import de.teamlapen.vampirism.api.entity.factions.ISkillTree;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
