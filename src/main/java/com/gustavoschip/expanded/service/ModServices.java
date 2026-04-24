@@ -43,8 +43,8 @@ public abstract class ModServices {
     public static void register(IEventBus modEventBus) {
     }
 
-    protected static boolean canSyncAttachment(ServerPlayer player) {
-        return player != null && player.connection != null;
+    public static boolean canSyncAttachment(ServerPlayer player) {
+        return player != null;
     }
 
     protected static boolean hasBooleanAttachment(Player player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment) {
@@ -58,17 +58,18 @@ public abstract class ModServices {
         return hasBooleanAttachment((Player) player, attachment);
     }
 
-    protected static void setBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment, boolean value, String label, Logger logger) {
+    protected static boolean setBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment, boolean value, String label, Logger logger) {
         if (!canSyncAttachment(player)) {
             logger.debug("Deferred {} update for {} until login sync", label, player.getName().getString());
-            return;
+            return false;
         }
         if (hasBooleanAttachment(player, attachment) == value) {
-            return;
+            return false;
         }
 
         player.setData(attachment, value);
         logger.debug("Set {} for {} to {}", label, player.getName().getString(), value);
+        return true;
     }
 
     protected static boolean hasSkillEnabled(ServerPlayer player, DeferredHolder<ISkill<?>, ? extends ISkill<? extends IFactionPlayer<?>>> skill) {

@@ -43,15 +43,7 @@ public final class AdvancedFlightService extends ModServices {
     private AdvancedFlightService() {
     }
 
-    public static boolean canSyncAttachment(ServerPlayer player) {
-        return ModServices.canSyncAttachment(player);
-    }
-
     public static boolean hasAdvancedFlight(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT);
-    }
-
-    public static boolean hasAdvancedFlight(ServerPlayer player) {
         return hasBooleanAttachment(player, SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT);
     }
 
@@ -60,16 +52,10 @@ public final class AdvancedFlightService extends ModServices {
     }
 
     public static void setAdvancedFlight(ServerPlayer player, boolean advancedFlight) {
-        if (!ModServices.canSyncAttachment(player)) {
-            LOGGER.debug("Deferred advanced flight update for {} until login sync", player.getName().getString());
+        if (!setBooleanAttachment(player, SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT, advancedFlight, "advanced flight", LOGGER)) {
             return;
         }
 
-        if (hasAdvancedFlight(player) == advancedFlight) {
-            return;
-        }
-
-        setBooleanAttachment(player, SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT, advancedFlight, "advanced flight", LOGGER);
         if (advancedFlight) {
             applyAdvancedFlight(player);
         }

@@ -51,10 +51,6 @@ public final class GarlicBloodService extends ModServices {
         return hasBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT);
     }
 
-    public static boolean hasGarlicBlood(ServerPlayer player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT);
-    }
-
     public static void setGarlicBlood(ServerPlayer player, boolean garlicBlood) {
         setBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT, garlicBlood, "garlic blood", LOGGER);
     }
@@ -63,9 +59,6 @@ public final class GarlicBloodService extends ModServices {
         setGarlicBlood(player, hasGarlicBloodSkill(player));
     }
 
-    public static boolean canSyncAttachment(ServerPlayer player) {
-        return ModServices.canSyncAttachment(player);
-    }
 
     public static boolean isGarlicBloodTarget(Entity entity) {
         return entity instanceof Player player && hasGarlicBlood(player);

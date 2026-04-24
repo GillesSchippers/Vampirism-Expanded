@@ -9,8 +9,8 @@ version = "${mod_version}"
 displayName = "${mod_name}"
 displayURL = "https://github.com/GillesSchippers/Vampirism-Expanded"
 logoFile = "assets/expanded/icon.png"
-updateJSONURL="https://neoforge.curseupdate.com/1522717/expanded"
-credits="Maran124, QDuif"
+updateJSONURL = "https://neoforge.curseupdate.com/1522717/expanded"
+credits = "Maran124, QDuif"
 authors = "Gilles Schippers"
 description = '''
 An exciting expansion to the Vampirism mod that introduces new mechanics, features, and a deeper gameplay experience for players.

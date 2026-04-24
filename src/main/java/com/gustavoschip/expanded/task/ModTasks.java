@@ -25,6 +25,7 @@
 package com.gustavoschip.expanded.task;
 
 import com.gustavoschip.expanded.attachment.ModAttachments;
+import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookEntry;
 import com.gustavoschip.expanded.task.holder.HunterTaskHolders;
 import com.gustavoschip.expanded.task.holder.VampireTaskHolders;
 import com.gustavoschip.expanded.task.reward.SkillPointTaskReward;
@@ -67,6 +68,31 @@ public final class ModTasks {
         TASK_REWARD_INSTANCES.register(modEventBus);
     }
 
+    @SuppressWarnings("unused")
+    public static final class TaskGuideEntries {
+        public static final GuideBookEntry TASKS = guide("tasks", "guide.expanded.tasks", "guide.expanded.tasks.text");
+
+        public static final GuideBookEntry HUNTER_SKILL_POINTS_1 = guide(HunterTaskHolders.HUNTER_SKILL_POINTS_1, "task.expanded.hunter_skill_points_1", "guide.expanded.hunter_skill_points_1.text");
+        public static final GuideBookEntry HUNTER_SKILL_POINTS_2 = guide(HunterTaskHolders.HUNTER_SKILL_POINTS_2, "task.expanded.hunter_skill_points_2", "guide.expanded.hunter_skill_points_2.text");
+        public static final GuideBookEntry VAMPIRE_SKILL_POINTS_1 = guide(VampireTaskHolders.VAMPIRE_SKILL_POINTS_1, "task.expanded.vampire_skill_points_1", "guide.expanded.vampire_skill_points_1.text");
+        public static final GuideBookEntry VAMPIRE_SKILL_POINTS_2 = guide(VampireTaskHolders.VAMPIRE_SKILL_POINTS_2, "task.expanded.vampire_skill_points_2", "guide.expanded.vampire_skill_points_2.text");
+
+        private TaskGuideEntries() {
+        }
+
+        private static GuideBookEntry guide(String path, String nameKey, String descriptionKey) {
+            return guide(fromNamespaceAndPath(MOD_ID, path), nameKey, descriptionKey);
+        }
+
+        private static GuideBookEntry guide(ResourceKey<Task> task, String nameKey, String descriptionKey) {
+            return guide(task.location(), nameKey, descriptionKey);
+        }
+
+        private static GuideBookEntry guide(ResourceLocation id, String nameKey, String descriptionKey) {
+            return new GuideBookEntry(id, nameKey, descriptionKey, null);
+        }
+    }
+
     public static final class TaskHolders {
         public static final ResourceLocation HUNTER_FACTION_ID = fromNamespaceAndPath("vampirism", "hunter");
         public static final ResourceLocation VAMPIRE_FACTION_ID = fromNamespaceAndPath("vampirism", "vampire");
@@ -94,29 +120,16 @@ public final class ModTasks {
         }
 
         public static void addSkillPoints(IFactionPlayer<?> factionPlayer, int amount) {
-            if (amount <= 0) {
-                return;
-            }
-
-            DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> attachment = getAttachmentForFaction(factionPlayer.getFaction().getID());
-            if (attachment == null) {
-                return;
-            }
-
-            addSkillPoints(factionPlayer, attachment, amount);
+            addSkillPoints(factionPlayer, factionPlayer.getFaction().getID(), amount);
         }
 
         public static void addSkillPoints(IFactionPlayer<?> factionPlayer, ResourceLocation factionId, int amount) {
-            if (amount <= 0) {
+            if (amount <= 0 || !factionPlayer.getFaction().getID().equals(factionId)) {
                 return;
             }
 
             DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> attachment = getAttachmentForFaction(factionId);
             if (attachment == null) {
-                return;
-            }
-
-            if (!factionPlayer.getFaction().getID().equals(factionId)) {
                 return;
             }
 

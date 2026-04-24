@@ -55,15 +55,7 @@ public final class VampiricGroundingService extends ModServices {
     private VampiricGroundingService() {
     }
 
-    public static boolean canSyncAttachment(ServerPlayer player) {
-        return ModServices.canSyncAttachment(player);
-    }
-
     public static boolean hasVampiricGrounding(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT);
-    }
-
-    public static boolean hasVampiricGrounding(ServerPlayer player) {
         return hasBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT);
     }
 
@@ -72,16 +64,10 @@ public final class VampiricGroundingService extends ModServices {
     }
 
     public static void setVampiricGrounding(ServerPlayer player, boolean vampiricGrounding) {
-        if (!canSyncAttachment(player)) {
-            LOGGER.debug("Deferred vampiric grounding update for {} until login sync", player.getName().getString());
+        if (!setBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT, vampiricGrounding, "vampiric grounding", LOGGER)) {
             return;
         }
 
-        if (hasVampiricGrounding(player) == vampiricGrounding) {
-            return;
-        }
-
-        setBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT, vampiricGrounding, "vampiric grounding", LOGGER);
         if (vampiricGrounding) {
             applyAttributeBonuses(player);
             deactivateBatMode(player);
@@ -147,10 +133,10 @@ public final class VampiricGroundingService extends ModServices {
         AttributeInstance bloodExhaustion = player.getAttribute(ModAttributes.BLOOD_EXHAUSTION);
 
         if (sundamage != null) {
-            replaceModifier(sundamage, SUNDAMAGE_REDUCTION_ID, SUNDAMAGE_REDUCTION_MODIFIER, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            replaceModifier(sundamage, SUNDAMAGE_REDUCTION_ID, SUNDAMAGE_REDUCTION_MODIFIER);
         }
         if (bloodExhaustion != null) {
-            replaceModifier(bloodExhaustion, BLOOD_EXHAUSTION_INCREASE_ID, BLOOD_EXHAUSTION_INCREASE_MODIFIER, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            replaceModifier(bloodExhaustion, BLOOD_EXHAUSTION_INCREASE_ID, BLOOD_EXHAUSTION_INCREASE_MODIFIER);
         }
     }
 
@@ -166,15 +152,15 @@ public final class VampiricGroundingService extends ModServices {
         }
     }
 
-    private static void replaceModifier(AttributeInstance attribute, ResourceLocation id, double amount, AttributeModifier.Operation operation) {
+    private static void replaceModifier(AttributeInstance attribute, ResourceLocation id, double amount) {
         AttributeModifier current = attribute.getModifier(id);
-        if (current != null && current.amount() == amount && current.operation() == operation) {
+        if (current != null && current.amount() == amount && current.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
             return;
         }
         if (current != null) {
             attribute.removeModifier(id);
         }
-        attribute.addPermanentModifier(new AttributeModifier(id, amount, operation));
+        attribute.addPermanentModifier(new AttributeModifier(id, amount, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
     }
 
     // TODO: Create separate interface module

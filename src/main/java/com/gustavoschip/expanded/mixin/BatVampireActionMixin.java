@@ -36,9 +36,9 @@ import de.teamlapen.vampirism.entity.player.vampire.actions.BatVampireAction;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -50,6 +50,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
 @Mixin(value = BatVampireAction.class, priority = 1500, remap = false)
 public abstract class BatVampireActionMixin {
+
+    @Unique
+    private static void expanded$applyBatModeBonuses(IVampirePlayer vampire) {
+        if (vampire.asEntity() instanceof ServerPlayer player) {
+            AdvancedFlightService.onBatActivated(player);
+        }
+    }
 
     @Inject(method = "canBeUsedBy(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z", at = @At("RETURN"), cancellable = true)
     private void expanded$preventGroundingBatModeWhen(IVampirePlayer vampire, CallbackInfoReturnable<Boolean> cir) {
@@ -115,12 +122,5 @@ public abstract class BatVampireActionMixin {
         }
 
         original.call(instance, modifier);
-    }
-
-    @Unique
-    private static void expanded$applyBatModeBonuses(IVampirePlayer vampire) {
-        if (vampire.asEntity() instanceof ServerPlayer player) {
-            AdvancedFlightService.onBatActivated(player);
-        }
     }
 }

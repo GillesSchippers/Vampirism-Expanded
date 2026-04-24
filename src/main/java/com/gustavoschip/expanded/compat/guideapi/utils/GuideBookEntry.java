@@ -22,27 +22,41 @@
  * SOFTWARE.
  */
 
-package com.gustavoschip.expanded.skill.holder;
+package com.gustavoschip.expanded.compat.guideapi.utils;
 
-import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookEntry;
-import com.gustavoschip.expanded.skill.ModSkills;
-import de.teamlapen.vampirism.api.entity.factions.ISkillTree;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
-import static com.gustavoschip.expanded.Expanded.MOD_ID;
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+@SuppressWarnings("unused")
+public final class GuideBookEntry {
+    private final ResourceLocation id;
+    private final String nameKey;
+    private final String descriptionKey;
+    private final @Nullable ResourceLocation texture;
 
-public final class SkillTreeHolders {
-    public static final ResourceKey<ISkillTree> HUNTER_LEVEL = ModSkills.tree("hunter/level");
-    public static final ResourceKey<ISkillTree> VAMPIRE_LEVEL = ModSkills.tree("vampire/level");
-    public static final GuideBookEntry HUNTER_LEVEL_GUIDE = new GuideBookEntry(HUNTER_LEVEL.location(), "tree.expanded.hunter", "guide.expanded.hunter_tree.text", texture("hunter_root.png"));
-    public static final GuideBookEntry VAMPIRE_LEVEL_GUIDE = new GuideBookEntry(VAMPIRE_LEVEL.location(), "tree.expanded.vampire", "guide.expanded.vampire_tree.text", texture("vampire_root.png"));
-
-    private SkillTreeHolders() {
+    public GuideBookEntry(ResourceLocation id, String nameKey, String descriptionKey, @Nullable ResourceLocation texture) {
+        this.id = id;
+        this.nameKey = nameKey;
+        this.descriptionKey = descriptionKey;
+        this.texture = texture;
     }
 
-    private static ResourceLocation texture(String path) {
-        return fromNamespaceAndPath(MOD_ID, "textures/skills/" + path);
+    public ResourceLocation getId() {
+        return id;
+    }
+
+    public Component getName() {
+        return Component.translatable(nameKey);
+    }
+
+    public Component getDescription() {
+        return Component.translatable(descriptionKey);
+    }
+
+    public @Nullable ResourceLocation getTexture() {
+        return texture;
     }
 }
+
+

@@ -25,8 +25,8 @@
 package com.gustavoschip.expanded.mixin.client;
 
 import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
-import de.teamlapen.vampirism.entity.player.VampirismPlayerAttributes;
 import de.teamlapen.vampirism.client.renderer.RenderHandler;
+import de.teamlapen.vampirism.entity.player.VampirismPlayerAttributes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
