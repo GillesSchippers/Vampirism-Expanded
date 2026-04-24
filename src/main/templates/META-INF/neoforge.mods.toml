@@ -36,12 +36,19 @@ side = "BOTH"
 modId = "vampirism"
 type = "required"
 versionRange = "${vampirism_version_range}"
-ordering = "NONE"
+ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.${ mod_id }]]
 modId = "guideapi_vp"
 type = "optional"
 versionRange = "${guideapi_version_range}"
-ordering = "NONE"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "bloodlines"
+type = "optional"
+versionRange = "${bloodlines_version_range}"
+ordering = "AFTER"
 side = "BOTH"

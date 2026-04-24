@@ -55,7 +55,6 @@ public class ExpandedMixinPlugin extends RestrictiveMixinConfigPlugin {
 
     @Override
     public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-        // No target filtering yet; conditional mixin rules can be added here later.
     }
 
     @Override

@@ -69,7 +69,7 @@ public final class AdvancedFlightService extends ModServices {
     }
 
     public static void setAdvancedFlight(ServerPlayer player, boolean advancedFlight) {
-        if (!canSyncAttachment(player)) {
+        if (!ModServices.canSyncAttachment(player)) {
             LOGGER.debug("Deferred advanced flight update for {} until login sync", player.getName().getString());
             return;
         }
@@ -94,6 +94,7 @@ public final class AdvancedFlightService extends ModServices {
 
     public static void onBatActivated(ServerPlayer player) {
         applyBatFlightBonuses(player, false);
+        player.setSwimming(false);
     }
 
     public static void applyAdvancedFlight(ServerPlayer player) {

@@ -20,6 +20,29 @@ sourceSets.main.resources {
 }
 
 repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+
+    exclusiveContent {
+        forRepository {
+            maven {
+                url "https://cursemaven.com"
+            }
+        }
+        filter {
+            includeGroup "curse.maven"
+        }
+    }
+
     maven {
         name = "conditional-mixin"
         url = "https://maven.fallenbreath.me/releases"
@@ -142,6 +165,10 @@ dependencies {
         exclude group: "mezz.jei", module: "jei-1.21-neoforge"
     }
 
+    compileOnly("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
+
+    localRuntime("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
+
     localRuntime("de.maxanier.guideapi:Guide-API-VP:${guideapi_version}") {
         exclude group: "mezz.jei", module: "jei-1.21-neoforge"
     }
@@ -149,16 +176,17 @@ dependencies {
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
-            neo_version            : neo_version,
-            loader_version_range   : loader_version_range,
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            vampirism_version_range: vampirism_version_range,
-            guideapi_version_range : guideapi_version_range,
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_license            : mod_license,
-            mod_version            : mod_version,
+            neo_version             : neo_version,
+            loader_version_range    : loader_version_range,
+            minecraft_version       : minecraft_version,
+            minecraft_version_range : minecraft_version_range,
+            vampirism_version_range : vampirism_version_range,
+            guideapi_version_range  : guideapi_version_range,
+            bloodlines_version_range: bloodlines_version_range,
+            mod_id                  : mod_id,
+            mod_name                : mod_name,
+            mod_license             : mod_license,
+            mod_version             : mod_version,
     ]
     inputs.properties replaceProperties
     expand replaceProperties
@@ -201,6 +229,7 @@ if (curseforgeToken.isPresent() && curseforgeProjectId.isPresent()) {
             minecraftVersions.add(minecraft_version)
             requires("vampirism-become-a-vampire")
             optional("guide-api-village-and-pillage")
+            optional("bloodlines")
         }
     }
 }

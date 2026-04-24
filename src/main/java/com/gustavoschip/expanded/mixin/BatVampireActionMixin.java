@@ -24,11 +24,14 @@
 
 package com.gustavoschip.expanded.mixin;
 
+import com.bawnorton.mixinsquared.TargetHandler;
 import com.gustavoschip.expanded.service.skill.AdvancedFlightService;
 import com.gustavoschip.expanded.service.skill.VampiricGroundingService;
 import de.teamlapen.vampirism.api.entity.player.actions.IAction;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
 import de.teamlapen.vampirism.entity.player.vampire.actions.BatVampireAction;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,10 +39,11 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@SuppressWarnings({"unused", "UnusedMixin"})
-@Mixin(value = BatVampireAction.class, remap = false)
+@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
+@Mixin(value = BatVampireAction.class, priority = 1500, remap = false)
 public abstract class BatVampireActionMixin {
 
     @Inject(method = "canBeUsedBy(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z", at = @At("RETURN"), cancellable = true)
@@ -85,11 +89,24 @@ public abstract class BatVampireActionMixin {
         }
     }
 
+    @Restriction(require = {
+            @Condition(type = Condition.Type.MOD, value = "bloodlines"),
+            @Condition(type = Condition.Type.MIXIN, value = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin")
+    })
+    @TargetHandler(mixin = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin", name = "setNobleBatSpeedMultiplier")
+    @Inject(method = "@MixinSquared:Handler", at = @At("TAIL"))
+    private void expanded$applyAdvancedFlight(Player player, boolean enabled, CallbackInfo ci, CallbackInfo actualCi) {
+        if (!enabled || !(player instanceof ServerPlayer serverPlayer) || !AdvancedFlightService.hasAdvancedFlight(serverPlayer)) {
+            return;
+        }
+
+        AdvancedFlightService.onBatActivated(serverPlayer);
+    }
+
     @Unique
     private static void expanded$applyBatModeBonuses(IVampirePlayer vampire) {
         if (vampire.asEntity() instanceof ServerPlayer player) {
             AdvancedFlightService.onBatActivated(player);
-            player.setSwimming(false);
         }
     }
 }

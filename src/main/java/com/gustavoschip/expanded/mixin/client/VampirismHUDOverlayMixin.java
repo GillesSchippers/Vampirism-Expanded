@@ -36,8 +36,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@SuppressWarnings({"unused", "UnusedMixin"})
-@Mixin(value = VampirismHUDOverlay.class, remap = false)
+@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
+@Mixin(value = VampirismHUDOverlay.class, priority = 1000, remap = false)
 public abstract class VampirismHUDOverlayMixin {
     @Unique
     private static final int POISONOUS_BLOOD_FANGS_COLOR = 0x099022;

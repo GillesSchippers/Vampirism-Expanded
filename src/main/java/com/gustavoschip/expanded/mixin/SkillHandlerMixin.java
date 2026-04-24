@@ -36,8 +36,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.ArrayList;
 
-@SuppressWarnings({"unused", "UnusedMixin"})
-@Mixin(value = SkillHandler.class, remap = false)
+@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
+@Mixin(value = SkillHandler.class, priority = 1000, remap = false)
 public abstract class SkillHandlerMixin<T extends IFactionPlayer<T>> {
     @Shadow
     @Final

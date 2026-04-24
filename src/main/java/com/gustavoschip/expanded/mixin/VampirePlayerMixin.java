@@ -32,8 +32,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@SuppressWarnings({"unused", "UnusedMixin"})
-@Mixin(value = VampirePlayer.class, remap = false)
+@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
+@Mixin(value = VampirePlayer.class, priority = 1000, remap = false)
 public abstract class VampirePlayerMixin {
 
     @Inject(method = "determineBiteType", at = @At("RETURN"), cancellable = true)

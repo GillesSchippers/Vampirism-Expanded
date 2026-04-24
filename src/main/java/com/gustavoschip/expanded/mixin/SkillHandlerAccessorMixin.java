@@ -32,8 +32,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import java.util.ArrayList;
 
-@SuppressWarnings({"unused", "UnusedMixin"})
-@Mixin(value = SkillHandler.class, remap = false)
+@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
+@Mixin(value = SkillHandler.class, priority = 1000, remap = false)
 public interface SkillHandlerAccessorMixin {
     @Accessor("enabledSkills")
     ArrayList<ISkill<?>> expanded$getEnabledSkills();

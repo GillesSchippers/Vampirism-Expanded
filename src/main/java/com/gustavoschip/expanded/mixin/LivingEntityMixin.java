@@ -33,8 +33,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@SuppressWarnings({"unused", "UnusedMixin"})
-@Mixin(value = LivingEntity.class)
+@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
+@Mixin(value = LivingEntity.class, priority = 1000)
 public abstract class LivingEntityMixin implements VampiricGroundingService.LivingEntitySunDamageTracker {
     @Unique
     private boolean expanded$lastDamageWasSun;
