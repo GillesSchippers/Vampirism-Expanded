@@ -24,7 +24,6 @@
 
 package com.gustavoschip.expanded.mixin;
 
-import com.bawnorton.mixinsquared.TargetHandler;
 import com.gustavoschip.expanded.service.skill.AdvancedFlightService;
 import com.gustavoschip.expanded.service.skill.VampiricGroundingService;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -33,8 +32,6 @@ import com.llamalad7.mixinextras.sugar.Local;
 import de.teamlapen.vampirism.api.entity.player.actions.IAction;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
 import de.teamlapen.vampirism.entity.player.vampire.actions.BatVampireAction;
-import me.fallenbreath.conditionalmixin.api.annotation.Condition;
-import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -48,7 +45,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
-@Mixin(value = BatVampireAction.class, priority = 1500, remap = false)
+@Mixin(value = BatVampireAction.class, priority = 1000, remap = false)
 public abstract class BatVampireActionMixin {
 
     @Unique
@@ -104,20 +101,6 @@ public abstract class BatVampireActionMixin {
     @WrapOperation(method = "setModifier(Lnet/minecraft/world/entity/player/Player;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addPermanentModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V"))
     private void expanded$blockMainVampirismBatArmor(AttributeInstance instance, AttributeModifier modifier, Operation<Void> original, @Local(argsOnly = true) Player player, @Local(argsOnly = true) boolean enabled) {
         if (enabled && AdvancedFlightService.hasAdvancedFlight(player) && (instance == player.getAttribute(Attributes.ARMOR) || instance == player.getAttribute(Attributes.ARMOR_TOUGHNESS))) {
-            return;
-        }
-
-        original.call(instance, modifier);
-    }
-
-    @Restriction(require = {
-            @Condition(type = Condition.Type.MOD, value = "bloodlines"),
-            @Condition(type = Condition.Type.MIXIN, value = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin")
-    })
-    @TargetHandler(mixin = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin", name = "setNobleBatSpeedMultiplier")
-    @WrapOperation(method = "@MixinSquared:Handler", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addPermanentModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V"))
-    private void expanded$blockBloodlinesArmor(AttributeInstance instance, AttributeModifier modifier, Operation<Void> original, @Local(argsOnly = true) Player player) {
-        if (AdvancedFlightService.hasAdvancedFlight(player)) {
             return;
         }
 

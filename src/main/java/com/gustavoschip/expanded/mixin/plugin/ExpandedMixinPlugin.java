@@ -48,6 +48,12 @@ public class ExpandedMixinPlugin extends RestrictiveMixinConfigPlugin {
             "client.VampirismRenderHandlerMixin"
     );
 
+    private static final List<String> COMPAT_COMMON_MIXINS =  List.of(
+            "compat.bloodlines.BatVampireActionMixin"
+    );
+
+    private static final List<String> COMPAT_CLIENT_MIXINS =  List.of();
+
     @Override
     public String getRefMapperConfig() {
         return null;
@@ -60,9 +66,11 @@ public class ExpandedMixinPlugin extends RestrictiveMixinConfigPlugin {
     @Override
     public List<String> getMixins() {
         List<String> mixins = new ArrayList<>(COMMON_MIXINS);
+        mixins.addAll(COMPAT_COMMON_MIXINS);
 
         if (FMLEnvironment.dist.isClient()) {
             mixins.addAll(CLIENT_MIXINS);
+            mixins.addAll(COMPAT_CLIENT_MIXINS);
         }
 
         return mixins;
