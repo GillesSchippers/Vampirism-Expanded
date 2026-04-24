@@ -74,6 +74,7 @@ public class GuideBookCompat {
         event.categories.add(Math.max(event.categories.size() - 1, 0), expandedCategory);
     }
 
+    // TODO: Implement better documentation.
     private static Map<ResourceLocation, EntryAbstract> buildExpandedEntries(BookHelper helper) {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<>();
         entries.put(entry("overview"), new EntryText(textPage(helper, translateComponent("guide.expanded.overview.text")), translateComponent("guide.expanded.overview")));
