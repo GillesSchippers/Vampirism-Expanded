@@ -27,11 +27,13 @@ package com.gustavoschip.expanded.mixin.plugin;
 import me.fallenbreath.conditionalmixin.api.mixin.RestrictiveMixinConfigPlugin;
 import net.neoforged.fml.loading.FMLEnvironment;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class ExpandedMixinPlugin extends RestrictiveMixinConfigPlugin {
     private static final List<String> COMMON_MIXINS = List.of(
+            "BatVampireActionMixin",
             "LivingEntityMixin",
             "SkillHandlerAccessorMixin",
             "SkillHandlerMixin",
@@ -57,15 +59,12 @@ public class ExpandedMixinPlugin extends RestrictiveMixinConfigPlugin {
 
     @Override
     public List<String> getMixins() {
-        return FMLEnvironment.dist.isClient() ? List.of(
-                COMMON_MIXINS.get(0),
-                COMMON_MIXINS.get(1),
-                COMMON_MIXINS.get(2),
-                COMMON_MIXINS.get(3),
-                CLIENT_MIXINS.get(0),
-                CLIENT_MIXINS.get(1),
-                CLIENT_MIXINS.get(2),
-                CLIENT_MIXINS.get(3)
-        ) : COMMON_MIXINS;
+        List<String> mixins = new ArrayList<>(COMMON_MIXINS);
+
+        if (FMLEnvironment.dist.isClient()) {
+            mixins.addAll(CLIENT_MIXINS);
+        }
+
+        return mixins;
     }
 }

@@ -28,8 +28,6 @@ import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
 import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
-import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
-import de.teamlapen.vampirism.api.event.ActionEvent;
 import de.teamlapen.vampirism.core.ModAttributes;
 import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
 import de.teamlapen.vampirism.entity.player.vampire.actions.VampireActions;
@@ -96,6 +94,21 @@ public final class VampiricGroundingService extends ModServices {
         setVampiricGrounding(player, hasVampiricGroundingSkill(player));
     }
 
+    public static boolean canEnterBatMode(Player player) {
+        return !hasVampiricGrounding(player);
+    }
+
+    public static boolean handleBatActivation(Player player) {
+        if (canEnterBatMode(player)) {
+            return true;
+        }
+
+        if (player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.displayClientMessage(Component.translatable("text.expanded.vampiric_grounding.bat_disabled"), true);
+        }
+        return false;
+    }
+
     public static void clearSunDisorientation(ServerPlayer player) {
         if (!hasVampiricGrounding(player)) {
             return;
@@ -106,21 +119,6 @@ public final class VampiricGroundingService extends ModServices {
         }
     }
 
-    // TODO: Implement limited bat mode instead of outright disabling it.
-    public static void handleBatActionActivated(ActionEvent.ActionActivatedEvent event) {
-        if (event.getAction() != VampireActions.BAT.get()) {
-            return;
-        }
-        if (!(event.getFactionPlayer() instanceof IVampirePlayer vampirePlayer)) {
-            return;
-        }
-        if (!(vampirePlayer.asEntity() instanceof ServerPlayer player) || !hasVampiricGrounding(player)) {
-            return;
-        }
-
-        event.setCanceled(true);
-        player.displayClientMessage(Component.translatable("text.expanded.vampiric_grounding.bat_disabled"), true);
-    }
 
     public static void handleLivingKnockback(LivingKnockBackEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || !VampiricGroundingService.hasVampiricGrounding(player)) {

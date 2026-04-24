@@ -28,8 +28,6 @@ import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
 import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
-import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
-import de.teamlapen.vampirism.api.event.ActionEvent;
 import de.teamlapen.vampirism.core.ModRegistries;
 import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
 import de.teamlapen.vampirism.entity.player.vampire.actions.VampireActions;
@@ -56,10 +54,6 @@ public final class AdvancedFlightService extends ModServices {
 
     public static boolean canSyncAttachment(ServerPlayer player) {
         return ModServices.canSyncAttachment(player);
-    }
-
-    public static boolean hasAdvancedFlight(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT);
     }
 
     public static boolean hasAdvancedFlight(ServerPlayer player) {
@@ -94,8 +88,16 @@ public final class AdvancedFlightService extends ModServices {
         setAdvancedFlight(player, hasAdvancedFlightSkill(player));
     }
 
+    public static void onBatActivated(ServerPlayer player) {
+        applyBatFlightBonuses(player, false);
+    }
+
     public static void applyAdvancedFlight(ServerPlayer player) {
-        if (!hasAdvancedFlight(player) || !isBatActive(player)) {
+        applyBatFlightBonuses(player, true);
+    }
+
+    private static void applyBatFlightBonuses(ServerPlayer player, boolean requireBatActive) {
+        if (!hasAdvancedFlight(player) || (requireBatActive && !isBatActive(player))) {
             return;
         }
 
@@ -119,19 +121,6 @@ public final class AdvancedFlightService extends ModServices {
         setFlightSpeed(player);
     }
 
-    public static void handleBatActionActivated(ActionEvent.ActionActivatedEvent event) {
-        if (event.getAction() != VampireActions.BAT.get()) {
-            return;
-        }
-        if (!(event.getFactionPlayer() instanceof IVampirePlayer vampirePlayer)) {
-            return;
-        }
-        if (!(vampirePlayer.asEntity() instanceof ServerPlayer player) || !hasAdvancedFlight(player)) {
-            return;
-        }
-
-        applyAdvancedFlight(player);
-    }
 
     private static void setFlightSpeed(Player player) {
         Abilities abilities = player.getAbilities();
