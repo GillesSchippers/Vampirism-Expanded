@@ -27,19 +27,23 @@ package com.gustavoschip.expanded.mixin;
 import com.bawnorton.mixinsquared.TargetHandler;
 import com.gustavoschip.expanded.service.skill.AdvancedFlightService;
 import com.gustavoschip.expanded.service.skill.VampiricGroundingService;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import de.teamlapen.vampirism.api.entity.player.actions.IAction;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
 import de.teamlapen.vampirism.entity.player.vampire.actions.BatVampireAction;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
@@ -94,13 +98,13 @@ public abstract class BatVampireActionMixin {
             @Condition(type = Condition.Type.MIXIN, value = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin")
     })
     @TargetHandler(mixin = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin", name = "setNobleBatSpeedMultiplier")
-    @Inject(method = "@MixinSquared:Handler", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addPermanentModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V", shift = At.Shift.AFTER, ordinal = 0))
-    private void expanded$applyAdvancedFlight(Player player, boolean enabled, CallbackInfo ci, CallbackInfo _ci) {
-        if (!enabled || !(player instanceof ServerPlayer serverPlayer) || !AdvancedFlightService.shouldCancelBloodlinesBatArmor(player)) {
+    @WrapOperation(method = "@MixinSquared:Handler", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addPermanentModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V"))
+    private void expanded$blockBloodlinesArmor(AttributeInstance instance, AttributeModifier modifier, Operation<Void> original, @Local(argsOnly = true) Player player) {
+        if (AdvancedFlightService.shouldCancelBloodlinesBatArmor(player)) {
             return;
         }
 
-        AdvancedFlightService.applyBloodlinesBatCompatibility(serverPlayer);
+        original.call(instance, modifier);
     }
 
     @Unique
