@@ -28,13 +28,9 @@ import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
 import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
-import de.teamlapen.vampirism.core.ModRegistries;
 import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
 import de.teamlapen.vampirism.entity.player.vampire.actions.VampireActions;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
@@ -96,18 +92,6 @@ public final class AdvancedFlightService extends ModServices {
         applyBatFlightBonuses(player, true);
     }
 
-    public static boolean shouldCancelBloodlinesBatArmor(Player player) {
-        return hasAdvancedFlightEffect(player);
-    }
-
-    public static void applyBloodlinesBatCompatibility(ServerPlayer player) {
-        if (!shouldCancelBloodlinesBatArmor(player)) {
-            return;
-        }
-
-        removeBatFlightArmorModifiers(player);
-    }
-
     public static boolean canUseBatModeInLiquids(Player player) {
         return hasAdvancedFlightEffect(player);
     }
@@ -121,26 +105,9 @@ public final class AdvancedFlightService extends ModServices {
             return;
         }
 
-        removeBatFlightArmorModifiers(player);
         setFlightSpeed(player);
     }
 
-    private static void removeBatFlightArmorModifiers(ServerPlayer player) {
-        ResourceLocation batActionId = ModRegistries.ACTIONS.getKey(VampireActions.BAT.get());
-        if (batActionId == null) {
-            LOGGER.debug("Skipped advanced flight adjustment for {} because the bat action id was unavailable", player.getName().getString());
-            return;
-        }
-
-        AttributeInstance armor = player.getAttribute(Attributes.ARMOR);
-        AttributeInstance toughness = player.getAttribute(Attributes.ARMOR_TOUGHNESS);
-        if (armor != null) {
-            armor.removeModifier(batActionId);
-        }
-        if (toughness != null) {
-            toughness.removeModifier(batActionId);
-        }
-    }
 
     private static boolean hasAdvancedFlightEffect(Player player) {
         if (hasAdvancedFlight(player)) {

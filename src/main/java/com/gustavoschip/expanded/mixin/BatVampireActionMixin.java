@@ -36,6 +36,7 @@ import de.teamlapen.vampirism.entity.player.vampire.actions.BatVampireAction;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -93,6 +94,15 @@ public abstract class BatVampireActionMixin {
         }
     }
 
+    @WrapOperation(method = "setModifier(Lnet/minecraft/world/entity/player/Player;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addPermanentModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V"))
+    private void expanded$blockMainVampirismBatArmor(AttributeInstance instance, AttributeModifier modifier, Operation<Void> original, @Local(argsOnly = true) Player player, @Local(argsOnly = true) boolean enabled) {
+        if (enabled && AdvancedFlightService.hasAdvancedFlight(player) && (instance == player.getAttribute(Attributes.ARMOR) || instance == player.getAttribute(Attributes.ARMOR_TOUGHNESS))) {
+            return;
+        }
+
+        original.call(instance, modifier);
+    }
+
     @Restriction(require = {
             @Condition(type = Condition.Type.MOD, value = "bloodlines"),
             @Condition(type = Condition.Type.MIXIN, value = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin")
@@ -100,7 +110,7 @@ public abstract class BatVampireActionMixin {
     @TargetHandler(mixin = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin", name = "setNobleBatSpeedMultiplier")
     @WrapOperation(method = "@MixinSquared:Handler", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addPermanentModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V"))
     private void expanded$blockBloodlinesArmor(AttributeInstance instance, AttributeModifier modifier, Operation<Void> original, @Local(argsOnly = true) Player player) {
-        if (AdvancedFlightService.shouldCancelBloodlinesBatArmor(player)) {
+        if (AdvancedFlightService.hasAdvancedFlight(player)) {
             return;
         }
 
