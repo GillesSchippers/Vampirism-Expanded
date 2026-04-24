@@ -24,6 +24,7 @@
 
 package com.gustavoschip.expanded.mixin;
 
+import com.gustavoschip.expanded.service.skill.PoisonousBloodService;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
 import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -42,7 +43,7 @@ public abstract class VampirePlayerMixin {
             return;
         }
 
-        if (com.gustavoschip.expanded.service.skill.PoisonousBloodService.isPoisonousBloodTarget(entity)) {
+        if (PoisonousBloodService.isPoisonousBloodTarget(entity)) {
             // HUNTER_CREATURE path interrupts the bite attempt immediately and poisons the vampire.
             cir.setReturnValue(IVampirePlayer.BITE_TYPE.HUNTER_CREATURE);
         }

@@ -33,6 +33,7 @@ import net.minecraft.resources.ResourceLocation;
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
+@SuppressWarnings("unused")
 public final class SkillTreeHolders {
     public static final ResourceKey<ISkillTree> HUNTER_LEVEL = ModSkills.tree("hunter/level");
     public static final ResourceKey<ISkillTree> VAMPIRE_LEVEL = ModSkills.tree("vampire/level");
