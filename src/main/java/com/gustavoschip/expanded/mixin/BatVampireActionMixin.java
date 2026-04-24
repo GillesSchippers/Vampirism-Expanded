@@ -94,9 +94,9 @@ public abstract class BatVampireActionMixin {
             @Condition(type = Condition.Type.MIXIN, value = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin")
     })
     @TargetHandler(mixin = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin", name = "setNobleBatSpeedMultiplier")
-    @Inject(method = "@MixinSquared:Handler", at = @At("TAIL"))
-    private void expanded$applyAdvancedFlight(Player player, boolean enabled, CallbackInfo ci, CallbackInfo actualCi) {
-        if (!enabled || !(player instanceof ServerPlayer serverPlayer)) {
+    @Inject(method = "@MixinSquared:Handler", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addPermanentModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V", shift = At.Shift.AFTER, ordinal = 0))
+    private void expanded$applyAdvancedFlight(Player player, boolean enabled, CallbackInfo ci, CallbackInfo _ci) {
+        if (!enabled || !(player instanceof ServerPlayer serverPlayer) || !AdvancedFlightService.shouldCancelBloodlinesBatArmor(player)) {
             return;
         }
 

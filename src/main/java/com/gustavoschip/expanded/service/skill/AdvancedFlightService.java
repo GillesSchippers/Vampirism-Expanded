@@ -96,8 +96,12 @@ public final class AdvancedFlightService extends ModServices {
         applyBatFlightBonuses(player, true);
     }
 
+    public static boolean shouldCancelBloodlinesBatArmor(Player player) {
+        return hasAdvancedFlightEffect(player);
+    }
+
     public static void applyBloodlinesBatCompatibility(ServerPlayer player) {
-        if (!hasAdvancedFlightEffect(player)) {
+        if (!shouldCancelBloodlinesBatArmor(player)) {
             return;
         }
 
