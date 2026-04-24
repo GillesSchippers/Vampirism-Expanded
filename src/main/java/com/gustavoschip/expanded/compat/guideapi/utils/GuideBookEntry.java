@@ -22,24 +22,41 @@
  * SOFTWARE.
  */
 
-package com.gustavoschip.expanded.mixin;
+package com.gustavoschip.expanded.compat.guideapi.utils;
 
-import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
-import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
-import de.teamlapen.vampirism.entity.player.skills.SkillHandler;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
+@SuppressWarnings("unused")
+public final class GuideBookEntry {
+    private final ResourceLocation id;
+    private final String nameKey;
+    private final String descriptionKey;
+    private final @Nullable ResourceLocation texture;
 
-@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
-@Mixin(value = SkillHandler.class, priority = 1000, remap = false)
-public interface SkillHandlerAccessorMixin {
-    @Accessor("enabledSkills")
-    ArrayList<ISkill<?>> expanded$getEnabledSkills();
+    public GuideBookEntry(ResourceLocation id, String nameKey, String descriptionKey, @Nullable ResourceLocation texture) {
+        this.id = id;
+        this.nameKey = nameKey;
+        this.descriptionKey = descriptionKey;
+        this.texture = texture;
+    }
 
-    @Accessor("player")
-    IFactionPlayer<?> expanded$getPlayer();
+    public ResourceLocation getId() {
+        return id;
+    }
+
+    public Component getName() {
+        return Component.translatable(nameKey);
+    }
+
+    public Component getDescription() {
+        return Component.translatable(descriptionKey);
+    }
+
+    public @Nullable ResourceLocation getTexture() {
+        return texture;
+    }
 }
 
 

@@ -2,19 +2,10 @@
   "required": true,
   "minVersion": "0.8.7",
   "package": "com.gustavoschip.expanded.mixin",
+  "plugin": "com.gustavoschip.expanded.mixin.plugin.ExpandedMixinPlugin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-    "LivingEntitySunDamageTrackerMixin",
-    "SkillHandlerAccessorMixin",
-    "SkillHandlerMixin",
-    "VampirePlayerMixin"
-  ],
-  "client": [
-    "client.SkillsTabScreenMixin",
-    "client.SunOverlayMixin",
-    "client.VampirismHUDOverlayMixin",
-    "client.VampirismRenderHandlerMixin"
-  ],
+  "mixins": [],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }

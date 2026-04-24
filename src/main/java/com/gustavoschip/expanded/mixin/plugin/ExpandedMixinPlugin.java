@@ -22,34 +22,49 @@
  * SOFTWARE.
  */
 
-package com.gustavoschip.expanded;
+package com.gustavoschip.expanded.mixin.plugin;
 
-import com.gustavoschip.expanded.attachment.ModAttachments;
-import com.gustavoschip.expanded.compat.guideapi.GuideBookCompat;
-import com.gustavoschip.expanded.event.ModEvents;
-import com.gustavoschip.expanded.service.ModServices;
-import com.gustavoschip.expanded.skill.ModSkills;
-import com.gustavoschip.expanded.task.ModTasks;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.Mod;
+import me.fallenbreath.conditionalmixin.api.mixin.RestrictiveMixinConfigPlugin;
 import net.neoforged.fml.loading.FMLEnvironment;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-@Mod(Expanded.MOD_ID)
-public class Expanded {
-    public static final String MOD_ID = "expanded";
+public class ExpandedMixinPlugin extends RestrictiveMixinConfigPlugin {
+    private static final List<String> COMMON_MIXINS = List.of(
+            "BatVampireActionMixin",
+            "EntityMixin",
+            "LivingEntityMixin",
+            "SkillHandlerAccessorMixin",
+            "SkillHandlerMixin",
+            "VampirePlayerMixin"
+    );
 
-    @SuppressWarnings("unused")
-    public Expanded(IEventBus modEventBus) {
-        ModAttachments.register(modEventBus);
-        ModTasks.register(modEventBus);
-        ModSkills.register(modEventBus);
-        ModEvents.register(modEventBus);
-        ModServices.register(modEventBus);
+    private static final List<String> CLIENT_MIXINS = List.of(
+            "client.SkillsTabScreenMixin",
+            "client.SunOverlayMixin",
+            "client.VampirismHUDOverlayMixin",
+            "client.VampirismRenderHandlerMixin"
+    );
 
-        if (FMLEnvironment.dist.isClient() && ModList.get().isLoaded("guideapi_vp")) {
-            GuideBookCompat.register();
+    @Override
+    public String getRefMapperConfig() {
+        return null;
+    }
+
+    @Override
+    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+    }
+
+    @Override
+    public List<String> getMixins() {
+        List<String> mixins = new ArrayList<>(COMMON_MIXINS);
+
+        if (FMLEnvironment.dist.isClient()) {
+            mixins.addAll(CLIENT_MIXINS);
         }
+
+        return mixins;
     }
 }

@@ -22,42 +22,34 @@
  * SOFTWARE.
  */
 
-package com.gustavoschip.expanded.mixin.client;
+package com.gustavoschip.expanded.mixin;
 
-import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
-import de.teamlapen.vampirism.client.gui.overlay.VampirismHUDOverlay;
-import net.minecraft.client.Minecraft;
+import com.gustavoschip.expanded.service.skill.AdvancedFlightService;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
-@Mixin(value = VampirismHUDOverlay.class, priority = 1000, remap = false)
-public abstract class VampirismHUDOverlayMixin {
-    @Unique
-    private static final int POISONOUS_BLOOD_FANGS_COLOR = 0x099022;
+@Mixin(value = Entity.class, priority = 1000)
+public abstract class EntityMixin {
 
-    @ModifyVariable(
-            method = "renderBloodFangs",
-            at = @At("HEAD"),
-            argsOnly = true,
-            ordinal = 2
-    )
-    private int expanded$forceGreenFangsForPoisonousPlayers(int color) {
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null || mc.hitResult == null || mc.hitResult.getType() != HitResult.Type.ENTITY) {
-            return color;
+    @Inject(method = "setSwimming(Z)V", at = @At("HEAD"), cancellable = true)
+    private void expanded$preventSwimmingWhileBatFormActive(boolean swimming, CallbackInfo ci) {
+        if (!swimming) {
+            return;
         }
 
-        Entity target = ((EntityHitResult) mc.hitResult).getEntity();
-        if (target instanceof Player player && !target.isInvisible() && player.getData(SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT)) {
-            return POISONOUS_BLOOD_FANGS_COLOR;
+        if (!((Object) this instanceof Player player)) {
+            return;
         }
-        return color;
+
+        if (AdvancedFlightService.shouldPreventSwimming(player)) {
+            ci.cancel();
+        }
     }
 }
+
+

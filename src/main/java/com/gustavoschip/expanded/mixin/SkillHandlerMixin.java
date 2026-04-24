@@ -27,6 +27,7 @@ package com.gustavoschip.expanded.mixin;
 import com.gustavoschip.expanded.skill.ModSkills;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
+import de.teamlapen.vampirism.entity.player.skills.SkillHandler;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -35,7 +36,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.ArrayList;
 
-@Mixin(targets = "de.teamlapen.vampirism.entity.player.skills.SkillHandler", remap = false)
+@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
+@Mixin(value = SkillHandler.class, priority = 1000, remap = false)
 public abstract class SkillHandlerMixin<T extends IFactionPlayer<T>> {
     @Shadow
     @Final

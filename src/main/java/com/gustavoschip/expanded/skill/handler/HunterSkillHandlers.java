@@ -24,6 +24,7 @@
 
 package com.gustavoschip.expanded.skill.handler;
 
+import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.service.skill.GarlicBloodService;
 import com.gustavoschip.expanded.service.skill.PoisonousBloodService;
 import com.mojang.logging.LogUtils;
@@ -31,6 +32,7 @@ import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import net.minecraft.server.level.ServerPlayer;
 import org.slf4j.Logger;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public final class HunterSkillHandlers {
@@ -40,28 +42,24 @@ public final class HunterSkillHandlers {
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> poisonousBloodToggle(boolean poisonous) {
-        return player -> {
-            if (player.asEntity() instanceof ServerPlayer serverPlayer) {
-                if (!PoisonousBloodService.canSyncAttachment(serverPlayer)) {
-                    LOGGER.debug("Deferred poisonous blood toggle {} for {} until login sync", poisonous, serverPlayer.getName().getString());
-                    return;
-                }
-                LOGGER.debug("Toggling poisonous blood to {} for {}", poisonous, serverPlayer.getName().getString());
-                PoisonousBloodService.setPoisonousBlood(serverPlayer, poisonous);
-            }
-        };
+        return createToggleAction("poisonous blood", poisonous, PoisonousBloodService::setPoisonousBlood);
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> garlicBloodToggle(boolean garlicBlood) {
+        return createToggleAction("garlic blood", garlicBlood, GarlicBloodService::setGarlicBlood);
+    }
+
+    private static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter) {
         return player -> {
-            if (player.asEntity() instanceof ServerPlayer serverPlayer) {
-                if (!GarlicBloodService.canSyncAttachment(serverPlayer)) {
-                    LOGGER.debug("Deferred garlic blood toggle {} for {} until login sync", garlicBlood, serverPlayer.getName().getString());
-                    return;
-                }
-                LOGGER.debug("Toggling garlic blood to {} for {}", garlicBlood, serverPlayer.getName().getString());
-                GarlicBloodService.setGarlicBlood(serverPlayer, garlicBlood);
+            if (!(player.asEntity() instanceof ServerPlayer serverPlayer)) {
+                return;
             }
+            if (!ModServices.canSyncAttachment(serverPlayer)) {
+                LOGGER.debug("Deferred {} toggle {} for {} until login sync", label, value, serverPlayer.getName().getString());
+                return;
+            }
+            LOGGER.debug("Toggling {} to {} for {}", label, value, serverPlayer.getName().getString());
+            setter.accept(serverPlayer, value);
         };
     }
 }

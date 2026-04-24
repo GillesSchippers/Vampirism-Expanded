@@ -48,10 +48,6 @@ public final class PoisonousBloodService extends ModServices {
         return hasBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT);
     }
 
-    public static boolean hasPoisonousBlood(ServerPlayer player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT);
-    }
-
     public static void setPoisonousBlood(ServerPlayer player, boolean poisonous) {
         setBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT, poisonous, "poisonous blood", LOGGER);
     }
@@ -64,9 +60,6 @@ public final class PoisonousBloodService extends ModServices {
         setPoisonousBlood(player, hasPoisonousBloodSkill(player));
     }
 
-    public static boolean canSyncAttachment(ServerPlayer player) {
-        return ModServices.canSyncAttachment(player);
-    }
 
     public static boolean isPoisonousBloodTarget(Entity entity) {
         return entity instanceof Player player && hasPoisonousBlood(player);

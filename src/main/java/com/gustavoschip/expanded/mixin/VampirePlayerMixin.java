@@ -24,14 +24,17 @@
 
 package com.gustavoschip.expanded.mixin;
 
+import com.gustavoschip.expanded.service.skill.PoisonousBloodService;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
+import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(targets = "de.teamlapen.vampirism.entity.player.vampire.VampirePlayer", remap = false)
+@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
+@Mixin(value = VampirePlayer.class, priority = 1000, remap = false)
 public abstract class VampirePlayerMixin {
 
     @Inject(method = "determineBiteType", at = @At("RETURN"), cancellable = true)
@@ -40,7 +43,7 @@ public abstract class VampirePlayerMixin {
             return;
         }
 
-        if (com.gustavoschip.expanded.service.skill.PoisonousBloodService.isPoisonousBloodTarget(entity)) {
+        if (PoisonousBloodService.isPoisonousBloodTarget(entity)) {
             // HUNTER_CREATURE path interrupts the bite attempt immediately and poisons the vampire.
             cir.setReturnValue(IVampirePlayer.BITE_TYPE.HUNTER_CREATURE);
         }

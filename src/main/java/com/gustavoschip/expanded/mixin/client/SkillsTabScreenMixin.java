@@ -30,6 +30,7 @@ import de.teamlapen.vampirism.api.entity.factions.ISkillTree;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkillHandler;
+import de.teamlapen.vampirism.client.gui.screens.skills.SkillsTabScreen;
 import net.minecraft.core.Holder;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -40,7 +41,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 
-@Mixin(targets = "de.teamlapen.vampirism.client.gui.screens.skills.SkillsTabScreen", remap = false)
+@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
+@Mixin(value = SkillsTabScreen.class, priority = 1000, remap = false)
 public abstract class SkillsTabScreenMixin {
     @Shadow
     @Final

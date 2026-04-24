@@ -33,6 +33,7 @@ import de.teamlapen.vampirism.api.entity.player.task.TaskUnlocker;
 import de.teamlapen.vampirism.entity.factions.FactionPlayerHandler;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -58,14 +59,26 @@ public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, O
 
             ).apply(instance, FactionLevelTaskUnlocker::new));
 
+    private static boolean isWithinBounds(int value, int minValue, @Nullable Integer maxValue) {
+        if (value < minValue) {
+            return false;
+        }
+
+        return maxValue == null || value <= maxValue;
+    }
+
+    private static String formatUpperBound(@Nullable Integer maxValue) {
+        return maxValue == null ? "+" : "-" + maxValue;
+    }
+
     @Override
     public Component getDescription() {
         return Component.literal("Requires faction: %s, level: %d%s, lord rank: %d%s".formatted(
                 faction,
                 minLevel,
-                maxLevel.map(max -> "-" + max).orElse("+"),
+                formatUpperBound(maxLevel.orElse(null)),
                 minLordRank,
-                maxLordRank.map(max -> "-" + max).orElse("+")
+                formatUpperBound(maxLordRank.orElse(null))
         ));
     }
 
@@ -75,20 +88,12 @@ public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, O
             return false;
         }
 
-        int level = playerEntity.getLevel();
-        if (level < minLevel) return false;
-
-        if (maxLevel.isPresent() && level > maxLevel.get()) {
+        if (!isWithinBounds(playerEntity.getLevel(), minLevel, maxLevel.orElse(null))) {
             return false;
         }
 
         int lordRank = FactionPlayerHandler.get(playerEntity.asEntity()).getLordLevel();
-
-        if (lordRank < minLordRank) {
-            return false;
-        }
-
-        return maxLordRank.isEmpty() || lordRank <= maxLordRank.get();
+        return isWithinBounds(lordRank, minLordRank, maxLordRank.orElse(null));
     }
 
     @Override
