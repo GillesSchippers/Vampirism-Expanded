@@ -41,7 +41,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 
-@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
 @Mixin(value = SkillsTabScreen.class, priority = 1000, remap = false)
 public abstract class SkillsTabScreenMixin {
     @Shadow

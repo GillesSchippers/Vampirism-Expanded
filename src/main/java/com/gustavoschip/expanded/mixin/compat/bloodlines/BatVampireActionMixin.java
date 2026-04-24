@@ -38,7 +38,6 @@ import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
 @Restriction(require = @Condition(type = Condition.Type.MOD, value = "bloodlines"))
 @Mixin(value = BatVampireAction.class, priority = 1500, remap = false)
 public abstract class BatVampireActionMixin {

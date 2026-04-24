@@ -39,7 +39,6 @@ import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
 @Mixin(value = RenderHandler.class, priority = 1000, remap = false)
 public abstract class VampirismRenderHandlerMixin {
     @Unique

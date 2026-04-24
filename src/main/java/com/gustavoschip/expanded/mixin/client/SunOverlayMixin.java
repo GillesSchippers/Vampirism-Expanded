@@ -34,7 +34,6 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-@SuppressWarnings({"unused", "UnusedMixin", "DefaultAnnotationParam"})
 @Mixin(value = SunOverlay.class, priority = 1000, remap = false)
 public abstract class SunOverlayMixin {
     @Unique
