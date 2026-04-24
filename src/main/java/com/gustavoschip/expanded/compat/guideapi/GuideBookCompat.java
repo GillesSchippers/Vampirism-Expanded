@@ -84,10 +84,10 @@ public class GuideBookCompat {
 //      addEntry(entries, helper, ModTasks.TaskGuideEntries.HUNTER_SKILL_POINTS_2);
 //      addEntry(entries, helper, ModTasks.TaskGuideEntries.VAMPIRE_SKILL_POINTS_1);
 //      addEntry(entries, helper, ModTasks.TaskGuideEntries.VAMPIRE_SKILL_POINTS_2);
-        addEntry(entries, helper, SkillHolders.POISONOUS_BLOOD_GUIDE);
-        addEntry(entries, helper, SkillHolders.GARLIC_BLOOD_GUIDE);
-        addEntry(entries, helper, SkillHolders.VAMPIRIC_GROUNDING_GUIDE);
-        addEntry(entries, helper, SkillHolders.ADVANCED_FLIGHT_GUIDE);
+//      addEntry(entries, helper, SkillHolders.POISONOUS_BLOOD_GUIDE);
+//      addEntry(entries, helper, SkillHolders.GARLIC_BLOOD_GUIDE);
+//      addEntry(entries, helper, SkillHolders.VAMPIRIC_GROUNDING_GUIDE);
+//      addEntry(entries, helper, SkillHolders.ADVANCED_FLIGHT_GUIDE);
 
         return entries;
     }
