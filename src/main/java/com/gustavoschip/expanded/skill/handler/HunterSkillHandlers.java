@@ -24,6 +24,7 @@
 
 package com.gustavoschip.expanded.skill.handler;
 
+import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.service.skill.GarlicBloodService;
 import com.gustavoschip.expanded.service.skill.PoisonousBloodService;
 import com.mojang.logging.LogUtils;
@@ -53,7 +54,7 @@ public final class HunterSkillHandlers {
             if (!(player.asEntity() instanceof ServerPlayer serverPlayer)) {
                 return;
             }
-            if (!com.gustavoschip.expanded.service.ModServices.canSyncAttachment(serverPlayer)) {
+            if (!ModServices.canSyncAttachment(serverPlayer)) {
                 LOGGER.debug("Deferred {} toggle {} for {} until login sync", label, value, serverPlayer.getName().getString());
                 return;
             }
