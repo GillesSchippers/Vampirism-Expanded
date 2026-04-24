@@ -26,6 +26,11 @@ repositories {
     }
 
     maven {
+        name = "MixinSquared"
+        url = "https://maven.bawnorton.com/releases"
+    }
+
+    maven {
         name = "Vampirism"
         url = "https://maven.maxanier.de/releases"
     }
@@ -111,19 +116,32 @@ dependencies {
             prefer   "${mixinextras_version}"
         }
     }
+
+    jarJar(implementation("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:${mixinsquared_version}")) {
+        version {
+            strictly "${mixinsquared_version_range}"
+            prefer   "${mixinsquared_version}"
+        }
+    }
+
     jarJar(implementation("me.fallenbreath:conditional-mixin-neoforge:${conditional_mixin_version}")) {
         version {
             strictly "${conditional_mixin_version_range}"
             prefer   "${conditional_mixin_version}"
         }
     }
+
+    compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:${mixinsquared_version}"))
+
     implementation("de.teamlapen.vampirism:Vampirism:${vampirism_version}") {
         exclude group: "mezz.jei", module: "jei-1.21-neoforge"
         exclude group: "com.github.glitchfiend", module: "TerraBlender-neoforge"
     }
+
     compileOnly("de.maxanier.guideapi:Guide-API-VP:${guideapi_version}") {
         exclude group: "mezz.jei", module: "jei-1.21-neoforge"
     }
+
     localRuntime("de.maxanier.guideapi:Guide-API-VP:${guideapi_version}") {
         exclude group: "mezz.jei", module: "jei-1.21-neoforge"
     }
