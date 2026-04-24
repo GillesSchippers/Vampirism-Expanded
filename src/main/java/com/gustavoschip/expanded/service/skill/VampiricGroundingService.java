@@ -106,6 +106,7 @@ public final class VampiricGroundingService extends ModServices {
         }
     }
 
+    // TODO: Implement limited bat mode instead of outright disabling it.
     public static void handleBatActionActivated(ActionEvent.ActionActivatedEvent event) {
         if (event.getAction() != VampireActions.BAT.get()) {
             return;
