@@ -209,7 +209,10 @@ if (curseforgeToken.isPresent() && curseforgeProjectId.isPresent()) {
         curseforge {
             projectId = curseforgeProjectId.get()
             accessToken = curseforgeToken
+            clientRequired = true
+            serverRequired = true
             minecraftVersions.add(minecraft_version)
+            javaVersions.add(java.toolchain.languageVersion)
             requires("vampirism-become-a-vampire")
             optional("guide-api-village-and-pillage")
             optional("bloodlines")
