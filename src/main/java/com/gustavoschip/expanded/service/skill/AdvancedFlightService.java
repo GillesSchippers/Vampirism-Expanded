@@ -96,6 +96,14 @@ public final class AdvancedFlightService extends ModServices {
         applyBatFlightBonuses(player, true);
     }
 
+    public static void applyBloodlinesBatCompatibility(ServerPlayer player) {
+        if (!hasAdvancedFlightEffect(player)) {
+            return;
+        }
+
+        removeBatFlightArmorModifiers(player);
+    }
+
     public static boolean canUseBatModeInLiquids(Player player) {
         return hasAdvancedFlightEffect(player);
     }
@@ -109,6 +117,11 @@ public final class AdvancedFlightService extends ModServices {
             return;
         }
 
+        removeBatFlightArmorModifiers(player);
+        setFlightSpeed(player);
+    }
+
+    private static void removeBatFlightArmorModifiers(ServerPlayer player) {
         ResourceLocation batActionId = ModRegistries.ACTIONS.getKey(VampireActions.BAT.get());
         if (batActionId == null) {
             LOGGER.debug("Skipped advanced flight adjustment for {} because the bat action id was unavailable", player.getName().getString());
@@ -123,8 +136,6 @@ public final class AdvancedFlightService extends ModServices {
         if (toughness != null) {
             toughness.removeModifier(batActionId);
         }
-
-        setFlightSpeed(player);
     }
 
     private static boolean hasAdvancedFlightEffect(Player player) {

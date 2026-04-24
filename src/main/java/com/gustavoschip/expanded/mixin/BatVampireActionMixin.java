@@ -100,7 +100,7 @@ public abstract class BatVampireActionMixin {
             return;
         }
 
-        AdvancedFlightService.onBatActivated(serverPlayer);
+        AdvancedFlightService.applyBloodlinesBatCompatibility(serverPlayer);
     }
 
     @Unique
