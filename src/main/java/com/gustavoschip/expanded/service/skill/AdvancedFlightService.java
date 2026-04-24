@@ -39,15 +39,10 @@ import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
-import static com.gustavoschip.expanded.Expanded.MOD_ID;
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
-
 public final class AdvancedFlightService extends ModServices {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final float ADVANCED_FLIGHT_SPEED_MULTIPLIER = 1.5F;
-    private static final ResourceLocation BAT_ARMOR_PENALTY_ID = fromNamespaceAndPath(MOD_ID, "advanced_flight_bat_armor_penalty");
-    private static final ResourceLocation BAT_TOUGHNESS_PENALTY_ID = fromNamespaceAndPath(MOD_ID, "advanced_flight_bat_toughness_penalty");
 
     private AdvancedFlightService() {
     }
@@ -102,15 +97,15 @@ public final class AdvancedFlightService extends ModServices {
     }
 
     public static boolean canUseBatModeInLiquids(Player player) {
-        return hasAdvancedFlight(player);
+        return hasAdvancedFlightEffect(player);
     }
 
     public static boolean shouldPreventSwimming(Player player) {
-        return isBatActive(player) && hasAdvancedFlight(player);
+        return isBatActive(player) && hasAdvancedFlightEffect(player);
     }
 
     private static void applyBatFlightBonuses(ServerPlayer player, boolean requireBatActive) {
-        if (!hasAdvancedFlight(player) || (requireBatActive && !isBatActive(player))) {
+        if (!hasAdvancedFlightEffect(player) || (requireBatActive && !isBatActive(player))) {
             return;
         }
 
@@ -124,20 +119,27 @@ public final class AdvancedFlightService extends ModServices {
         AttributeInstance toughness = player.getAttribute(Attributes.ARMOR_TOUGHNESS);
         if (armor != null) {
             armor.removeModifier(batActionId);
-            armor.removeModifier(BAT_ARMOR_PENALTY_ID);
         }
         if (toughness != null) {
             toughness.removeModifier(batActionId);
-            toughness.removeModifier(BAT_TOUGHNESS_PENALTY_ID);
         }
 
         setFlightSpeed(player);
+    }
+
+    private static boolean hasAdvancedFlightEffect(Player player) {
+        if (hasAdvancedFlight(player)) {
+            return true;
+        }
+
+        return player instanceof ServerPlayer serverPlayer && hasAdvancedFlightSkill(serverPlayer);
     }
 
 
     private static void setFlightSpeed(Player player) {
         Abilities abilities = player.getAbilities();
         float speed = abilities.getFlyingSpeed() * ADVANCED_FLIGHT_SPEED_MULTIPLIER;
+        LOGGER.debug("Setting flight speed for {} to {}", player.getName().getString(), speed);
         abilities.setFlyingSpeed(speed);
         player.onUpdateAbilities();
     }

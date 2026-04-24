@@ -96,7 +96,7 @@ public abstract class BatVampireActionMixin {
     @TargetHandler(mixin = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin", name = "setNobleBatSpeedMultiplier")
     @Inject(method = "@MixinSquared:Handler", at = @At("TAIL"))
     private void expanded$applyAdvancedFlight(Player player, boolean enabled, CallbackInfo ci, CallbackInfo actualCi) {
-        if (!enabled || !(player instanceof ServerPlayer serverPlayer) || !AdvancedFlightService.hasAdvancedFlight(serverPlayer)) {
+        if (!enabled || !(player instanceof ServerPlayer serverPlayer)) {
             return;
         }
 
