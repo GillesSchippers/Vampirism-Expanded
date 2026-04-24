@@ -24,35 +24,31 @@
 
 package com.gustavoschip.expanded.mixin;
 
-import com.gustavoschip.expanded.skill.ModSkills;
-import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
-import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
-import de.teamlapen.vampirism.entity.player.skills.SkillHandler;
-import org.spongepowered.asm.mixin.Final;
+import com.gustavoschip.expanded.service.skill.AdvancedFlightService;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
-
-import java.util.ArrayList;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @SuppressWarnings({"unused", "UnusedMixin"})
-@Mixin(value = SkillHandler.class, remap = false)
-public abstract class SkillHandlerMixin<T extends IFactionPlayer<T>> {
-    @Shadow
-    @Final
-    private T player;
-    @Shadow
-    @Final
-    private ArrayList<ISkill<T>> enabledSkills;
+@Mixin(Entity.class)
+public abstract class EntityMixin {
 
-    @Redirect(method = "canSkillBeEnabled", at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/entity/player/skills/SkillHandler;getLeftSkillPoints()I"))
-    private int expanded$useExpandedPointsForExpandedSkills(de.teamlapen.vampirism.entity.player.skills.SkillHandler<?> instance, ISkill<T> skill) {
-        if (!ModSkills.ExpandedSkillPointHelper.usesExpandedPoints(skill)) {
-            return instance.getLeftSkillPoints();
+    @Inject(method = "setSwimming(Z)V", at = @At("HEAD"), cancellable = true)
+    private void expanded$preventSwimmingWhileBatFormActive(boolean swimming, CallbackInfo ci) {
+        if (!swimming) {
+            return;
         }
 
-        return ModSkills.ExpandedSkillPointHelper.getRemainingExpandedPoints(this.player, this.enabledSkills);
+        if (!((Object) this instanceof Player player)) {
+            return;
+        }
+
+        if (AdvancedFlightService.shouldPreventSwimming(player)) {
+            ci.cancel();
+        }
     }
 }
 

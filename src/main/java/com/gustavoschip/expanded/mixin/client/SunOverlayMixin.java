@@ -25,6 +25,7 @@
 package com.gustavoschip.expanded.mixin.client;
 
 import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
+import de.teamlapen.vampirism.client.gui.overlay.SunOverlay;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -34,7 +35,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @SuppressWarnings({"unused", "UnusedMixin"})
-@Mixin(targets = "de.teamlapen.vampirism.client.gui.overlay.SunOverlay", remap = false)
+@Mixin(value = SunOverlay.class, remap = false)
 public abstract class SunOverlayMixin {
     @Unique
     private static final float GROUNDING_START_SCALE = 1.5F;

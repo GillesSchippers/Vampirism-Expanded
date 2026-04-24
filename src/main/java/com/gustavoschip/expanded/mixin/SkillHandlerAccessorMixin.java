@@ -26,13 +26,14 @@ package com.gustavoschip.expanded.mixin;
 
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
+import de.teamlapen.vampirism.entity.player.skills.SkillHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 import java.util.ArrayList;
 
 @SuppressWarnings({"unused", "UnusedMixin"})
-@Mixin(targets = "de.teamlapen.vampirism.entity.player.skills.SkillHandler", remap = false)
+@Mixin(value = SkillHandler.class, remap = false)
 public interface SkillHandlerAccessorMixin {
     @Accessor("enabledSkills")
     ArrayList<ISkill<?>> expanded$getEnabledSkills();

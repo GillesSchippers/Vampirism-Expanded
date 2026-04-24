@@ -25,6 +25,7 @@
 package com.gustavoschip.expanded.mixin.client;
 
 import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
+import de.teamlapen.vampirism.client.gui.overlay.VampirismHUDOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +37,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @SuppressWarnings({"unused", "UnusedMixin"})
-@Mixin(targets = "de.teamlapen.vampirism.client.gui.overlay.VampirismHUDOverlay", remap = false)
+@Mixin(value = VampirismHUDOverlay.class, remap = false)
 public abstract class VampirismHUDOverlayMixin {
     @Unique
     private static final int POISONOUS_BLOOD_FANGS_COLOR = 0x099022;

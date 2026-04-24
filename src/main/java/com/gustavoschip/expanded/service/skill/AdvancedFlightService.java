@@ -56,6 +56,10 @@ public final class AdvancedFlightService extends ModServices {
         return ModServices.canSyncAttachment(player);
     }
 
+    public static boolean hasAdvancedFlight(Player player) {
+        return hasBooleanAttachment(player, SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT);
+    }
+
     public static boolean hasAdvancedFlight(ServerPlayer player) {
         return hasBooleanAttachment(player, SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT);
     }
@@ -94,6 +98,14 @@ public final class AdvancedFlightService extends ModServices {
 
     public static void applyAdvancedFlight(ServerPlayer player) {
         applyBatFlightBonuses(player, true);
+    }
+
+    public static boolean canUseBatModeInLiquids(Player player) {
+        return hasAdvancedFlight(player);
+    }
+
+    public static boolean shouldPreventSwimming(Player player) {
+        return isBatActive(player) && hasAdvancedFlight(player);
     }
 
     private static void applyBatFlightBonuses(ServerPlayer player, boolean requireBatActive) {

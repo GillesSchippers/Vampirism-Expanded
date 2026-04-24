@@ -26,6 +26,7 @@ package com.gustavoschip.expanded.mixin.client;
 
 import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
 import de.teamlapen.vampirism.entity.player.VampirismPlayerAttributes;
+import de.teamlapen.vampirism.client.renderer.RenderHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -39,7 +40,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @SuppressWarnings({"unused", "UnusedMixin"})
-@Mixin(targets = "de.teamlapen.vampirism.client.renderer.RenderHandler", remap = false)
+@Mixin(value = RenderHandler.class, remap = false)
 public abstract class VampirismRenderHandlerMixin {
     @Unique
     private static final int POISONOUS_BLOOD_VISION_RED = 0x07;

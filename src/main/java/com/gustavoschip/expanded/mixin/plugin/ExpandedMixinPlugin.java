@@ -34,6 +34,7 @@ import java.util.Set;
 public class ExpandedMixinPlugin extends RestrictiveMixinConfigPlugin {
     private static final List<String> COMMON_MIXINS = List.of(
             "BatVampireActionMixin",
+            "EntityMixin",
             "LivingEntityMixin",
             "SkillHandlerAccessorMixin",
             "SkillHandlerMixin",
