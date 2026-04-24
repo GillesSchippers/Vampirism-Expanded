@@ -98,24 +98,6 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
-        clientCompat {
-            type = "client"
-            devLogin = true
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        serverCompat {
-            type = "server"
-            programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        clientOfflineCompat {
-            type = "client"
-            devLogin = false
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             logLevel = org.slf4j.event.Level.DEBUG
@@ -130,8 +112,7 @@ neoForge {
 }
 
 configurations {
-    runtimeClasspath.extendsFrom localRuntime
-    optionalLocalRuntime.extendsFrom localRuntime
+    runtimeClasspath.extendsFrom(localRuntime)
 }
 
 dependencies {
@@ -163,25 +144,8 @@ dependencies {
 
     compileOnly("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
 
-    optionalLocalRuntime("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
-
-    optionalLocalRuntime("de.maxanier.guideapi:Guide-API-VP:${guideapi_version}") {
-        exclude group: "mezz.jei", module: "jei-1.21-neoforge"
-    }
-}
-
-afterEvaluate {
-    tasks.named("runClientCompat").configure {
-        classpath += configurations.optionalLocalRuntime
-    }
-
-    tasks.named("runServerCompat").configure {
-        classpath += configurations.optionalLocalRuntime
-    }
-
-    tasks.named("runClientOfflineCompat").configure {
-        classpath += configurations.optionalLocalRuntime
-    }
+    localRuntime("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
+    localRuntime("curse.maven:Guide-API-VP-380771:5618709") // TODO: Specify in gradle.properties
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

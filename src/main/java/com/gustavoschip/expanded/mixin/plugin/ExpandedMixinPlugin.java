@@ -25,9 +25,7 @@
 package com.gustavoschip.expanded.mixin.plugin;
 
 import me.fallenbreath.conditionalmixin.api.mixin.RestrictiveMixinConfigPlugin;
-import net.neoforged.fml.loading.FMLEnvironment;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 

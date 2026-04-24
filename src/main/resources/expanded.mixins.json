@@ -5,13 +5,13 @@
   "plugin": "com.gustavoschip.expanded.mixin.plugin.ExpandedMixinPlugin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "compat.bloodlines.BatVampireActionMixin",
     "BatVampireActionMixin",
     "EntityMixin",
     "LivingEntityMixin",
     "SkillHandlerAccessorMixin",
     "SkillHandlerMixin",
-    "VampirePlayerMixin"
+    "VampirePlayerMixin",
+    "compat.bloodlines.BatVampireActionMixin"
   ],
   "client": [
     "client.SkillsTabScreenMixin",
