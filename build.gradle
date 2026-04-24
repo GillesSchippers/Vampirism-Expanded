@@ -98,6 +98,24 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
+        clientCompat {
+            type = "client"
+            devLogin = true
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        serverCompat {
+            type = "server"
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        clientOfflineCompat {
+            type = "client"
+            devLogin = false
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             logLevel = org.slf4j.event.Level.DEBUG
@@ -113,16 +131,10 @@ neoForge {
 
 configurations {
     runtimeClasspath.extendsFrom localRuntime
+    optionalLocalRuntime.extendsFrom localRuntime
 }
 
 dependencies {
-    implementation(jarJar("io.github.llamalad7:mixinextras-neoforge:${mixinextras_version}")) {
-        version {
-            strictly "${mixinextras_version_range}"
-            prefer   "${mixinextras_version}"
-        }
-    }
-
     jarJar(implementation("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:${mixinsquared_version}")) {
         version {
             strictly "${mixinsquared_version_range}"
@@ -137,12 +149,13 @@ dependencies {
         }
     }
 
-    compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:${mixinsquared_version}"))
-
     implementation("de.teamlapen.vampirism:Vampirism:${vampirism_version}") {
         exclude group: "mezz.jei", module: "jei-1.21-neoforge"
+        exclude group: "de.maxanier.guideapi", module: "Guide-API-VP"
         exclude group: "com.github.glitchfiend", module: "TerraBlender-neoforge"
     }
+
+    compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:${mixinsquared_version}"))
 
     compileOnly("de.maxanier.guideapi:Guide-API-VP:${guideapi_version}") {
         exclude group: "mezz.jei", module: "jei-1.21-neoforge"
@@ -150,10 +163,24 @@ dependencies {
 
     compileOnly("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
 
-    localRuntime("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
+    optionalLocalRuntime("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
 
-    localRuntime("de.maxanier.guideapi:Guide-API-VP:${guideapi_version}") {
+    optionalLocalRuntime("de.maxanier.guideapi:Guide-API-VP:${guideapi_version}") {
         exclude group: "mezz.jei", module: "jei-1.21-neoforge"
+    }
+}
+
+afterEvaluate {
+    tasks.named("runClientCompat").configure {
+        classpath += configurations.optionalLocalRuntime
+    }
+
+    tasks.named("runServerCompat").configure {
+        classpath += configurations.optionalLocalRuntime
+    }
+
+    tasks.named("runClientOfflineCompat").configure {
+        classpath += configurations.optionalLocalRuntime
     }
 }
 
