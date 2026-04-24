@@ -4,8 +4,21 @@
   "package": "com.gustavoschip.expanded.mixin",
   "plugin": "com.gustavoschip.expanded.mixin.plugin.ExpandedMixinPlugin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
-  "client": [],
+  "mixins": [
+    "compat.bloodlines.BatVampireActionMixin",
+    "BatVampireActionMixin",
+    "EntityMixin",
+    "LivingEntityMixin",
+    "SkillHandlerAccessorMixin",
+    "SkillHandlerMixin",
+    "VampirePlayerMixin"
+  ],
+  "client": [
+    "client.SkillsTabScreenMixin",
+    "client.SunOverlayMixin",
+    "client.VampirismHUDOverlayMixin",
+    "client.VampirismRenderHandlerMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

@@ -32,28 +32,6 @@ import java.util.List;
 import java.util.Set;
 
 public class ExpandedMixinPlugin extends RestrictiveMixinConfigPlugin {
-    private static final List<String> COMMON_MIXINS = List.of(
-            "BatVampireActionMixin",
-            "EntityMixin",
-            "LivingEntityMixin",
-            "SkillHandlerAccessorMixin",
-            "SkillHandlerMixin",
-            "VampirePlayerMixin"
-    );
-
-    private static final List<String> CLIENT_MIXINS = List.of(
-            "client.SkillsTabScreenMixin",
-            "client.SunOverlayMixin",
-            "client.VampirismHUDOverlayMixin",
-            "client.VampirismRenderHandlerMixin"
-    );
-
-    private static final List<String> COMPAT_COMMON_MIXINS =  List.of(
-            "compat.bloodlines.BatVampireActionMixin"
-    );
-
-    private static final List<String> COMPAT_CLIENT_MIXINS =  List.of();
-
     @Override
     public String getRefMapperConfig() {
         return null;
@@ -65,14 +43,6 @@ public class ExpandedMixinPlugin extends RestrictiveMixinConfigPlugin {
 
     @Override
     public List<String> getMixins() {
-        List<String> mixins = new ArrayList<>(COMMON_MIXINS);
-        mixins.addAll(COMPAT_COMMON_MIXINS);
-
-        if (FMLEnvironment.dist.isClient()) {
-            mixins.addAll(CLIENT_MIXINS);
-            mixins.addAll(COMPAT_CLIENT_MIXINS);
-        }
-
-        return mixins;
+        return null;
     }
 }
