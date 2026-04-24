@@ -23,7 +23,6 @@ repositories {
     exclusiveContent {
         forRepository {
             maven {
-                name = "Modrinth"
                 url = "https://api.modrinth.com/maven"
             }
         }
@@ -35,7 +34,7 @@ repositories {
     exclusiveContent {
         forRepository {
             maven {
-                url "https://cursemaven.com"
+                url = "https://cursemaven.com"
             }
         }
         filter {
@@ -44,28 +43,15 @@ repositories {
     }
 
     maven {
-        name = "conditional-mixin"
         url = "https://maven.fallenbreath.me/releases"
     }
 
     maven {
-        name = "MixinSquared"
         url = "https://maven.bawnorton.com/releases"
     }
 
     maven {
-        name = "Vampirism"
         url = "https://maven.maxanier.de/releases"
-    }
-
-    maven {
-        name = "JEI"
-        url = "https://maven.blamejared.com/"
-    }
-
-    maven {
-        name = "TerraBlender"
-        url = 'https://maven.minecraftforge.net/'
     }
 }
 
@@ -85,12 +71,13 @@ neoForge {
 
     runs {
         client {
-            client()
+            type = "client"
+            devLogin = true
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         server {
-            server()
+            type = "server"
             programArgument '--nogui'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
@@ -101,21 +88,17 @@ neoForge {
         }
 
         data {
-            data()
+            type = "data"
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
 
-        clientAuth {
-            client()
-            devLogin = true
+        clientOffline {
+            type = "client"
+            devLogin = false
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         configureEach {
-            // Recommended logging data for a userdev environment
-            // The markers can be added/remove as needed separated by commas.
-            // "SCAN": For mods scan.
-            // "REGISTRIES": For firing of registry events.
-            // "REGISTRYDUMP": For getting the contents of all registries.
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             logLevel = org.slf4j.event.Level.DEBUG
         }
