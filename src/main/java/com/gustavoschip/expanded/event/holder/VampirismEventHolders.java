@@ -32,6 +32,7 @@ public final class VampirismEventHolders {
 
     public VampirismEventHolders() {}
 
+    // TODO: Replace with dedicated mixin.
     @SubscribeEvent
     private void onPlayerDrinkBlood(BloodDrinkEvent.PlayerDrinkBloodEvent event) {
         HunterService.handlePlayerDrinkBlood(event);

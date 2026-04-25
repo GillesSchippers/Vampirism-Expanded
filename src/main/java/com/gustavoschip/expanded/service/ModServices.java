@@ -26,6 +26,7 @@ package com.gustavoschip.expanded.service;
 
 import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
 
+import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
 import net.minecraft.server.level.ServerPlayer;
@@ -37,35 +38,56 @@ import org.slf4j.Logger;
 @SuppressWarnings("unused")
 public abstract class ModServices {
 
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     protected ModServices() {}
 
     public static boolean canSyncAttachment(ServerPlayer player) {
-        return player != null;
+        return player != null && player.connection != null && !player.hasDisconnected();
     }
 
     protected static boolean hasBooleanAttachment(Player player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment) {
-        return player.getData(attachment);
+        if (player instanceof ServerPlayer sp && !canSyncAttachment(sp)) {
+            LOGGER.debug("Cannot check {} for {} until login sync", attachment.getId().getPath(), player.getName().getString());
+            return false;
+        }
+
+        return player.hasData(attachment) && player.getData(attachment);
     }
 
     protected static boolean hasBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment) {
         if (!canSyncAttachment(player)) {
+            LOGGER.debug("Cannot check {} for {} until login sync", attachment.getId().getPath(), player.getName().getString());
             return false;
         }
         return hasBooleanAttachment((Player) player, attachment);
     }
 
-    protected static boolean setBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment, boolean value, String label, Logger logger) {
+    protected static void setBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment, boolean value, String label) {
+        setBooleanAttachment(player, attachment, value, label, 0);
+    }
+
+    private static void setBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment, boolean value, String label, int attempts) {
         if (!canSyncAttachment(player)) {
-            logger.debug("Deferred {} update for {} until login sync", label, player.getName().getString());
-            return false;
+            if (attempts >= 40) {
+                LOGGER.warn("Failed to sync {} for {} after retries", label, player.getName().getString());
+                return;
+            }
+
+            LOGGER.debug("Deferred {} toggle {} for {} (attempt {})", label, value, player.getName().getString(), attempts + 1);
+
+            player.server.tell(new net.minecraft.server.TickTask(player.server.getTickCount() + 1, () -> setBooleanAttachment(player, attachment, value, label, attempts + 1)));
+
+            return;
         }
+
         if (hasBooleanAttachment(player, attachment) == value) {
-            return false;
+            LOGGER.debug("{} for {} already {}", label, player.getName().getString(), value);
+            return;
         }
 
         player.setData(attachment, value);
-        logger.debug("Set {} for {} to {}", label, player.getName().getString(), value);
-        return true;
+        LOGGER.debug("Set {} for {} to {}", label, player.getName().getString(), value);
     }
 
     protected static boolean hasSkillEnabled(ServerPlayer player, DeferredHolder<ISkill<?>, ? extends ISkill<? extends IFactionPlayer<?>>> skill) {

@@ -45,11 +45,11 @@ public class HunterService extends ModServices {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static void setPoisonousBlood(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT, enabled, "Poisonous Blood", LOGGER);
+        setBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT, enabled, "Poisonous Blood");
     }
 
     public static void setGarlicBlood(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT, enabled, "Garlic Blood", LOGGER);
+        setBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT, enabled, "Garlic Blood");
     }
 
     public static boolean hasGarlicBloodSkill(ServerPlayer player) {
@@ -58,11 +58,6 @@ public class HunterService extends ModServices {
 
     public static boolean hasPoisonousBloodSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.POISONOUS_BLOOD);
-    }
-
-    public static void syncFromHunterSkill(ServerPlayer player) {
-        setPoisonousBlood(player, hasPoisonousBloodSkill(player));
-        setGarlicBlood(player, hasGarlicBloodSkill(player));
     }
 
     public static boolean hasPoisonousBlood(Player player) {

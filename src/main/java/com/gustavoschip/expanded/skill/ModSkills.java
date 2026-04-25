@@ -85,17 +85,36 @@ public final class ModSkills {
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter) {
-        return player -> {
-            if (!(player.asEntity() instanceof ServerPlayer serverPlayer)) {
+        return factionPlayer -> {
+            if (!(factionPlayer.asEntity() instanceof ServerPlayer serverPlayer)) {
                 return;
             }
-            if (!ModServices.canSyncAttachment(serverPlayer)) {
-                LOGGER.debug("Deferred {} toggle {} for {} until login sync", label, value, serverPlayer.getName().getString());
-                return;
-            }
-            LOGGER.debug("Toggling {} to {} for {}", label, value, serverPlayer.getName().getString());
-            setter.accept(serverPlayer, value);
+
+            runToggleWhenReady(serverPlayer, label, value, setter, 0);
         };
+    }
+
+    private static void runToggleWhenReady(ServerPlayer player, String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter, int attempts) {
+        if (player.isRemoved() || !player.isAlive()) {
+            LOGGER.debug("Cancelled {} toggle for {} (player invalid)", label, player.getName().getString());
+            return;
+        }
+
+        if (!ModServices.canSyncAttachment(player)) {
+            if (attempts >= 40) {
+                // ~2 seconds at 20 TPS
+                LOGGER.debug("Aborted {} toggle {} for {} after {} retries", label, value, player.getName().getString(), attempts);
+                return;
+            }
+
+            LOGGER.debug("Deferred {} toggle {} for {} until login sync (attempt {})", label, value, player.getName().getString(), attempts + 1);
+
+            player.server.execute(() -> runToggleWhenReady(player, label, value, setter, attempts + 1));
+            return;
+        }
+
+        LOGGER.debug("Toggling {} to {} for {}", label, value, player.getName().getString());
+        setter.accept(player, value);
     }
 
     public static final class Trees {

@@ -53,26 +53,26 @@ public class VampireService extends ModServices {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static void setBatSpeed(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.BAT_SPEED_ATTACHMENT, enabled, "Bat Speed", LOGGER);
+        setBooleanAttachment(player, SkillAttachmentHolders.BAT_SPEED_ATTACHMENT, enabled, "Bat Speed");
 
         if (enabled) applyBatFlightBonuses(player, true);
     }
 
     public static void setBatArmor(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.BAT_ARMOR_ATTACHMENT, enabled, "Bat Armor", LOGGER);
+        setBooleanAttachment(player, SkillAttachmentHolders.BAT_ARMOR_ATTACHMENT, enabled, "Bat Armor");
     }
 
     public static void setBatLiquid(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.BAT_LIQUID_ATTACHMENT, enabled, "Bat Liquid", LOGGER);
+        setBooleanAttachment(player, SkillAttachmentHolders.BAT_LIQUID_ATTACHMENT, enabled, "Bat Liquid");
     }
 
     public static void setVampiricConstitution(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_CONSTITUTION_ATTACHMENT, enabled, "Vampiric Constitution", LOGGER);
+        setBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_CONSTITUTION_ATTACHMENT, enabled, "Vampiric Constitution");
         handleVampiricConstitutionStats(player, enabled);
     }
 
     public static void setDayWalker(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.DAY_WALKER_ATTACHMENT, enabled, "Day Walker", LOGGER);
+        setBooleanAttachment(player, SkillAttachmentHolders.DAY_WALKER_ATTACHMENT, enabled, "Day Walker");
         handleDayWalkerStats(player, enabled);
     }
 
@@ -94,14 +94,6 @@ public class VampireService extends ModServices {
 
     public static boolean hasDayWalkerSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.DAY_WALKER);
-    }
-
-    public static void syncFromVampireSkill(ServerPlayer player) {
-        setBatSpeed(player, hasBatSpeedSkill(player));
-        setBatArmor(player, hasBatArmorSkill(player));
-        setBatLiquid(player, hasBatLiquidSkill(player));
-        setVampiricConstitution(player, hasVampiricConstitutionSkill(player));
-        setDayWalker(player, hasDayWalkerSkill(player));
     }
 
     public static boolean hasBatSpeed(Player player) {

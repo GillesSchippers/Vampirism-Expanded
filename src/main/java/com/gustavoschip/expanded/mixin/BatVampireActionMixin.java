@@ -37,33 +37,13 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = BatVampireAction.class, priority = 1000, remap = false)
 public abstract class BatVampireActionMixin {
-
-    @Unique
-    private static void expanded$applyBatModeStats(IVampirePlayer vampire) {
-        if (vampire.asEntity() instanceof ServerPlayer player) {
-            VampireService.onBatActivated(player);
-        }
-    }
-
-    //    @Inject(method = "canBeUsedBy(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z", at = @At("RETURN"), cancellable = true)
-    //    private void expanded$preventGroundingBatModeWhen(IVampirePlayer vampire, CallbackInfoReturnable<Boolean> cir) {
-    //        if (!cir.getReturnValue()) {
-    //            return;
-    //        }
-    //
-    //        if (!VampiricGroundingService.canEnterBatMode(vampire.asEntity())) {
-    //            cir.setReturnValue(false);
-    //        }
-    //    }
 
     @Redirect(
         method = { "canBeUsedBy(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z", "onUpdate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z" },
@@ -73,24 +53,10 @@ public abstract class BatVampireActionMixin {
         return player.isInWater() && !VampireService.canUseBatModeInLiquids(player);
     }
 
-    //    @Inject(method = "activate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;Lde/teamlapen/vampirism/api/entity/player/actions/IAction$ActivationContext;)Z", at = @At("HEAD"), cancellable = true)
-    //    private void expanded$blockGroundingBatMode(IVampirePlayer vampire, IAction.ActivationContext context, CallbackInfoReturnable<Boolean> cir) {
-    //        if (VampiricGroundingService.handleBatActivation(vampire.asEntity())) {
-    //            return;
-    //        }
-    //
-    //        cir.setReturnValue(false);
-    //    }
-
-    @Inject(method = "onReActivated(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)V", at = @At("TAIL"))
-    private void expanded$applyBatModeBonusesOnReload(IVampirePlayer vampire, CallbackInfo ci) {
-        expanded$applyBatModeStats(vampire);
-    }
-
     @Inject(method = "activate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;Lde/teamlapen/vampirism/api/entity/player/actions/IAction$ActivationContext;)Z", at = @At("TAIL"))
     private void expanded$applyBatModeBonusesOnActivate(IVampirePlayer vampire, IAction.ActivationContext context, CallbackInfoReturnable<Boolean> cir) {
-        if (cir.getReturnValueZ()) {
-            expanded$applyBatModeStats(vampire);
+        if (cir.getReturnValueZ() && (vampire.asEntity() instanceof ServerPlayer player)) {
+            VampireService.onBatActivated(player);
         }
     }
 

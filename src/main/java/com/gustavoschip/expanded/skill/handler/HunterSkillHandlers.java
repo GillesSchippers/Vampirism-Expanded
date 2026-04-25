@@ -36,17 +36,17 @@ public final class HunterSkillHandlers {
 
     public static <T extends IFactionPlayer<T>> Consumer<T> innateToughnessToggle(boolean enabled) {
         //return createToggleAction("Innate Toughness", enabled, HunterService::setInnateToughness);
-        return createToggleAction("Innate Toughness", enabled, null);
+        return createToggleAction("Innate Toughness", enabled, null); // TODO
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> huntersGrowthToggle(boolean enabled) {
         //return createToggleAction("Hunters Growth", enabled, HunterService::setHuntersGrowth);
-        return createToggleAction("Hunters Growth", enabled, null);
+        return createToggleAction("Hunters Growth", enabled, null); // TODO
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> preparedHuntToggle(boolean enabled) {
         //return createToggleAction("Prepared Hunt", enabled, HunterService::setPreparedHunt);
-        return createToggleAction("Prepared Hunt", enabled, null);
+        return createToggleAction("Prepared Hunt", enabled, null); // TODO
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> garlicBloodToggle(boolean enabled) {

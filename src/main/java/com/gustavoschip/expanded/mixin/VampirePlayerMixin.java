@@ -30,6 +30,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
 import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -49,14 +50,13 @@ public abstract class VampirePlayerMixin {
         }
 
         if (HunterService.isPoisonousBloodTarget(entity)) {
-            // HUNTER_CREATURE path interrupts the bite attempt immediately and poisons the vampire.
             cir.setReturnValue(IVampirePlayer.BITE_TYPE.HUNTER_CREATURE);
         }
     }
 
     @WrapOperation(method = "handleSunDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;addEffect(Lnet/minecraft/world/effect/MobEffectInstance;)Z"))
     private boolean wrapEffects(Player player, MobEffectInstance effect, Operation<Boolean> original) {
-        if (effect.getEffect().value() == MobEffects.CONFUSION && VampireService.hasDayWalker(player)) {
+        if (effect.is(MobEffects.CONFUSION) && VampireService.hasDayWalkerSkill(player instanceof ServerPlayer sp ? sp : null)) {
             return false;
         }
 
