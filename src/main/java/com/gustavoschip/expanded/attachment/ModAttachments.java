@@ -38,36 +38,48 @@ import static com.gustavoschip.expanded.Expanded.MOD_ID;
 
 @SuppressWarnings("unused")
 public class ModAttachments {
-    public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MOD_ID);
 
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> POISONOUS_BLOOD_ATTACHMENT = SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> GARLIC_BLOOD_ATTACHMENT = SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> VAMPIRIC_GROUNDING_ATTACHMENT = SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> ADVANCED_FLIGHT_ATTACHMENT = SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> HUNTER_TASK_SKILL_POINTS_ATTACHMENT = TaskAttachmentHolders.HUNTER_TASK_SKILL_POINTS_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT = TaskAttachmentHolders.VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT;
+    public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(
+        NeoForgeRegistries.Keys.ATTACHMENT_TYPES,
+        MOD_ID
+    );
 
-    protected ModAttachments() {
-    }
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> POISONOUS_BLOOD_ATTACHMENT =
+        SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT;
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> GARLIC_BLOOD_ATTACHMENT =
+        SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT;
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> VAMPIRIC_GROUNDING_ATTACHMENT =
+        SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT;
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> ADVANCED_FLIGHT_ATTACHMENT =
+        SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT;
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> HUNTER_TASK_SKILL_POINTS_ATTACHMENT =
+        TaskAttachmentHolders.HUNTER_TASK_SKILL_POINTS_ATTACHMENT;
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT =
+        TaskAttachmentHolders.VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT;
+
+    protected ModAttachments() {}
 
     public static DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> registerBooleanAttachment(String id) {
-        return ATTACHMENTS.register(id, () -> AttachmentType.builder(() -> false)
+        return ATTACHMENTS.register(id, () ->
+            AttachmentType.builder(() -> false)
                 .serialize(Codec.BOOL)
                 .sync(ByteBufCodecs.BOOL)
                 .copyOnDeath()
-                .build());
+                .build()
+        );
     }
 
     public static DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> registerIntegerAttachment(String id) {
-        return ATTACHMENTS.register(id, () -> AttachmentType.builder(() -> 0)
+        return ATTACHMENTS.register(id, () ->
+            AttachmentType.builder(() -> 0)
                 .serialize(Codec.INT)
                 .sync(ByteBufCodecs.INT)
                 .copyOnDeath()
-                .build());
+                .build()
+        );
     }
 
     public static void register(IEventBus modEventBus) {
         ATTACHMENTS.register(modEventBus);
     }
 }
-

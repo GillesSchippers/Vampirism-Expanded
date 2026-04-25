@@ -119,14 +119,14 @@ dependencies {
     jarJar(implementation("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:${mixinsquared_version}")) {
         version {
             strictly "${mixinsquared_version_range}"
-            prefer   "${mixinsquared_version}"
+            prefer "${mixinsquared_version}"
         }
     }
 
     jarJar(implementation("me.fallenbreath:conditional-mixin-neoforge:${conditional_mixin_version}")) {
         version {
             strictly "${conditional_mixin_version_range}"
-            prefer   "${conditional_mixin_version}"
+            prefer "${conditional_mixin_version}"
         }
     }
 

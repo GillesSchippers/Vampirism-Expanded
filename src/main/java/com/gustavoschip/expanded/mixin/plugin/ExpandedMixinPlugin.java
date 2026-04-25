@@ -24,20 +24,19 @@
 
 package com.gustavoschip.expanded.mixin.plugin;
 
-import me.fallenbreath.conditionalmixin.api.mixin.RestrictiveMixinConfigPlugin;
-
 import java.util.List;
 import java.util.Set;
+import me.fallenbreath.conditionalmixin.api.mixin.RestrictiveMixinConfigPlugin;
 
 public class ExpandedMixinPlugin extends RestrictiveMixinConfigPlugin {
+
     @Override
     public String getRefMapperConfig() {
         return null;
     }
 
     @Override
-    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-    }
+    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {}
 
     @Override
     public List<String> getMixins() {

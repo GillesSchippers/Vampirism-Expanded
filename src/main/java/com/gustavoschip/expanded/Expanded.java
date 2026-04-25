@@ -35,9 +35,9 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
 
-
 @Mod(Expanded.MOD_ID)
 public class Expanded {
+
     public static final String MOD_ID = "expanded";
 
     @SuppressWarnings("unused")

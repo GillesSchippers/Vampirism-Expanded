@@ -35,13 +35,20 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public record SkillPointTaskReward(int points, ResourceLocation source,
-                                   ResourceLocation faction) implements TaskReward, ITaskRewardInstance {
-    public static final MapCodec<SkillPointTaskReward> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            Codec.INT.fieldOf("points").forGetter(SkillPointTaskReward::points),
-            ResourceLocation.CODEC.fieldOf("source").forGetter(SkillPointTaskReward::source),
-            ResourceLocation.CODEC.fieldOf("faction").forGetter(SkillPointTaskReward::faction)
-    ).apply(instance, SkillPointTaskReward::new));
+public record SkillPointTaskReward(
+    int points,
+    ResourceLocation source,
+    ResourceLocation faction
+) implements TaskReward, ITaskRewardInstance {
+    public static final MapCodec<SkillPointTaskReward> CODEC = RecordCodecBuilder.mapCodec(instance ->
+        instance
+            .group(
+                Codec.INT.fieldOf("points").forGetter(SkillPointTaskReward::points),
+                ResourceLocation.CODEC.fieldOf("source").forGetter(SkillPointTaskReward::source),
+                ResourceLocation.CODEC.fieldOf("faction").forGetter(SkillPointTaskReward::faction)
+            )
+            .apply(instance, SkillPointTaskReward::new)
+    );
 
     // TODO: Investigate duplicate points in singleplayer?
     @Override
@@ -65,4 +72,3 @@ public record SkillPointTaskReward(int points, ResourceLocation source,
         return Component.translatable("task_reward.expanded.skill_points", this.points);
     }
 }
-

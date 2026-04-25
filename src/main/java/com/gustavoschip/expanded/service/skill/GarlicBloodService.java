@@ -37,11 +37,11 @@ import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
 public final class GarlicBloodService extends ModServices {
+
     public static final int GARLIC_EFFECT_DURATION_TICKS = 20 * 10;
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private GarlicBloodService() {
-    }
+    private GarlicBloodService() {}
 
     public static boolean hasGarlicBloodSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.GARLIC_BLOOD);
@@ -58,7 +58,6 @@ public final class GarlicBloodService extends ModServices {
     public static void syncFromHunterSkill(ServerPlayer player) {
         setGarlicBlood(player, hasGarlicBloodSkill(player));
     }
-
 
     public static boolean isGarlicBloodTarget(Entity entity) {
         return entity instanceof Player player && hasGarlicBlood(player);
@@ -90,5 +89,3 @@ public final class GarlicBloodService extends ModServices {
         applyGarlicEffect(vampire, sourcePlayer);
     }
 }
-
-

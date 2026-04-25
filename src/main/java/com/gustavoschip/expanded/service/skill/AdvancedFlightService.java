@@ -36,12 +36,12 @@ import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
 public final class AdvancedFlightService extends ModServices {
+
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final float ADVANCED_FLIGHT_SPEED_MULTIPLIER = 1.5F;
 
-    private AdvancedFlightService() {
-    }
+    private AdvancedFlightService() {}
 
     public static boolean hasAdvancedFlight(Player player) {
         return hasBooleanAttachment(player, SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT);
@@ -94,7 +94,6 @@ public final class AdvancedFlightService extends ModServices {
         setFlightSpeed(player);
     }
 
-
     private static boolean hasAdvancedFlightEffect(Player player) {
         if (hasAdvancedFlight(player)) {
             return true;
@@ -102,7 +101,6 @@ public final class AdvancedFlightService extends ModServices {
 
         return player instanceof ServerPlayer serverPlayer && hasAdvancedFlightSkill(serverPlayer);
     }
-
 
     private static void setFlightSpeed(Player player) {
         Abilities abilities = player.getAbilities();
@@ -112,8 +110,3 @@ public final class AdvancedFlightService extends ModServices {
         player.onUpdateAbilities();
     }
 }
-
-
-
-
-

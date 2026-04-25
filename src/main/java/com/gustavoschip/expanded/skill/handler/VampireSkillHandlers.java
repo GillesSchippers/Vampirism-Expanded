@@ -36,10 +36,10 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public final class VampireSkillHandlers {
+
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private VampireSkillHandlers() {
-    }
+    private VampireSkillHandlers() {}
 
     public static <T extends IFactionPlayer<T>> Consumer<T> vampiricGroundingToggle(boolean vampiricGrounding) {
         return createToggleAction("vampiric grounding", vampiricGrounding, VampiricGroundingService::setVampiricGrounding);
@@ -49,7 +49,11 @@ public final class VampireSkillHandlers {
         return createToggleAction("advanced flight", advancedFlight, AdvancedFlightService::setAdvancedFlight);
     }
 
-    private static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter) {
+    private static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(
+        String label,
+        boolean value,
+        BiConsumer<ServerPlayer, Boolean> setter
+    ) {
         return player -> {
             if (!(player.asEntity() instanceof ServerPlayer serverPlayer)) {
                 return;
@@ -63,4 +67,3 @@ public final class VampireSkillHandlers {
         };
     }
 }
-

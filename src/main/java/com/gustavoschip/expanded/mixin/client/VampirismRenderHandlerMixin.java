@@ -41,10 +41,13 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(value = RenderHandler.class, priority = 1000, remap = false)
 public abstract class VampirismRenderHandlerMixin {
+
     @Unique
     private static final int POISONOUS_BLOOD_VISION_RED = 0x07;
+
     @Unique
     private static final int POISONOUS_BLOOD_VISION_GREEN = 0xE0;
+
     @Unique
     private static final int POISONOUS_BLOOD_VISION_BLUE = 0x07;
 
@@ -57,12 +60,12 @@ public abstract class VampirismRenderHandlerMixin {
     }
 
     @ModifyArgs(
-            method = "onRenderLivingPost",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lde/teamlapen/vampirism/client/renderer/RenderHandler$OutlineBuffer;setColor(IIII)V",
-                    remap = false
-            )
+        method = "onRenderLivingPost",
+        at = @At(
+            value = "INVOKE",
+            target = "Lde/teamlapen/vampirism/client/renderer/RenderHandler$OutlineBuffer;setColor(IIII)V",
+            remap = false
+        )
     )
     private void expanded$setGreenBloodVisionColorForPoisonousPlayers(Args args) {
         Entity entity = this.expanded$currentBloodVisionEntity;

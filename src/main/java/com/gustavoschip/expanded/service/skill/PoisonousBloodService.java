@@ -38,11 +38,11 @@ import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
 public final class PoisonousBloodService extends ModServices {
+
     public static final int POISONOUS_BLOOD_EFFECT_DURATION_TICKS = 60;
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private PoisonousBloodService() {
-    }
+    private PoisonousBloodService() {}
 
     public static boolean hasPoisonousBlood(Player player) {
         return hasBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT);
@@ -59,7 +59,6 @@ public final class PoisonousBloodService extends ModServices {
     public static void syncFromHunterSkill(ServerPlayer player) {
         setPoisonousBlood(player, hasPoisonousBloodSkill(player));
     }
-
 
     public static boolean isPoisonousBloodTarget(Entity entity) {
         return entity instanceof Player player && hasPoisonousBlood(player);
@@ -91,5 +90,3 @@ public final class PoisonousBloodService extends ModServices {
         event.setUseRemaining(false);
     }
 }
-
-

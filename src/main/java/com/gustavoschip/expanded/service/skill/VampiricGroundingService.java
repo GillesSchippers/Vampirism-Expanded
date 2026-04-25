@@ -44,15 +44,18 @@ import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 public final class VampiricGroundingService extends ModServices {
+
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final ResourceLocation SUNDAMAGE_REDUCTION_ID = fromNamespaceAndPath(MOD_ID, "vampiric_grounding_sundamage");
-    private static final ResourceLocation BLOOD_EXHAUSTION_INCREASE_ID = fromNamespaceAndPath(MOD_ID, "vampiric_grounding_blood_exhaustion");
+    private static final ResourceLocation BLOOD_EXHAUSTION_INCREASE_ID = fromNamespaceAndPath(
+        MOD_ID,
+        "vampiric_grounding_blood_exhaustion"
+    );
     private static final double SUNDAMAGE_REDUCTION_MODIFIER = -0.75D;
     private static final double BLOOD_EXHAUSTION_INCREASE_MODIFIER = 0.5D;
 
-    private VampiricGroundingService() {
-    }
+    private VampiricGroundingService() {}
 
     public static boolean hasVampiricGrounding(Player player) {
         return hasBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT);
@@ -63,7 +66,15 @@ public final class VampiricGroundingService extends ModServices {
     }
 
     public static void setVampiricGrounding(ServerPlayer player, boolean vampiricGrounding) {
-        if (!setBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT, vampiricGrounding, "vampiric grounding", LOGGER)) {
+        if (
+            !setBooleanAttachment(
+                player,
+                SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT,
+                vampiricGrounding,
+                "vampiric grounding",
+                LOGGER
+            )
+        ) {
             return;
         }
 
@@ -156,6 +167,3 @@ public final class VampiricGroundingService extends ModServices {
         boolean expanded$isLastDamageWasSun();
     }
 }
-
-
-

@@ -35,13 +35,23 @@ import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 @SuppressWarnings("unused")
 public final class SkillTreeHolders {
+
     public static final ResourceKey<ISkillTree> HUNTER_LEVEL = ModSkills.tree("hunter/level");
     public static final ResourceKey<ISkillTree> VAMPIRE_LEVEL = ModSkills.tree("vampire/level");
-    public static final GuideBookEntry HUNTER_LEVEL_GUIDE = new GuideBookEntry(HUNTER_LEVEL.location(), "tree.expanded.hunter", "guide.expanded.hunter_tree.text", texture("hunter_root.png"));
-    public static final GuideBookEntry VAMPIRE_LEVEL_GUIDE = new GuideBookEntry(VAMPIRE_LEVEL.location(), "tree.expanded.vampire", "guide.expanded.vampire_tree.text", texture("vampire_root.png"));
+    public static final GuideBookEntry HUNTER_LEVEL_GUIDE = new GuideBookEntry(
+        HUNTER_LEVEL.location(),
+        "tree.expanded.hunter",
+        "guide.expanded.hunter_tree.text",
+        texture("hunter_root.png")
+    );
+    public static final GuideBookEntry VAMPIRE_LEVEL_GUIDE = new GuideBookEntry(
+        VAMPIRE_LEVEL.location(),
+        "tree.expanded.vampire",
+        "guide.expanded.vampire_tree.text",
+        texture("vampire_root.png")
+    );
 
-    private SkillTreeHolders() {
-    }
+    private SkillTreeHolders() {}
 
     private static ResourceLocation texture(String path) {
         return fromNamespaceAndPath(MOD_ID, "textures/skills/" + path);

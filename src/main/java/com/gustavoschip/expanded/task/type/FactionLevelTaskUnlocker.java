@@ -31,33 +31,30 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.task.TaskUnlocker;
 import de.teamlapen.vampirism.entity.factions.FactionPlayerHandler;
+import java.util.Optional;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
-
-public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, Optional<Integer> maxLevel,
-                                       int minLordRank, Optional<Integer> maxLordRank) implements TaskUnlocker {
-
-    public static final MapCodec<FactionLevelTaskUnlocker> CODEC =
-            RecordCodecBuilder.mapCodec(instance -> instance.group(
-                    ResourceLocation.CODEC.fieldOf("faction")
-                            .forGetter(FactionLevelTaskUnlocker::faction),
-
-                    Codec.INT.fieldOf("minLevel")
-                            .forGetter(FactionLevelTaskUnlocker::minLevel),
-
-                    Codec.INT.optionalFieldOf("maxLevel")
-                            .forGetter(FactionLevelTaskUnlocker::maxLevel),
-
-                    Codec.INT.fieldOf("minLordRank")
-                            .forGetter(FactionLevelTaskUnlocker::minLordRank),
-
-                    Codec.INT.optionalFieldOf("maxLordRank")
-                            .forGetter(FactionLevelTaskUnlocker::maxLordRank)
-
-            ).apply(instance, FactionLevelTaskUnlocker::new));
+public record FactionLevelTaskUnlocker(
+    ResourceLocation faction,
+    int minLevel,
+    Optional<Integer> maxLevel,
+    int minLordRank,
+    Optional<Integer> maxLordRank
+) implements TaskUnlocker {
+    public static final MapCodec<FactionLevelTaskUnlocker> CODEC = RecordCodecBuilder.mapCodec(instance ->
+        instance
+            .group(
+                ResourceLocation.CODEC.fieldOf("faction").forGetter(FactionLevelTaskUnlocker::faction),
+                Codec.INT.fieldOf("minLevel").forGetter(FactionLevelTaskUnlocker::minLevel),
+                Codec.INT.optionalFieldOf("maxLevel").forGetter(FactionLevelTaskUnlocker::maxLevel),
+                Codec.INT.fieldOf("minLordRank").forGetter(FactionLevelTaskUnlocker::minLordRank),
+                Codec.INT.optionalFieldOf("maxLordRank").forGetter(FactionLevelTaskUnlocker::maxLordRank)
+            )
+            .apply(instance, FactionLevelTaskUnlocker::new)
+    );
 
     private static boolean isWithinBounds(int value, int minValue, @Nullable Integer maxValue) {
         if (value < minValue) {
@@ -73,13 +70,15 @@ public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, O
 
     @Override
     public Component getDescription() {
-        return Component.literal("Requires faction: %s, level: %d%s, lord rank: %d%s".formatted(
+        return Component.literal(
+            "Requires faction: %s, level: %d%s, lord rank: %d%s".formatted(
                 faction,
                 minLevel,
                 formatUpperBound(maxLevel.orElse(null)),
                 minLordRank,
                 formatUpperBound(maxLordRank.orElse(null))
-        ));
+            )
+        );
     }
 
     @Override

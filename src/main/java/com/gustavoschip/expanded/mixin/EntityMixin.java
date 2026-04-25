@@ -50,5 +50,3 @@ public abstract class EntityMixin {
         }
     }
 }
-
-

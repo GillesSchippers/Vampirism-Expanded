@@ -32,13 +32,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public final class NeoForgeEventHolders {
+
     public static final NeoForgeEventHolders INSTANCE = new NeoForgeEventHolders();
 
-    private NeoForgeEventHolders() {
-    }
+    private NeoForgeEventHolders() {}
 
     @SubscribeEvent
     public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {

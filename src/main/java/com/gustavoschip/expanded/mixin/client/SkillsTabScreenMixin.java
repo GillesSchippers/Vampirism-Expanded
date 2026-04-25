@@ -43,9 +43,11 @@ import java.util.ArrayList;
 
 @Mixin(value = SkillsTabScreen.class, priority = 1000, remap = false)
 public abstract class SkillsTabScreenMixin {
+
     @Shadow
     @Final
     private Holder<ISkillTree> skillTree;
+
     @Shadow
     @Final
     private ISkillHandler<?> skillHandler;
@@ -62,6 +64,3 @@ public abstract class SkillsTabScreenMixin {
         cir.setReturnValue(ModSkills.ExpandedSkillPointHelper.getRemainingExpandedPoints(player, enabledSkills));
     }
 }
-
-
-

@@ -42,6 +42,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 public final class GuideBookScaledPageTextImage extends Page {
+
     private final PageText pageText;
     private final ResourceLocation image;
     private final int imageX;
@@ -49,7 +50,15 @@ public final class GuideBookScaledPageTextImage extends Page {
     private final int imageWidth;
     private final int imageHeight;
 
-    public GuideBookScaledPageTextImage(FormattedText text, ResourceLocation image, int textYOffset, int imageX, int imageY, int imageWidth, int imageHeight) {
+    public GuideBookScaledPageTextImage(
+        FormattedText text,
+        ResourceLocation image,
+        int textYOffset,
+        int imageX,
+        int imageY,
+        int imageWidth,
+        int imageHeight
+    ) {
         this.pageText = new PageText(text, textYOffset);
         this.image = image;
         this.imageX = imageX;
@@ -60,7 +69,19 @@ public final class GuideBookScaledPageTextImage extends Page {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void draw(GuiGraphics graphics, RegistryAccess registryAccess, Book book, CategoryAbstract category, EntryAbstract entry, int guiLeft, int guiTop, int mouseX, int mouseY, BaseScreen guiBase, Font fontRendererObj) {
+    public void draw(
+        GuiGraphics graphics,
+        RegistryAccess registryAccess,
+        Book book,
+        CategoryAbstract category,
+        EntryAbstract entry,
+        int guiLeft,
+        int guiTop,
+        int mouseX,
+        int mouseY,
+        BaseScreen guiBase,
+        Font fontRendererObj
+    ) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, image);

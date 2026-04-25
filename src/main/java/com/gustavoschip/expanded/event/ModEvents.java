@@ -32,12 +32,10 @@ import net.neoforged.neoforge.common.NeoForge;
 @SuppressWarnings("unused")
 public final class ModEvents {
 
-    private ModEvents() {
-    }
+    private ModEvents() {}
 
     public static void register(IEventBus modEventBus) {
         NeoForge.EVENT_BUS.register(VampirismEventHolders.INSTANCE);
         NeoForge.EVENT_BUS.register(NeoForgeEventHolders.INSTANCE);
     }
 }
-

@@ -49,10 +49,14 @@ import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 @SuppressWarnings("unused")
 public final class ModSkills {
+
     public static final DeferredRegister<ISkill<?>> SKILLS = DeferredRegister.create(VampirismRegistries.Keys.SKILL, MOD_ID);
     public static final ResourceLocation HUNTER_FACTION_ID = fromNamespaceAndPath("vampirism", "hunter");
     public static final ResourceLocation VAMPIRE_FACTION_ID = fromNamespaceAndPath("vampirism", "vampire");
-    public static final ISkillPointProvider TASK_SKILL_POINTS = SkillPointProviders.register(fromNamespaceAndPath(MOD_ID, "task_skill_points"), ModTasks.TaskSkillPointStorage::getSkillPoints);
+    public static final ISkillPointProvider TASK_SKILL_POINTS = SkillPointProviders.register(
+        fromNamespaceAndPath(MOD_ID, "task_skill_points"),
+        ModTasks.TaskSkillPointStorage::getSkillPoints
+    );
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = SkillHolders.HUNTER_ROOT;
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SkillHolders.POISONOUS_BLOOD;
@@ -61,8 +65,7 @@ public final class ModSkills {
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRIC_GROUNDING = SkillHolders.VAMPIRIC_GROUNDING;
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> ADVANCED_FLIGHT = SkillHolders.ADVANCED_FLIGHT;
 
-    private ModSkills() {
-    }
+    private ModSkills() {}
 
     public static void register(IEventBus modEventBus) {
         SKILLS.register(modEventBus);
@@ -77,29 +80,27 @@ public final class ModSkills {
     }
 
     public static final class Trees {
+
         public static final ResourceKey<ISkillTree> HUNTER_LEVEL = SkillTreeHolders.HUNTER_LEVEL;
         public static final ResourceKey<ISkillTree> VAMPIRE_LEVEL = SkillTreeHolders.VAMPIRE_LEVEL;
 
-        private Trees() {
-        }
-
+        private Trees() {}
     }
 
     public static final class Nodes {
+
         public static final ResourceKey<ISkillNode> HUNTER_ROOT = SkillNodeHolders.HUNTER_ROOT;
         public static final ResourceKey<ISkillNode> HUNTER_1 = SkillNodeHolders.HUNTER_1;
 
         public static final ResourceKey<ISkillNode> VAMPIRE_ROOT = SkillNodeHolders.VAMPIRE_ROOT;
         public static final ResourceKey<ISkillNode> VAMPIRE_1 = SkillNodeHolders.VAMPIRE_1;
 
-        private Nodes() {
-        }
-
+        private Nodes() {}
     }
 
     public static final class ExpandedSkillPointHelper {
-        private ExpandedSkillPointHelper() {
-        }
+
+        private ExpandedSkillPointHelper() {}
 
         public static boolean usesExpandedPoints(ISkill<?> skill) {
             return skill.allowedSkillTrees().map(ExpandedSkillPointHelper::isExpandedTree, tag -> false);
@@ -118,12 +119,12 @@ public final class ModSkills {
                 return Integer.MAX_VALUE;
             }
 
-            int spentPoints = enabledSkills.stream()
-                    .filter(ExpandedSkillPointHelper::usesExpandedPoints)
-                    .mapToInt(ISkill::getSkillPointCost)
-                    .sum();
+            int spentPoints = enabledSkills
+                .stream()
+                .filter(ExpandedSkillPointHelper::usesExpandedPoints)
+                .mapToInt(ISkill::getSkillPointCost)
+                .sum();
             return Math.max(0, ModTasks.TaskSkillPointStorage.getSkillPoints(player) - spentPoints);
         }
     }
 }
-

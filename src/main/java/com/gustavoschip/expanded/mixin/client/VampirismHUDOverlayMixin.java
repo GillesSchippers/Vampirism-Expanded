@@ -38,15 +38,11 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(value = VampirismHUDOverlay.class, priority = 1000, remap = false)
 public abstract class VampirismHUDOverlayMixin {
+
     @Unique
     private static final int POISONOUS_BLOOD_FANGS_COLOR = 0x099022;
 
-    @ModifyVariable(
-            method = "renderBloodFangs",
-            at = @At("HEAD"),
-            argsOnly = true,
-            ordinal = 2
-    )
+    @ModifyVariable(method = "renderBloodFangs", at = @At("HEAD"), argsOnly = true, ordinal = 2)
     private int expanded$forceGreenFangsForPoisonousPlayers(int color) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.hitResult == null || mc.hitResult.getType() != HitResult.Type.ENTITY) {

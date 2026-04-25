@@ -37,11 +37,10 @@ import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
 
 @SuppressWarnings("unused")
 public abstract class ModServices {
-    protected ModServices() {
-    }
 
-    public static void register(IEventBus modEventBus) {
-    }
+    protected ModServices() {}
+
+    public static void register(IEventBus modEventBus) {}
 
     public static boolean canSyncAttachment(ServerPlayer player) {
         return player != null;
@@ -51,14 +50,23 @@ public abstract class ModServices {
         return player.getData(attachment);
     }
 
-    protected static boolean hasBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment) {
+    protected static boolean hasBooleanAttachment(
+        ServerPlayer player,
+        DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment
+    ) {
         if (!canSyncAttachment(player)) {
             return false;
         }
         return hasBooleanAttachment((Player) player, attachment);
     }
 
-    protected static boolean setBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment, boolean value, String label, Logger logger) {
+    protected static boolean setBooleanAttachment(
+        ServerPlayer player,
+        DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment,
+        boolean value,
+        String label,
+        Logger logger
+    ) {
         if (!canSyncAttachment(player)) {
             logger.debug("Deferred {} update for {} until login sync", label, player.getName().getString());
             return false;
@@ -72,11 +80,13 @@ public abstract class ModServices {
         return true;
     }
 
-    protected static boolean hasSkillEnabled(ServerPlayer player, DeferredHolder<ISkill<?>, ? extends ISkill<? extends IFactionPlayer<?>>> skill) {
+    protected static boolean hasSkillEnabled(
+        ServerPlayer player,
+        DeferredHolder<ISkill<?>, ? extends ISkill<? extends IFactionPlayer<?>>> skill
+    ) {
         return factionPlayerHandler(player)
-                .getCurrentFactionPlayer()
-                .map(factionPlayer -> factionPlayer.getSkillHandler().isSkillEnabled(skill.get()))
-                .orElse(false);
+            .getCurrentFactionPlayer()
+            .map(factionPlayer -> factionPlayer.getSkillHandler().isSkillEnabled(skill.get()))
+            .orElse(false);
     }
 }
-

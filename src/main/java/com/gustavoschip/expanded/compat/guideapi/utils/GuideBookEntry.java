@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("unused")
 public final class GuideBookEntry {
+
     private final ResourceLocation id;
     private final String nameKey;
     private final String descriptionKey;
@@ -58,5 +59,3 @@ public final class GuideBookEntry {
         return texture;
     }
 }
-
-

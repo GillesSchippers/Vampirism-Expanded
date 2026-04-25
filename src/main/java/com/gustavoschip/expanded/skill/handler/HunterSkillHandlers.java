@@ -36,10 +36,10 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public final class HunterSkillHandlers {
+
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private HunterSkillHandlers() {
-    }
+    private HunterSkillHandlers() {}
 
     public static <T extends IFactionPlayer<T>> Consumer<T> poisonousBloodToggle(boolean poisonous) {
         return createToggleAction("poisonous blood", poisonous, PoisonousBloodService::setPoisonousBlood);
@@ -49,7 +49,11 @@ public final class HunterSkillHandlers {
         return createToggleAction("garlic blood", garlicBlood, GarlicBloodService::setGarlicBlood);
     }
 
-    private static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter) {
+    private static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(
+        String label,
+        boolean value,
+        BiConsumer<ServerPlayer, Boolean> setter
+    ) {
         return player -> {
             if (!(player.asEntity() instanceof ServerPlayer serverPlayer)) {
                 return;
@@ -63,4 +67,3 @@ public final class HunterSkillHandlers {
         };
     }
 }
-

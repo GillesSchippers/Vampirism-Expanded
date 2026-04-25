@@ -40,5 +40,3 @@ public interface SkillHandlerAccessorMixin {
     @Accessor("player")
     IFactionPlayer<?> expanded$getPlayer();
 }
-
-

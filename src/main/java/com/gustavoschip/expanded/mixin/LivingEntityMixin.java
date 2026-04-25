@@ -35,6 +35,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = LivingEntity.class, priority = 1000, remap = true)
 public abstract class LivingEntityMixin implements VampiricGroundingService.LivingEntitySunDamageTracker {
+
     @Unique
     private boolean expanded$lastDamageWasSun;
 
@@ -53,5 +54,3 @@ public abstract class LivingEntityMixin implements VampiricGroundingService.Livi
         return this.expanded$lastDamageWasSun;
     }
 }
-
-

@@ -36,8 +36,10 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(value = SunOverlay.class, priority = 1000, remap = false)
 public abstract class SunOverlayMixin {
+
     @Unique
     private static final float GROUNDING_START_SCALE = 1.5F;
+
     @Unique
     private static final float GROUNDING_END_SCALE = 1.0F;
 
@@ -47,16 +49,15 @@ public abstract class SunOverlayMixin {
     @Unique
     private static boolean expanded$HasVampiricGrounding() {
         Minecraft mc = Minecraft.getInstance();
-        return mc.player != null &&
-                mc.player.getData(SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT);
+        return mc.player != null && mc.player.getData(SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT);
     }
 
     @ModifyArgs(
-            method = "render",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;scaleBy(FFFFLnet/minecraft/client/gui/GuiGraphics;)V"
-            )
+        method = "render",
+        at = @At(
+            value = "INVOKE",
+            target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;scaleBy(FFFFLnet/minecraft/client/gui/GuiGraphics;)V"
+        )
     )
     private void expanded$modifySunOverlayScale(Args args) {
         if (!expanded$HasVampiricGrounding()) {
@@ -68,15 +69,14 @@ public abstract class SunOverlayMixin {
     }
 
     @ModifyArg(
-            method = "render",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;renderTextureOverlay(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;F)V"
-            ),
-            index = 2
+        method = "render",
+        at = @At(
+            value = "INVOKE",
+            target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;renderTextureOverlay(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;F)V"
+        ),
+        index = 2
     )
     private float expanded$modifySunOverlayAlpha(float originalAlpha) {
         return expanded$HasVampiricGrounding() ? GROUNDING_ALPHA : originalAlpha;
     }
 }
-
