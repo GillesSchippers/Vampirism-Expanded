@@ -26,7 +26,6 @@ package com.gustavoschip.expanded.compat.guideapi;
 
 import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookEntry;
 import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookScaledPageTextImage;
-import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.gustavoschip.expanded.task.ModTasks;
 import de.maxanier.guideapi.api.IPage;
 import de.maxanier.guideapi.api.impl.abstraction.CategoryAbstract;
