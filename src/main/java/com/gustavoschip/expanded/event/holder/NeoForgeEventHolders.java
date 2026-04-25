@@ -56,13 +56,4 @@ public final class NeoForgeEventHolders {
     public void onLivingKnockBack(LivingKnockBackEvent event) {
         VampiricGroundingService.handleLivingKnockback(event);
     }
-
-    @SubscribeEvent
-    public void onPlayerTick(PlayerTickEvent.Post event) {
-        if (!(event.getEntity() instanceof ServerPlayer player)) {
-            return;
-        }
-
-        VampiricGroundingService.clearSunDisorientation(player);
-    }
 }

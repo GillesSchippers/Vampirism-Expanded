@@ -34,7 +34,6 @@ import de.teamlapen.vampirism.entity.player.vampire.actions.VampireActions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -94,17 +93,6 @@ public final class VampiricGroundingService extends ModServices {
         }
         return false;
     }
-
-    public static void clearSunDisorientation(ServerPlayer player) {
-        if (!hasVampiricGrounding(player)) {
-            return;
-        }
-
-        if (player.hasEffect(MobEffects.CONFUSION)) {
-            player.removeEffect(MobEffects.CONFUSION);
-        }
-    }
-
 
     public static void handleLivingKnockback(LivingKnockBackEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || !VampiricGroundingService.hasVampiricGrounding(player)) {
