@@ -40,16 +40,34 @@ public final class SkillHolders {
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = ModSkills.SKILLS.register("hunter_root", () ->
         new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 0, false)
     );
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = ModSkills.SKILLS.register("poisonous_blood", () ->
-        new ActionFactionSkill<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 9, true).setToggleActions(
-            HunterSkillHandlers.poisonousBloodToggle(true),
-            HunterSkillHandlers.poisonousBloodToggle(false)
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> INNATE_TOUGHNESS = ModSkills.SKILLS.register("innate_toughness", () ->
+        new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 1, true).setToggleActions(
+            HunterSkillHandlers.innateToughnessToggle(true),
+            HunterSkillHandlers.innateToughnessToggle(false)
+        )
+    );
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> ___ = ModSkills.SKILLS.register("hunters_growth", () ->
+        new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 3, true).setToggleActions(
+            HunterSkillHandlers.huntersGrowthToggle(true),
+            HunterSkillHandlers.huntersGrowthToggle(false)
+        )
+    );
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> __ = ModSkills.SKILLS.register("prepared_hunt", () ->
+        new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 5, true).setToggleActions(
+            HunterSkillHandlers.preparedHuntToggle(true),
+            HunterSkillHandlers.preparedHuntToggle(false)
         )
     );
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> GARLIC_BLOOD = ModSkills.SKILLS.register("garlic_blood", () ->
         new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 7, true).setToggleActions(
             HunterSkillHandlers.garlicBloodToggle(true),
             HunterSkillHandlers.garlicBloodToggle(false)
+        )
+    );
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = ModSkills.SKILLS.register("poisonous_blood", () ->
+        new ActionFactionSkill<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 9, true).setToggleActions(
+            HunterSkillHandlers.poisonousBloodToggle(true),
+            HunterSkillHandlers.poisonousBloodToggle(false)
         )
     );
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = ModSkills.SKILLS.register("vampire_root", () ->

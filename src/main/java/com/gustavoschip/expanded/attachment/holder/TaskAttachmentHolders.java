@@ -30,8 +30,10 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class TaskAttachmentHolders extends ModAttachments {
 
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> HUNTER_TASK_SKILL_POINTS_ATTACHMENT = ModAttachments.registerIntegerAttachment("hunter_task_skill_points");
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT = ModAttachments.registerIntegerAttachment("vampire_task_skill_points");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> HUNTER_TASK_SKILL_POINTS_ATTACHMENT = registerIntegerAttachment("hunter_task_skill_points");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT = registerIntegerAttachment("vampire_task_skill_points");
 
     private TaskAttachmentHolders() {}
+
+    public static void init() {}
 }

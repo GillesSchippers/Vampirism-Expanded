@@ -30,13 +30,15 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class SkillAttachmentHolders extends ModAttachments {
 
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> POISONOUS_BLOOD_ATTACHMENT = ModAttachments.registerBooleanAttachment("poisonous_blood");
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> GARLIC_BLOOD_ATTACHMENT = ModAttachments.registerBooleanAttachment("garlic_blood");
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_SPEED_ATTACHMENT = ModAttachments.registerBooleanAttachment("bat_speed");
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_ARMOR_ATTACHMENT = ModAttachments.registerBooleanAttachment("bat_armor");
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_LIQUID_ATTACHMENT = ModAttachments.registerBooleanAttachment("bat_liquid");
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> VAMPIRIC_CONSTITUTION_ATTACHMENT = ModAttachments.registerBooleanAttachment("vampiric_constitution");
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> DAY_WALKER_ATTACHMENT = ModAttachments.registerBooleanAttachment("day_walker");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> POISONOUS_BLOOD_ATTACHMENT = registerBooleanAttachment("poisonous_blood");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> GARLIC_BLOOD_ATTACHMENT = registerBooleanAttachment("garlic_blood");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_SPEED_ATTACHMENT = registerBooleanAttachment("bat_speed");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_ARMOR_ATTACHMENT = registerBooleanAttachment("bat_armor");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_LIQUID_ATTACHMENT = registerBooleanAttachment("bat_liquid");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> VAMPIRIC_CONSTITUTION_ATTACHMENT = registerBooleanAttachment("vampiric_constitution");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> DAY_WALKER_ATTACHMENT = registerBooleanAttachment("day_walker");
 
     private SkillAttachmentHolders() {}
+
+    public static void init() {}
 }

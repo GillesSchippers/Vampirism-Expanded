@@ -27,10 +27,12 @@ package com.gustavoschip.expanded.skill;
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
+import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.gustavoschip.expanded.skill.holder.SkillNodeHolders;
 import com.gustavoschip.expanded.skill.holder.SkillTreeHolders;
 import com.gustavoschip.expanded.task.ModTasks;
+import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.VampirismRegistries;
 import de.teamlapen.vampirism.api.entity.factions.ISkillNode;
 import de.teamlapen.vampirism.api.entity.factions.ISkillTree;
@@ -39,12 +41,16 @@ import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkillPointProvider;
 import de.teamlapen.vampirism.api.entity.player.skills.SkillPointProviders;
 import java.util.Collection;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.slf4j.Logger;
 
 @SuppressWarnings("unused")
 public final class ModSkills {
@@ -53,7 +59,6 @@ public final class ModSkills {
     public static final ResourceLocation HUNTER_FACTION_ID = fromNamespaceAndPath("vampirism", "hunter");
     public static final ResourceLocation VAMPIRE_FACTION_ID = fromNamespaceAndPath("vampirism", "vampire");
     public static final ISkillPointProvider TASK_SKILL_POINTS = SkillPointProviders.register(fromNamespaceAndPath(MOD_ID, "task_skill_points"), ModTasks.TaskSkillPointStorage::getSkillPoints);
-
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = SkillHolders.HUNTER_ROOT;
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SkillHolders.POISONOUS_BLOOD;
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> GARLIC_BLOOD = SkillHolders.GARLIC_BLOOD;
@@ -63,6 +68,7 @@ public final class ModSkills {
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BAT_LIQUID = SkillHolders.BAT_LIQUID;
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRIC_CONSTITUTION = SkillHolders.VAMPIRIC_CONSTITUTION;
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> DAY_WALKER = SkillHolders.DAY_WALKER;
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     private ModSkills() {}
 
@@ -76,6 +82,20 @@ public final class ModSkills {
 
     public static ResourceKey<ISkillNode> node(String path) {
         return ResourceKey.create(VampirismRegistries.Keys.SKILL_NODE, fromNamespaceAndPath(MOD_ID, path));
+    }
+
+    public static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter) {
+        return player -> {
+            if (!(player.asEntity() instanceof ServerPlayer serverPlayer)) {
+                return;
+            }
+            if (!ModServices.canSyncAttachment(serverPlayer)) {
+                LOGGER.debug("Deferred {} toggle {} for {} until login sync", label, value, serverPlayer.getName().getString());
+                return;
+            }
+            LOGGER.debug("Toggling {} to {} for {}", label, value, serverPlayer.getName().getString());
+            setter.accept(serverPlayer, value);
+        };
     }
 
     public static final class Trees {

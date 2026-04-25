@@ -181,7 +181,7 @@ public class VampireService extends ModServices {
             return;
         }
 
-        setFlightSpeed(player);
+        setFlightSpeedBuff(player);
     }
 
     private static boolean hasBatSpeedFlight(Player player) {
@@ -192,7 +192,7 @@ public class VampireService extends ModServices {
         return player instanceof ServerPlayer serverPlayer && hasBatSpeedSkill(serverPlayer);
     }
 
-    private static void setFlightSpeed(Player player) {
+    private static void setFlightSpeedBuff(Player player) {
         Abilities abilities = player.getAbilities();
         float speed = abilities.getFlyingSpeed() * FLIGHT_SPEED_MULTIPLIER;
         LOGGER.debug("Setting flight speed for {} to {}", player.getName().getString(), speed);

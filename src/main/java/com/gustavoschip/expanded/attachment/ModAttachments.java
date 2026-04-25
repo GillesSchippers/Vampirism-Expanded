@@ -26,6 +26,8 @@ package com.gustavoschip.expanded.attachment;
 
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 
+import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
+import com.gustavoschip.expanded.attachment.holder.TaskAttachmentHolders;
 import com.mojang.serialization.Codec;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.bus.api.IEventBus;
@@ -60,6 +62,9 @@ public abstract class ModAttachments {
     }
 
     public static void register(IEventBus modEventBus) {
+        SkillAttachmentHolders.init();
+        TaskAttachmentHolders.init();
+
         ATTACHMENTS.register(modEventBus);
     }
 }

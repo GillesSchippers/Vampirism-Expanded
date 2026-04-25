@@ -24,18 +24,13 @@
 
 package com.gustavoschip.expanded.skill.handler;
 
-import com.gustavoschip.expanded.service.ModServices;
+import static com.gustavoschip.expanded.skill.ModSkills.createToggleAction;
+
 import com.gustavoschip.expanded.service.skill.VampireService;
-import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import net.minecraft.server.level.ServerPlayer;
-import org.slf4j.Logger;
 
 public final class VampireSkillHandlers {
-
-    private static final Logger LOGGER = LogUtils.getLogger();
 
     private VampireSkillHandlers() {}
 
@@ -57,19 +52,5 @@ public final class VampireSkillHandlers {
 
     public static <T extends IFactionPlayer<T>> Consumer<T> dayWalkerToggle(boolean enabled) {
         return createToggleAction("Day Walker", enabled, VampireService::setDayWalker);
-    }
-
-    private static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter) {
-        return player -> {
-            if (!(player.asEntity() instanceof ServerPlayer serverPlayer)) {
-                return;
-            }
-            if (!ModServices.canSyncAttachment(serverPlayer)) {
-                LOGGER.debug("Deferred {} toggle {} for {} until login sync", label, value, serverPlayer.getName().getString());
-                return;
-            }
-            LOGGER.debug("Toggling {} to {} for {}", label, value, serverPlayer.getName().getString());
-            setter.accept(serverPlayer, value);
-        };
     }
 }

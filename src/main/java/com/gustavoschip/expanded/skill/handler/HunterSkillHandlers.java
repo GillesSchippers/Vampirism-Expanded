@@ -24,40 +24,36 @@
 
 package com.gustavoschip.expanded.skill.handler;
 
-import com.gustavoschip.expanded.service.ModServices;
+import static com.gustavoschip.expanded.skill.ModSkills.createToggleAction;
+
 import com.gustavoschip.expanded.service.skill.HunterService;
-import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import net.minecraft.server.level.ServerPlayer;
-import org.slf4j.Logger;
 
 public final class HunterSkillHandlers {
 
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     private HunterSkillHandlers() {}
 
-    public static <T extends IFactionPlayer<T>> Consumer<T> poisonousBloodToggle(boolean enabled) {
-        return createToggleAction("Poisonous Blood", enabled, HunterService::setPoisonousBlood);
+    public static <T extends IFactionPlayer<T>> Consumer<T> innateToughnessToggle(boolean enabled) {
+        //return createToggleAction("Innate Toughness", enabled, HunterService::setInnateToughness);
+        return createToggleAction("Innate Toughness", enabled, null);
+    }
+
+    public static <T extends IFactionPlayer<T>> Consumer<T> huntersGrowthToggle(boolean enabled) {
+        //return createToggleAction("Hunters Growth", enabled, HunterService::setHuntersGrowth);
+        return createToggleAction("Hunters Growth", enabled, null);
+    }
+
+    public static <T extends IFactionPlayer<T>> Consumer<T> preparedHuntToggle(boolean enabled) {
+        //return createToggleAction("Prepared Hunt", enabled, HunterService::setPreparedHunt);
+        return createToggleAction("Prepared Hunt", enabled, null);
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> garlicBloodToggle(boolean enabled) {
         return createToggleAction("Garlic Blood", enabled, HunterService::setGarlicBlood);
     }
 
-    private static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter) {
-        return player -> {
-            if (!(player.asEntity() instanceof ServerPlayer serverPlayer)) {
-                return;
-            }
-            if (!ModServices.canSyncAttachment(serverPlayer)) {
-                LOGGER.debug("Deferred {} toggle {} for {} until login sync", label, value, serverPlayer.getName().getString());
-                return;
-            }
-            LOGGER.debug("Toggling {} to {} for {}", label, value, serverPlayer.getName().getString());
-            setter.accept(serverPlayer, value);
-        };
+    public static <T extends IFactionPlayer<T>> Consumer<T> poisonousBloodToggle(boolean enabled) {
+        return createToggleAction("Poisonous Blood", enabled, HunterService::setPoisonousBlood);
     }
 }

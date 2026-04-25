@@ -48,7 +48,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class BatVampireActionMixin {
 
     @Unique
-    private static void expanded$applyBatModeBonuses(IVampirePlayer vampire) {
+    private static void expanded$applyBatModeStats(IVampirePlayer vampire) {
         if (vampire.asEntity() instanceof ServerPlayer player) {
             VampireService.onBatActivated(player);
         }
@@ -84,13 +84,13 @@ public abstract class BatVampireActionMixin {
 
     @Inject(method = "onReActivated(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)V", at = @At("TAIL"))
     private void expanded$applyBatModeBonusesOnReload(IVampirePlayer vampire, CallbackInfo ci) {
-        expanded$applyBatModeBonuses(vampire);
+        expanded$applyBatModeStats(vampire);
     }
 
     @Inject(method = "activate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;Lde/teamlapen/vampirism/api/entity/player/actions/IAction$ActivationContext;)Z", at = @At("TAIL"))
     private void expanded$applyBatModeBonusesOnActivate(IVampirePlayer vampire, IAction.ActivationContext context, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValueZ()) {
-            expanded$applyBatModeBonuses(vampire);
+            expanded$applyBatModeStats(vampire);
         }
     }
 
