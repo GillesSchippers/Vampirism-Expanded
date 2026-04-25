@@ -24,6 +24,9 @@
 
 package com.gustavoschip.expanded.skill;
 
+import static com.gustavoschip.expanded.Expanded.MOD_ID;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.gustavoschip.expanded.skill.holder.SkillNodeHolders;
 import com.gustavoschip.expanded.skill.holder.SkillTreeHolders;
@@ -35,17 +38,13 @@ import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkillPointProvider;
 import de.teamlapen.vampirism.api.entity.player.skills.SkillPointProviders;
+import java.util.Collection;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.Collection;
-
-import static com.gustavoschip.expanded.Expanded.MOD_ID;
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 @SuppressWarnings("unused")
 public final class ModSkills {
@@ -91,9 +90,13 @@ public final class ModSkills {
 
         public static final ResourceKey<ISkillNode> HUNTER_ROOT = SkillNodeHolders.HUNTER_ROOT;
         public static final ResourceKey<ISkillNode> HUNTER_1 = SkillNodeHolders.HUNTER_1;
+        public static final ResourceKey<ISkillNode> HUNTER_2 = SkillNodeHolders.HUNTER_2;
+        public static final ResourceKey<ISkillNode> HUNTER_3 = SkillNodeHolders.HUNTER_3;
 
         public static final ResourceKey<ISkillNode> VAMPIRE_ROOT = SkillNodeHolders.VAMPIRE_ROOT;
         public static final ResourceKey<ISkillNode> VAMPIRE_1 = SkillNodeHolders.VAMPIRE_1;
+        public static final ResourceKey<ISkillNode> VAMPIRE_2 = SkillNodeHolders.VAMPIRE_2;
+        public static final ResourceKey<ISkillNode> VAMPIRE_3 = SkillNodeHolders.VAMPIRE_3;
 
         private Nodes() {}
     }

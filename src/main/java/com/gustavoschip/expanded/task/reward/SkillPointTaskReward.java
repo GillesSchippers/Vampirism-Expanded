@@ -33,6 +33,7 @@ import de.teamlapen.vampirism.api.entity.player.task.ITaskRewardInstance;
 import de.teamlapen.vampirism.api.entity.player.task.TaskReward;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
 public record SkillPointTaskReward(
@@ -50,13 +51,14 @@ public record SkillPointTaskReward(
             .apply(instance, SkillPointTaskReward::new)
     );
 
-    // TODO: Investigate duplicate points in singleplayer?
     @Override
     public void applyReward(IFactionPlayer<?> player) {
+        if (!(player.asEntity() instanceof ServerPlayer)) {
+            return;
+        }
         ModTasks.TaskSkillPointStorage.addSkillPoints(player, this.faction, this.points);
     }
 
-    // TODO: Is this the cause of the issue described above? Shared/duplicated instances?
     @Override
     public @NotNull ITaskRewardInstance createInstance(IFactionPlayer<?> player) {
         return this;

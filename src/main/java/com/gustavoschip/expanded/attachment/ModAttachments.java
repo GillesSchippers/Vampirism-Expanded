@@ -24,6 +24,8 @@
 
 package com.gustavoschip.expanded.attachment;
 
+import static com.gustavoschip.expanded.Expanded.MOD_ID;
+
 import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
 import com.gustavoschip.expanded.attachment.holder.TaskAttachmentHolders;
 import com.mojang.serialization.Codec;
@@ -33,8 +35,6 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-
-import static com.gustavoschip.expanded.Expanded.MOD_ID;
 
 @SuppressWarnings("unused")
 public class ModAttachments {

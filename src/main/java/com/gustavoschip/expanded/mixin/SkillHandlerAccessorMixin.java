@@ -27,10 +27,9 @@ package com.gustavoschip.expanded.mixin;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
 import de.teamlapen.vampirism.entity.player.skills.SkillHandler;
+import java.util.ArrayList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
-
-import java.util.ArrayList;
 
 @Mixin(value = SkillHandler.class, priority = 1000, remap = false)
 public interface SkillHandlerAccessorMixin {

@@ -30,12 +30,11 @@ import de.teamlapen.vampirism.api.entity.factions.IPlayableFaction;
 import de.teamlapen.vampirism.api.entity.factions.ISkillTree;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.entity.player.skills.VampirismSkill;
+import java.util.Optional;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
 
 public class FactionSkillBase<T extends IFactionPlayer<T>> extends VampirismSkill<T> {
 

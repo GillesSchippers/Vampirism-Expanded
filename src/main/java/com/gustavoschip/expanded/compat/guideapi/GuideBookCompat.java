@@ -24,6 +24,11 @@
 
 package com.gustavoschip.expanded.compat.guideapi;
 
+import static com.gustavoschip.expanded.Expanded.MOD_ID;
+import static de.teamlapen.vampirism.core.ModBlocks.VAMPIRE_ORCHID;
+import static de.teamlapen.vampirism.modcompat.guide.GuideBook.translateComponent;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookEntry;
 import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookScaledPageTextImage;
 import com.gustavoschip.expanded.task.ModTasks;
@@ -35,21 +40,15 @@ import de.maxanier.guideapi.category.CategoryItemStack;
 import de.maxanier.guideapi.page.PageText;
 import de.teamlapen.vampirism.modcompat.guide.EntryText;
 import de.teamlapen.vampirism.modcompat.guide.VampirismGuideBookCategoriesEvent;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.gustavoschip.expanded.Expanded.MOD_ID;
-import static de.teamlapen.vampirism.core.ModBlocks.VAMPIRE_ORCHID;
-import static de.teamlapen.vampirism.modcompat.guide.GuideBook.translateComponent;
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 public class GuideBookCompat {
 

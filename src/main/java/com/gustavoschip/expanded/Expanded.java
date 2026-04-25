@@ -27,7 +27,6 @@ package com.gustavoschip.expanded;
 import com.gustavoschip.expanded.attachment.ModAttachments;
 import com.gustavoschip.expanded.compat.guideapi.GuideBookCompat;
 import com.gustavoschip.expanded.event.ModEvents;
-import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.skill.ModSkills;
 import com.gustavoschip.expanded.task.ModTasks;
 import net.neoforged.bus.api.IEventBus;
@@ -45,8 +44,7 @@ public class Expanded {
         ModAttachments.register(modEventBus);
         ModTasks.register(modEventBus);
         ModSkills.register(modEventBus);
-        ModEvents.register(modEventBus);
-        ModServices.register(modEventBus);
+        ModEvents.register();
 
         if (FMLEnvironment.dist.isClient() && ModList.get().isLoaded("guideapi_vp")) {
             GuideBookCompat.register();

@@ -1,7 +1,3 @@
 {
-  "skills": [
-    "expanded:vampiric_grounding",
-    "expanded:advanced_flight"
-  ]
+  "skills": ["expanded:vampiric_grounding", "expanded:advanced_flight"]
 }
-

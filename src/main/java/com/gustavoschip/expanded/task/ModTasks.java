@@ -24,6 +24,9 @@
 
 package com.gustavoschip.expanded.task;
 
+import static com.gustavoschip.expanded.Expanded.MOD_ID;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 import com.gustavoschip.expanded.attachment.ModAttachments;
 import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookEntry;
 import com.gustavoschip.expanded.task.holder.HunterTaskHolders;
@@ -45,9 +48,6 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Nullable;
-
-import static com.gustavoschip.expanded.Expanded.MOD_ID;
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 @SuppressWarnings("unused")
 public final class ModTasks {

@@ -1,7 +1,3 @@
 {
-  "skills": [
-    "expanded:poisonous_blood",
-    "expanded:garlic_blood"
-  ]
+  "skills": ["expanded:poisonous_blood", "expanded:garlic_blood"]
 }
-

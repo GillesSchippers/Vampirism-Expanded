@@ -29,11 +29,10 @@ import com.gustavoschip.expanded.service.skill.AdvancedFlightService;
 import com.gustavoschip.expanded.service.skill.VampiricGroundingService;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
-import net.minecraft.server.level.ServerPlayer;
-import org.slf4j.Logger;
-
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import net.minecraft.server.level.ServerPlayer;
+import org.slf4j.Logger;
 
 public final class VampireSkillHandlers {
 

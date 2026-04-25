@@ -24,23 +24,20 @@
 
 package com.gustavoschip.expanded.service;
 
+import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
+
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.slf4j.Logger;
-
-import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
 
 @SuppressWarnings("unused")
 public abstract class ModServices {
 
     protected ModServices() {}
-
-    public static void register(IEventBus modEventBus) {}
 
     public static boolean canSyncAttachment(ServerPlayer player) {
         return player != null;

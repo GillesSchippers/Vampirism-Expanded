@@ -24,6 +24,9 @@
 
 package com.gustavoschip.expanded.skill.holder;
 
+import static com.gustavoschip.expanded.Expanded.MOD_ID;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookEntry;
 import com.gustavoschip.expanded.skill.ModSkills;
 import com.gustavoschip.expanded.skill.handler.HunterSkillHandlers;
@@ -34,9 +37,6 @@ import com.mojang.datafixers.util.Either;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
 import net.neoforged.neoforge.registries.DeferredHolder;
-
-import static com.gustavoschip.expanded.Expanded.MOD_ID;
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 @SuppressWarnings("unused")
 public final class SkillHolders {

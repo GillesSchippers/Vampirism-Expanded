@@ -24,14 +24,14 @@
 
 package com.gustavoschip.expanded.skill.holder;
 
+import static com.gustavoschip.expanded.Expanded.MOD_ID;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookEntry;
 import com.gustavoschip.expanded.skill.ModSkills;
 import de.teamlapen.vampirism.api.entity.factions.ISkillTree;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-
-import static com.gustavoschip.expanded.Expanded.MOD_ID;
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 @SuppressWarnings("unused")
 public final class SkillTreeHolders {

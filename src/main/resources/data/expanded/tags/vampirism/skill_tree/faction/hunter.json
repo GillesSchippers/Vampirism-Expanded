@@ -1,7 +1,4 @@
 {
   "replace": false,
-  "values": [
-    "expanded:hunter/level"
-  ]
+  "values": ["expanded:hunter/level"]
 }
-

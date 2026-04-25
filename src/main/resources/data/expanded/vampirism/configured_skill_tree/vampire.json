@@ -2,9 +2,14 @@
   "children": [
     {
       "node": "expanded:vampire_1"
+    },
+    {
+      "node": "expanded:vampire_2"
+    },
+    {
+      "node": "expanded:vampire_3"
     }
   ],
   "node": "expanded:vampire_root",
   "skill_tree": "expanded:vampire/level"
 }
-

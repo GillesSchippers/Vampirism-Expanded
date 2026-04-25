@@ -24,6 +24,9 @@
 
 package com.gustavoschip.expanded.service.skill;
 
+import static com.gustavoschip.expanded.Expanded.MOD_ID;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
 import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.skill.holder.SkillHolders;
@@ -39,9 +42,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import org.slf4j.Logger;
-
-import static com.gustavoschip.expanded.Expanded.MOD_ID;
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 public final class VampiricGroundingService extends ModServices {
 
