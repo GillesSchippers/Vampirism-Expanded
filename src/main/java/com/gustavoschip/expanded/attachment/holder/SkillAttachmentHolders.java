@@ -32,13 +32,19 @@ public final class SkillAttachmentHolders {
 
     public static final String POISONOUS_BLOOD_ATTACHMENT_ID = "poisonous_blood";
     public static final String GARLIC_BLOOD_ATTACHMENT_ID = "garlic_blood";
-    public static final String VAMPIRIC_GROUNDING_ATTACHMENT_ID = "vampiric_grounding";
-    public static final String ADVANCED_FLIGHT_ATTACHMENT_ID = "advanced_flight";
+    public static final String BAT_SPEED_ATTACHMENT_ID = "bat_speed";
+    public static final String BAT_ARMOR_ATTACHMENT_ID = "bat_armor";
+    public static final String BAT_LIQUID_ATTACHMENT_ID = "bat_liquid";
+    public static final String VAMPIRIC_CONSTITUTION_ATTACHMENT_ID = "vampiric_constitution";
+    public static final String DAY_WALKER_ATTACHMENT_ID = "day_walker";
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> POISONOUS_BLOOD_ATTACHMENT = ModAttachments.registerBooleanAttachment(POISONOUS_BLOOD_ATTACHMENT_ID);
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> GARLIC_BLOOD_ATTACHMENT = ModAttachments.registerBooleanAttachment(GARLIC_BLOOD_ATTACHMENT_ID);
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> VAMPIRIC_GROUNDING_ATTACHMENT = ModAttachments.registerBooleanAttachment(VAMPIRIC_GROUNDING_ATTACHMENT_ID);
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> ADVANCED_FLIGHT_ATTACHMENT = ModAttachments.registerBooleanAttachment(ADVANCED_FLIGHT_ATTACHMENT_ID);
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_SPEED_ATTACHMENT = ModAttachments.registerBooleanAttachment(BAT_SPEED_ATTACHMENT_ID);
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_ARMOR_ATTACHMENT = ModAttachments.registerBooleanAttachment(BAT_ARMOR_ATTACHMENT_ID);
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_LIQUID_ATTACHMENT = ModAttachments.registerBooleanAttachment(BAT_LIQUID_ATTACHMENT_ID);
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> VAMPIRIC_CONSTITUTION_ATTACHMENT = ModAttachments.registerBooleanAttachment(VAMPIRIC_CONSTITUTION_ATTACHMENT_ID);
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> DAY_WALKER_ATTACHMENT = ModAttachments.registerBooleanAttachment(DAY_WALKER_ATTACHMENT_ID);
 
     private SkillAttachmentHolders() {}
 }

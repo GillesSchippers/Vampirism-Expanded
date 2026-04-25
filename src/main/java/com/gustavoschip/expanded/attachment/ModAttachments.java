@@ -43,8 +43,11 @@ public class ModAttachments {
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> POISONOUS_BLOOD_ATTACHMENT = SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT;
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> GARLIC_BLOOD_ATTACHMENT = SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> VAMPIRIC_GROUNDING_ATTACHMENT = SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> ADVANCED_FLIGHT_ATTACHMENT = SkillAttachmentHolders.ADVANCED_FLIGHT_ATTACHMENT;
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_SPEED_ATTACHMENT = SkillAttachmentHolders.BAT_SPEED_ATTACHMENT;
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_ARMOR_ATTACHMENT = SkillAttachmentHolders.BAT_ARMOR_ATTACHMENT;
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_LIQUID_ATTACHMENT = SkillAttachmentHolders.BAT_LIQUID_ATTACHMENT;
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> VAMPIRIC_CONSTITUTION_ATTACHMENT = SkillAttachmentHolders.VAMPIRIC_CONSTITUTION_ATTACHMENT;
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> DAY_WALKER_ATTACHMENT = SkillAttachmentHolders.DAY_WALKER_ATTACHMENT;
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> HUNTER_TASK_SKILL_POINTS_ATTACHMENT = TaskAttachmentHolders.HUNTER_TASK_SKILL_POINTS_ATTACHMENT;
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT = TaskAttachmentHolders.VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT;
 

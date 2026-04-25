@@ -5,13 +5,21 @@
             "children": [
                 {
                     "node": "expanded:hunter_3",
-                    "children": [{ "node": "expanded:hunter_4" }]
+                    "children": [
+                        {
+                            "node": "expanded:hunter_4"
+                        }
+                    ]
                 }
             ]
         },
         {
             "node": "expanded:hunter_2",
-            "children": [{ "node": "expanded:hunter_5" }]
+            "children": [
+                {
+                    "node": "expanded:hunter_5"
+                }
+            ]
         }
     ],
     "node": "expanded:hunter_root",

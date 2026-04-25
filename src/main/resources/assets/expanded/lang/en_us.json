@@ -20,14 +20,7 @@
     "guide.expanded.vampire_tree.text": "The Expanded Vampires tree provides the starting point for the new vampire progression path.\nIt connects the mod's vampire-specific skills to the existing Vampirism progression.",
     "skill.expanded.vampire_root": "Expanded Vampires",
     "guide.expanded.vampire_root.text": "Expanded Vampires is the root skill for the expanded vampire skill tree.\nIt marks the entry point for the new vampire-specific progression.",
-    "skill.expanded.vampiric_grounding": "Vampiric Grounding",
-    "skill.expanded.vampiric_grounding.desc": "Embrace a relentless combat form. Suffer far less sun damage, but bat mode is disabled and blood drains faster.",
-    "guide.expanded.vampiric_grounding": "Vampiric Grounding",
-    "guide.expanded.vampiric_grounding.text": "Vampiric Grounding turns your vampire into a front-line duelist. While active, your sun damage is heavily reduced.\nAs trade-offs, bat mode is disabled and your blood exhaustion is increased, so you must feed more often.",
-    "skill.expanded.advanced_flight": "Advanced Flight",
-    "skill.expanded.advanced_flight.desc": "Your bat form loses the armor and toughness penalties, flies faster, and can be used in liquids.",
-    "guide.expanded.advanced_flight": "Advanced Flight",
-    "guide.expanded.advanced_flight.text": "Advanced Flight improves your bat form. The usual armor and armor toughness penalties are removed, your bat flight speed is increased, and bat mode can be activated or maintained in liquids.",
+
     "task.expanded.hunter_skill_points_1": "Field Training",
     "task.expanded.hunter_skill_points_2": "Veteran Hunt",
     "task.expanded.vampire_skill_points_1": "Night Supplies",
@@ -42,6 +35,5 @@
     "task.expanded.vampire_skill_points_2.reward": "Rewards 2 vampire skill points",
     "task_reward.expanded.skill_points": "Awards %s skill points",
     "text.expanded.faction_level_unlocker.min": "Unlocked for %s at level %s or higher",
-    "text.expanded.faction_level_unlocker.range": "Unlocked for %s between levels %s and %s",
-    "text.expanded.vampiric_grounding.bat_disabled": "Vampiric Grounding prevents bat mode."
+    "text.expanded.faction_level_unlocker.range": "Unlocked for %s between levels %s and %s"
 }

@@ -20,5 +20,7 @@
         "client.VampirismHUDOverlayMixin",
         "client.VampirismRenderHandlerMixin"
     ],
-    "injectors": { "defaultRequire": 1 }
+    "injectors": {
+        "defaultRequire": 1
+    }
 }

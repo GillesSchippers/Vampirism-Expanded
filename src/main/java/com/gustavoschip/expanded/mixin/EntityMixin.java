@@ -24,7 +24,7 @@
 
 package com.gustavoschip.expanded.mixin;
 
-import com.gustavoschip.expanded.service.skill.AdvancedFlightService;
+import com.gustavoschip.expanded.service.skill.VampireService;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
@@ -45,7 +45,7 @@ public abstract class EntityMixin {
             return;
         }
 
-        if (AdvancedFlightService.shouldPreventSwimming(player)) {
+        if (VampireService.shouldPreventSwimming(player)) {
             ci.cancel();
         }
     }

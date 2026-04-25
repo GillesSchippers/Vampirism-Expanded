@@ -25,8 +25,7 @@
 package com.gustavoschip.expanded.skill.handler;
 
 import com.gustavoschip.expanded.service.ModServices;
-import com.gustavoschip.expanded.service.skill.GarlicBloodService;
-import com.gustavoschip.expanded.service.skill.PoisonousBloodService;
+import com.gustavoschip.expanded.service.skill.HunterService;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import java.util.function.BiConsumer;
@@ -40,12 +39,12 @@ public final class HunterSkillHandlers {
 
     private HunterSkillHandlers() {}
 
-    public static <T extends IFactionPlayer<T>> Consumer<T> poisonousBloodToggle(boolean poisonous) {
-        return createToggleAction("poisonous blood", poisonous, PoisonousBloodService::setPoisonousBlood);
+    public static <T extends IFactionPlayer<T>> Consumer<T> poisonousBloodToggle(boolean enabled) {
+        return createToggleAction("Poisonous Blood", enabled, HunterService::setPoisonousBlood);
     }
 
-    public static <T extends IFactionPlayer<T>> Consumer<T> garlicBloodToggle(boolean garlicBlood) {
-        return createToggleAction("garlic blood", garlicBlood, GarlicBloodService::setGarlicBlood);
+    public static <T extends IFactionPlayer<T>> Consumer<T> garlicBloodToggle(boolean enabled) {
+        return createToggleAction("Garlic Blood", enabled, HunterService::setGarlicBlood);
     }
 
     private static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter) {

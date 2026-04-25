@@ -24,8 +24,7 @@
 
 package com.gustavoschip.expanded.mixin;
 
-import com.gustavoschip.expanded.service.skill.AdvancedFlightService;
-import com.gustavoschip.expanded.service.skill.VampiricGroundingService;
+import com.gustavoschip.expanded.service.skill.VampireService;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -51,37 +50,37 @@ public abstract class BatVampireActionMixin {
     @Unique
     private static void expanded$applyBatModeBonuses(IVampirePlayer vampire) {
         if (vampire.asEntity() instanceof ServerPlayer player) {
-            AdvancedFlightService.onBatActivated(player);
+            VampireService.onBatActivated(player);
         }
     }
 
-    @Inject(method = "canBeUsedBy(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z", at = @At("RETURN"), cancellable = true)
-    private void expanded$preventGroundingBatModeWhen(IVampirePlayer vampire, CallbackInfoReturnable<Boolean> cir) {
-        if (!cir.getReturnValue()) {
-            return;
-        }
-
-        if (!VampiricGroundingService.canEnterBatMode(vampire.asEntity())) {
-            cir.setReturnValue(false);
-        }
-    }
+    //    @Inject(method = "canBeUsedBy(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z", at = @At("RETURN"), cancellable = true)
+    //    private void expanded$preventGroundingBatModeWhen(IVampirePlayer vampire, CallbackInfoReturnable<Boolean> cir) {
+    //        if (!cir.getReturnValue()) {
+    //            return;
+    //        }
+    //
+    //        if (!VampiricGroundingService.canEnterBatMode(vampire.asEntity())) {
+    //            cir.setReturnValue(false);
+    //        }
+    //    }
 
     @Redirect(
         method = { "canBeUsedBy(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z", "onUpdate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z" },
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isInWater()Z")
     )
     private boolean expanded$allowBatModeInLiquids(Player player) {
-        return player.isInWater() && !AdvancedFlightService.canUseBatModeInLiquids(player);
+        return player.isInWater() && !VampireService.canUseBatModeInLiquids(player);
     }
 
-    @Inject(method = "activate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;Lde/teamlapen/vampirism/api/entity/player/actions/IAction$ActivationContext;)Z", at = @At("HEAD"), cancellable = true)
-    private void expanded$blockGroundingBatMode(IVampirePlayer vampire, IAction.ActivationContext context, CallbackInfoReturnable<Boolean> cir) {
-        if (VampiricGroundingService.handleBatActivation(vampire.asEntity())) {
-            return;
-        }
-
-        cir.setReturnValue(false);
-    }
+    //    @Inject(method = "activate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;Lde/teamlapen/vampirism/api/entity/player/actions/IAction$ActivationContext;)Z", at = @At("HEAD"), cancellable = true)
+    //    private void expanded$blockGroundingBatMode(IVampirePlayer vampire, IAction.ActivationContext context, CallbackInfoReturnable<Boolean> cir) {
+    //        if (VampiricGroundingService.handleBatActivation(vampire.asEntity())) {
+    //            return;
+    //        }
+    //
+    //        cir.setReturnValue(false);
+    //    }
 
     @Inject(method = "onReActivated(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)V", at = @At("TAIL"))
     private void expanded$applyBatModeBonusesOnReload(IVampirePlayer vampire, CallbackInfo ci) {
@@ -99,8 +98,14 @@ public abstract class BatVampireActionMixin {
         method = "setModifier(Lnet/minecraft/world/entity/player/Player;Z)V",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addPermanentModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V")
     )
-    private void expanded$blockMainVampirismBatArmor(AttributeInstance instance, AttributeModifier modifier, Operation<Void> original, @Local(argsOnly = true) Player player, @Local(argsOnly = true) boolean enabled) {
-        if (enabled && AdvancedFlightService.hasAdvancedFlight(player) && (instance == player.getAttribute(Attributes.ARMOR) || instance == player.getAttribute(Attributes.ARMOR_TOUGHNESS))) {
+    private void expanded$blockMainVampirismBatArmor(
+        AttributeInstance instance,
+        AttributeModifier modifier,
+        Operation<Void> original,
+        @Local(argsOnly = true) Player player,
+        @Local(argsOnly = true) boolean enabled
+    ) {
+        if (enabled && VampireService.hasBatArmor(player) && (instance == player.getAttribute(Attributes.ARMOR) || instance == player.getAttribute(Attributes.ARMOR_TOUGHNESS))) {
             return;
         }
 

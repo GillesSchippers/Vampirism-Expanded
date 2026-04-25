@@ -24,7 +24,7 @@
 
 package com.gustavoschip.expanded.mixin.client;
 
-import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
+import com.gustavoschip.expanded.service.skill.HunterService;
 import de.teamlapen.vampirism.client.renderer.RenderHandler;
 import de.teamlapen.vampirism.entity.player.VampirismPlayerAttributes;
 import net.minecraft.client.Minecraft;
@@ -62,7 +62,7 @@ public abstract class VampirismRenderHandlerMixin {
     @ModifyArgs(method = "onRenderLivingPost", at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/client/renderer/RenderHandler$OutlineBuffer;setColor(IIII)V", remap = false))
     private void expanded$setGreenBloodVisionColorForPoisonousPlayers(Args args) {
         Entity entity = this.expanded$currentBloodVisionEntity;
-        if (!(entity instanceof Player player) || !player.getData(SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT)) {
+        if (!(entity instanceof Player player) || !HunterService.hasPoisonousBlood(player)) {
             return;
         }
 

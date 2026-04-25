@@ -24,7 +24,11 @@
 
 package com.gustavoschip.expanded.mixin.client;
 
+import com.gustavoschip.expanded.service.skill.VampireService;
+import com.gustavoschip.expanded.service.tracker.SunDamageTracker;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,8 +40,11 @@ public class GameRendererMixin {
 
     @Inject(method = "bobHurt", at = @At("HEAD"), cancellable = true)
     private void expanded$disableSpecificHurtCam(PoseStack poseStack, float partialTicks, CallbackInfo ci) {
-        // TODO: Cancel the bobHurt if the last damage was from the sun with Vampiric Grounding enabled.
-        if (false) {
+        LocalPlayer player = Minecraft.getInstance().player;
+
+        if (player == null) return;
+
+        if (player instanceof SunDamageTracker tracker && tracker.expanded$isLastDamageWasSun() && VampireService.hasDayWalker(player)) {
             ci.cancel();
         }
     }

@@ -63,7 +63,9 @@ public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, O
 
     @Override
     public Component getDescription() {
-        return Component.literal("Requires faction: %s, level: %d%s, lord rank: %d%s".formatted(faction, minLevel, formatUpperBound(maxLevel.orElse(null)), minLordRank, formatUpperBound(maxLordRank.orElse(null))));
+        return Component.literal(
+            "Requires faction: %s, level: %d%s, lord rank: %d%s".formatted(faction, minLevel, formatUpperBound(maxLevel.orElse(null)), minLordRank, formatUpperBound(maxLordRank.orElse(null)))
+        );
     }
 
     @Override

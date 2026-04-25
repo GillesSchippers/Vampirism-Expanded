@@ -1,1 +1,6 @@
-{ "replace": false, "values": ["expanded:hunter/level"] }
+{
+    "replace": false,
+    "values": [
+        "expanded:hunter/level"
+    ]
+}

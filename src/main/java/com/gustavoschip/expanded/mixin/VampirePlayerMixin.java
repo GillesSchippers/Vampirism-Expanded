@@ -24,8 +24,8 @@
 
 package com.gustavoschip.expanded.mixin;
 
-import com.gustavoschip.expanded.service.skill.PoisonousBloodService;
-import com.gustavoschip.expanded.service.skill.VampiricGroundingService;
+import com.gustavoschip.expanded.service.skill.HunterService;
+import com.gustavoschip.expanded.service.skill.VampireService;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
@@ -48,7 +48,7 @@ public abstract class VampirePlayerMixin {
             return;
         }
 
-        if (PoisonousBloodService.isPoisonousBloodTarget(entity)) {
+        if (HunterService.isPoisonousBloodTarget(entity)) {
             // HUNTER_CREATURE path interrupts the bite attempt immediately and poisons the vampire.
             cir.setReturnValue(IVampirePlayer.BITE_TYPE.HUNTER_CREATURE);
         }
@@ -56,7 +56,7 @@ public abstract class VampirePlayerMixin {
 
     @WrapOperation(method = "handleSunDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;addEffect(Lnet/minecraft/world/effect/MobEffectInstance;)Z"))
     private boolean wrapEffects(Player player, MobEffectInstance effect, Operation<Boolean> original) {
-        if (effect.getEffect().value() == MobEffects.CONFUSION && VampiricGroundingService.hasVampiricGrounding(player)) {
+        if (effect.getEffect().value() == MobEffects.CONFUSION && VampireService.hasDayWalker(player)) {
             return false;
         }
 

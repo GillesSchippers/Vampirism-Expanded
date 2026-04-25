@@ -3,15 +3,25 @@
         "requirements": [
             {
                 "type": "vampirism:item",
-                "description": { "translate": "item.minecraft.gold_ingot" },
+                "description": {
+                    "translate": "item.minecraft.gold_ingot"
+                },
                 "id": "minecraft:gold_ingot",
-                "item": { "count": 16, "id": "minecraft:gold_ingot" }
+                "item": {
+                    "count": 16,
+                    "id": "minecraft:gold_ingot"
+                }
             },
             {
                 "type": "vampirism:item",
-                "description": { "translate": "item.minecraft.iron_ingot" },
+                "description": {
+                    "translate": "item.minecraft.iron_ingot"
+                },
                 "id": "minecraft:iron_ingot",
-                "item": { "count": 16, "id": "minecraft:iron_ingot" }
+                "item": {
+                    "count": 16,
+                    "id": "minecraft:iron_ingot"
+                }
             }
         ]
     },
@@ -21,7 +31,9 @@
         "source": "expanded:hunter_skill_points_1",
         "faction": "vampirism:hunter"
     },
-    "title": { "translate": "task.expanded.hunter_skill_points_1" },
+    "title": {
+        "translate": "task.expanded.hunter_skill_points_1"
+    },
     "unlocker": [
         {
             "type": "expanded:faction_level",

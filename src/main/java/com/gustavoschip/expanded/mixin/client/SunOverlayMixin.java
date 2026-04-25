@@ -47,14 +47,14 @@ public abstract class SunOverlayMixin {
     private static final float GROUNDING_ALPHA = 0.5F;
 
     @Unique
-    private static boolean expanded$HasVampiricGrounding() {
+    private static boolean expanded$HasDayWalker() {
         Minecraft mc = Minecraft.getInstance();
-        return mc.player != null && mc.player.getData(SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT);
+        return mc.player != null && mc.player.getData(SkillAttachmentHolders.DAY_WALKER_ATTACHMENT);
     }
 
     @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;scaleBy(FFFFLnet/minecraft/client/gui/GuiGraphics;)V"))
     private void expanded$modifySunOverlayScale(Args args) {
-        if (!expanded$HasVampiricGrounding()) {
+        if (!expanded$HasDayWalker()) {
             return;
         }
 
@@ -64,10 +64,13 @@ public abstract class SunOverlayMixin {
 
     @ModifyArg(
         method = "render",
-        at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;renderTextureOverlay(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;F)V"),
+        at = @At(
+            value = "INVOKE",
+            target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;renderTextureOverlay(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;F)V"
+        ),
         index = 2
     )
     private float expanded$modifySunOverlayAlpha(float originalAlpha) {
-        return expanded$HasVampiricGrounding() ? GROUNDING_ALPHA : originalAlpha;
+        return expanded$HasDayWalker() ? GROUNDING_ALPHA : originalAlpha;
     }
 }

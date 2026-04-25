@@ -3,15 +3,25 @@
         "requirements": [
             {
                 "type": "vampirism:item",
-                "description": { "translate": "item.minecraft.diamond" },
+                "description": {
+                    "translate": "item.minecraft.diamond"
+                },
                 "id": "minecraft:diamond",
-                "item": { "count": 8, "id": "minecraft:diamond" }
+                "item": {
+                    "count": 8,
+                    "id": "minecraft:diamond"
+                }
             },
             {
                 "type": "vampirism:item",
-                "description": { "translate": "item.minecraft.emerald" },
+                "description": {
+                    "translate": "item.minecraft.emerald"
+                },
                 "id": "minecraft:emerald",
-                "item": { "count": 16, "id": "minecraft:emerald" }
+                "item": {
+                    "count": 16,
+                    "id": "minecraft:emerald"
+                }
             }
         ]
     },
@@ -21,7 +31,9 @@
         "source": "expanded:hunter_skill_points_2",
         "faction": "vampirism:hunter"
     },
-    "title": { "translate": "task.expanded.hunter_skill_points_2" },
+    "title": {
+        "translate": "task.expanded.hunter_skill_points_2"
+    },
     "unlocker": [
         {
             "type": "expanded:faction_level",

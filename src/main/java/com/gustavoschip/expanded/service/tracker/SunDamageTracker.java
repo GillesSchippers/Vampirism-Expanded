@@ -22,40 +22,8 @@
  * SOFTWARE.
  */
 
-package com.gustavoschip.expanded.compat.guideapi.utils;
+package com.gustavoschip.expanded.service.tracker;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
-
-@SuppressWarnings("unused")
-public final class GuideBookEntry {
-
-    private final ResourceLocation id;
-    private final String nameKey;
-    private final String descriptionKey;
-    private final @Nullable ResourceLocation texture;
-
-    public GuideBookEntry(ResourceLocation id, String nameKey, String descriptionKey, @Nullable ResourceLocation texture) {
-        this.id = id;
-        this.nameKey = nameKey;
-        this.descriptionKey = descriptionKey;
-        this.texture = texture;
-    }
-
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    public Component getName() {
-        return Component.translatable(nameKey);
-    }
-
-    public Component getDescription() {
-        return Component.translatable(descriptionKey);
-    }
-
-    public @Nullable ResourceLocation getTexture() {
-        return texture;
-    }
+public interface SunDamageTracker {
+    boolean expanded$isLastDamageWasSun();
 }

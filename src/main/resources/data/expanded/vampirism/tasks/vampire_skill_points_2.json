@@ -3,15 +3,25 @@
         "requirements": [
             {
                 "type": "vampirism:item",
-                "description": { "translate": "item.minecraft.obsidian" },
+                "description": {
+                    "translate": "item.minecraft.obsidian"
+                },
                 "id": "minecraft:obsidian",
-                "item": { "count": 32, "id": "minecraft:obsidian" }
+                "item": {
+                    "count": 32,
+                    "id": "minecraft:obsidian"
+                }
             },
             {
                 "type": "vampirism:item",
-                "description": { "translate": "item.minecraft.ghast_tear" },
+                "description": {
+                    "translate": "item.minecraft.ghast_tear"
+                },
                 "id": "minecraft:ghast_tear",
-                "item": { "count": 4, "id": "minecraft:ghast_tear" }
+                "item": {
+                    "count": 4,
+                    "id": "minecraft:ghast_tear"
+                }
             }
         ]
     },
@@ -21,7 +31,9 @@
         "source": "expanded:vampire_skill_points_2",
         "faction": "vampirism:vampire"
     },
-    "title": { "translate": "task.expanded.vampire_skill_points_2" },
+    "title": {
+        "translate": "task.expanded.vampire_skill_points_2"
+    },
     "unlocker": [
         {
             "type": "expanded:faction_level",

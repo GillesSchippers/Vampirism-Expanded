@@ -29,9 +29,6 @@ import static de.teamlapen.vampirism.core.ModBlocks.VAMPIRE_ORCHID;
 import static de.teamlapen.vampirism.modcompat.guide.GuideBook.translateComponent;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
-import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookEntry;
-import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookScaledPageTextImage;
-import com.gustavoschip.expanded.task.ModTasks;
 import de.maxanier.guideapi.api.IPage;
 import de.maxanier.guideapi.api.impl.abstraction.CategoryAbstract;
 import de.maxanier.guideapi.api.impl.abstraction.EntryAbstract;
@@ -52,12 +49,6 @@ import net.neoforged.neoforge.common.NeoForge;
 
 public class GuideBookCompat {
 
-    private static final int GUIDE_IMAGE_X = 60;
-    private static final int GUIDE_IMAGE_Y = 12;
-    private static final int GUIDE_IMAGE_WIDTH = 52;
-    private static final int GUIDE_IMAGE_HEIGHT = 52;
-    private static final int GUIDE_TEXT_Y_OFFSET = 58;
-
     protected GuideBookCompat() {}
 
     public static void register() {
@@ -72,41 +63,16 @@ public class GuideBookCompat {
         event.categories.add(Math.max(event.categories.size() - 1, 0), expandedCategory);
     }
 
-    // TODO: Implement better documentation.
     private static Map<ResourceLocation, EntryAbstract> buildExpandedEntries(BookHelper helper) {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<>();
         entries.put(entry("overview"), new EntryText(textPage(helper, translateComponent("guide.expanded.overview.text")), translateComponent("guide.expanded.overview")));
-
-        addEntry(entries, helper, ModTasks.TaskGuideEntries.TASKS);
-        //      addEntry(entries, helper, ModTasks.TaskGuideEntries.HUNTER_SKILL_POINTS_1);
-        //      addEntry(entries, helper, ModTasks.TaskGuideEntries.HUNTER_SKILL_POINTS_2);
-        //      addEntry(entries, helper, ModTasks.TaskGuideEntries.VAMPIRE_SKILL_POINTS_1);
-        //      addEntry(entries, helper, ModTasks.TaskGuideEntries.VAMPIRE_SKILL_POINTS_2);
-        //      addEntry(entries, helper, SkillHolders.POISONOUS_BLOOD_GUIDE);
-        //      addEntry(entries, helper, SkillHolders.GARLIC_BLOOD_GUIDE);
-        //      addEntry(entries, helper, SkillHolders.VAMPIRIC_GROUNDING_GUIDE);
-        //      addEntry(entries, helper, SkillHolders.ADVANCED_FLIGHT_GUIDE);
-
+        entries.put(entry("tasks"), new EntryText(textPage(helper, translateComponent("guide.expanded.tasks.text")), translateComponent("guide.expanded.tasks")));
         return entries;
-    }
-
-    private static void addEntry(Map<ResourceLocation, EntryAbstract> entries, BookHelper helper, GuideBookEntry guideEntry) {
-        entries.put(guideEntry.getId(), buildEntry(helper, guideEntry));
-    }
-
-    private static EntryAbstract buildEntry(BookHelper helper, GuideBookEntry guideEntry) {
-        List<IPage> pages = guideEntry.getTexture() == null ? textPage(helper, guideEntry.getDescription()) : imagePage(helper, guideEntry.getDescription(), guideEntry.getTexture());
-        return new EntryText(pages, guideEntry.getName());
     }
 
     @SuppressWarnings("SameParameterValue")
     private static List<IPage> textPage(BookHelper helper, FormattedText text) {
         return helper.addLinks(new ArrayList<>(List.of(new PageText(text))));
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    private static List<IPage> imagePage(BookHelper helper, FormattedText text, ResourceLocation image) {
-        return helper.addLinks(new ArrayList<>(List.of(new GuideBookScaledPageTextImage(text, image, GUIDE_TEXT_Y_OFFSET, GUIDE_IMAGE_X, GUIDE_IMAGE_Y, GUIDE_IMAGE_WIDTH, GUIDE_IMAGE_HEIGHT))));
     }
 
     @SuppressWarnings("SameParameterValue")

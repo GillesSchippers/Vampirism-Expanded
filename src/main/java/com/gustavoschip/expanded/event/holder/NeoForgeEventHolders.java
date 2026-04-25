@@ -24,13 +24,9 @@
 
 package com.gustavoschip.expanded.event.holder;
 
-import com.gustavoschip.expanded.service.skill.AdvancedFlightService;
-import com.gustavoschip.expanded.service.skill.GarlicBloodService;
-import com.gustavoschip.expanded.service.skill.PoisonousBloodService;
-import com.gustavoschip.expanded.service.skill.VampiricGroundingService;
+import com.gustavoschip.expanded.service.skill.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 public final class NeoForgeEventHolders {
@@ -45,9 +41,7 @@ public final class NeoForgeEventHolders {
             return;
         }
 
-        PoisonousBloodService.syncFromHunterSkill(player);
-        GarlicBloodService.syncFromHunterSkill(player);
-        VampiricGroundingService.syncFromVampireSkill(player);
-        AdvancedFlightService.syncFromVampireSkill(player);
+        VampireService.syncFromVampireSkill(player);
+        HunterService.syncFromHunterSkill(player);
     }
 }

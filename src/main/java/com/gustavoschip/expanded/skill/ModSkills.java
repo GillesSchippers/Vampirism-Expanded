@@ -58,8 +58,11 @@ public final class ModSkills {
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SkillHolders.POISONOUS_BLOOD;
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> GARLIC_BLOOD = SkillHolders.GARLIC_BLOOD;
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = SkillHolders.VAMPIRE_ROOT;
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRIC_GROUNDING = SkillHolders.VAMPIRIC_GROUNDING;
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> ADVANCED_FLIGHT = SkillHolders.ADVANCED_FLIGHT;
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BAT_SPEED = SkillHolders.BAT_SPEED;
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BAT_ARMOR = SkillHolders.BAT_ARMOR;
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BAT_LIQUID = SkillHolders.BAT_LIQUID;
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRIC_CONSTITUTION = SkillHolders.VAMPIRIC_CONSTITUTION;
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> DAY_WALKER = SkillHolders.DAY_WALKER;
 
     private ModSkills() {}
 

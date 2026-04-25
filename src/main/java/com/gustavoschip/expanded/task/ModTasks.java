@@ -28,7 +28,6 @@ import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 import com.gustavoschip.expanded.attachment.ModAttachments;
-import com.gustavoschip.expanded.compat.guideapi.utils.GuideBookEntry;
 import com.gustavoschip.expanded.task.holder.HunterTaskHolders;
 import com.gustavoschip.expanded.task.holder.VampireTaskHolders;
 import com.gustavoschip.expanded.task.reward.SkillPointTaskReward;
@@ -56,7 +55,9 @@ public final class ModTasks {
     public static final DeferredRegister<MapCodec<? extends TaskReward>> TASK_REWARDS = DeferredRegister.create(VampirismRegistries.Keys.TASK_REWARD, MOD_ID);
     public static final DeferredRegister<MapCodec<? extends ITaskRewardInstance>> TASK_REWARD_INSTANCES = DeferredRegister.create(VampirismRegistries.Keys.TASK_REWARD_INSTANCE, MOD_ID);
 
-    public static final DeferredHolder<MapCodec<? extends TaskUnlocker>, MapCodec<FactionLevelTaskUnlocker>> FACTION_LEVEL_UNLOCKER = TASK_UNLOCKER.register("faction_level", () -> FactionLevelTaskUnlocker.CODEC);
+    public static final DeferredHolder<MapCodec<? extends TaskUnlocker>, MapCodec<FactionLevelTaskUnlocker>> FACTION_LEVEL_UNLOCKER = TASK_UNLOCKER.register("faction_level", () ->
+        FactionLevelTaskUnlocker.CODEC
+    );
     public static final DeferredHolder<MapCodec<? extends TaskReward>, MapCodec<SkillPointTaskReward>> SKILL_POINT_REWARD = TASK_REWARDS.register("skill_points", () -> SkillPointTaskReward.CODEC);
     public static final DeferredHolder<MapCodec<? extends ITaskRewardInstance>, MapCodec<SkillPointTaskReward>> SKILL_POINT_REWARD_INSTANCE = TASK_REWARD_INSTANCES.register("skill_points", () ->
         SkillPointTaskReward.CODEC
@@ -68,31 +69,6 @@ public final class ModTasks {
         TASK_UNLOCKER.register(modEventBus);
         TASK_REWARDS.register(modEventBus);
         TASK_REWARD_INSTANCES.register(modEventBus);
-    }
-
-    @SuppressWarnings("unused")
-    public static final class TaskGuideEntries {
-
-        public static final GuideBookEntry TASKS = guide("tasks", "guide.expanded.tasks", "guide.expanded.tasks.text");
-
-        public static final GuideBookEntry HUNTER_SKILL_POINTS_1 = guide(HunterTaskHolders.HUNTER_SKILL_POINTS_1, "task.expanded.hunter_skill_points_1", "guide.expanded.hunter_skill_points_1.text");
-        public static final GuideBookEntry HUNTER_SKILL_POINTS_2 = guide(HunterTaskHolders.HUNTER_SKILL_POINTS_2, "task.expanded.hunter_skill_points_2", "guide.expanded.hunter_skill_points_2.text");
-        public static final GuideBookEntry VAMPIRE_SKILL_POINTS_1 = guide(VampireTaskHolders.VAMPIRE_SKILL_POINTS_1, "task.expanded.vampire_skill_points_1", "guide.expanded.vampire_skill_points_1.text");
-        public static final GuideBookEntry VAMPIRE_SKILL_POINTS_2 = guide(VampireTaskHolders.VAMPIRE_SKILL_POINTS_2, "task.expanded.vampire_skill_points_2", "guide.expanded.vampire_skill_points_2.text");
-
-        private TaskGuideEntries() {}
-
-        private static GuideBookEntry guide(String path, String nameKey, String descriptionKey) {
-            return guide(fromNamespaceAndPath(MOD_ID, path), nameKey, descriptionKey);
-        }
-
-        private static GuideBookEntry guide(ResourceKey<Task> task, String nameKey, String descriptionKey) {
-            return guide(task.location(), nameKey, descriptionKey);
-        }
-
-        private static GuideBookEntry guide(ResourceLocation id, String nameKey, String descriptionKey) {
-            return new GuideBookEntry(id, nameKey, descriptionKey, null);
-        }
     }
 
     public static final class TaskHolders {

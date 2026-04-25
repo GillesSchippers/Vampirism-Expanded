@@ -37,19 +37,23 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
-public final class PoisonousBloodService extends ModServices {
+@SuppressWarnings("unused")
+public class HunterService extends ModServices {
 
     public static final int POISONOUS_BLOOD_EFFECT_DURATION_TICKS = 60;
+    public static final int GARLIC_EFFECT_DURATION_TICKS = 200;
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private PoisonousBloodService() {}
-
-    public static boolean hasPoisonousBlood(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT);
+    public static void setPoisonousBlood(ServerPlayer player, boolean enabled) {
+        setBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT, enabled, "Poisonous Blood", LOGGER);
     }
 
-    public static void setPoisonousBlood(ServerPlayer player, boolean poisonous) {
-        setBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT, poisonous, "poisonous blood", LOGGER);
+    public static void setGarlicBlood(ServerPlayer player, boolean enabled) {
+        setBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT, enabled, "Garlic Blood", LOGGER);
+    }
+
+    public static boolean hasGarlicBloodSkill(ServerPlayer player) {
+        return hasSkillEnabled(player, SkillHolders.GARLIC_BLOOD);
     }
 
     public static boolean hasPoisonousBloodSkill(ServerPlayer player) {
@@ -58,10 +62,23 @@ public final class PoisonousBloodService extends ModServices {
 
     public static void syncFromHunterSkill(ServerPlayer player) {
         setPoisonousBlood(player, hasPoisonousBloodSkill(player));
+        setGarlicBlood(player, hasGarlicBloodSkill(player));
+    }
+
+    public static boolean hasPoisonousBlood(Player player) {
+        return hasBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT);
+    }
+
+    public static boolean hasGarlicBlood(Player player) {
+        return hasBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT);
     }
 
     public static boolean isPoisonousBloodTarget(Entity entity) {
         return entity instanceof Player player && hasPoisonousBlood(player);
+    }
+
+    public static boolean isGarlicBloodTarget(Entity entity) {
+        return entity instanceof Player player && hasGarlicBlood(player);
     }
 
     public static boolean interruptPoisonousBiteAttempt(ServerPlayer vampire, Entity target) {
@@ -74,19 +91,37 @@ public final class PoisonousBloodService extends ModServices {
         return true;
     }
 
+    public static void applyGarlicEffect(ServerPlayer vampire, ServerPlayer sourcePlayer) {
+        if (!isGarlicBloodTarget(sourcePlayer)) {
+            return;
+        }
+
+        vampire.addEffect(new MobEffectInstance(ModEffects.GARLIC, GARLIC_EFFECT_DURATION_TICKS));
+    }
+
     public static void handlePlayerDrinkBlood(BloodDrinkEvent.PlayerDrinkBloodEvent event) {
+        if (event.getAmount() <= 0) {
+            return;
+        }
+
         if (!(event.getVampire().asEntity() instanceof ServerPlayer vampire)) {
             return;
         }
 
         Entity source = event.getBloodSource().getEntity().orElse(null);
-        if (source == null || !interruptPoisonousBiteAttempt(vampire, source)) {
+        if (source == null) {
             return;
         }
 
-        // Fallback safety: if a poisonous source somehow reaches the drink event, prevent blood gain.
-        event.setAmount(0);
-        event.setSaturationModifier(0);
-        event.setUseRemaining(false);
+        if (interruptPoisonousBiteAttempt(vampire, source)) {
+            event.setAmount(0);
+            event.setSaturationModifier(0);
+            event.setUseRemaining(false);
+            return;
+        }
+
+        if (source instanceof ServerPlayer sourcePlayer) {
+            applyGarlicEffect(vampire, sourcePlayer);
+        }
     }
 }

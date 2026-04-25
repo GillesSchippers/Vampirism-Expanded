@@ -25,8 +25,7 @@
 package com.gustavoschip.expanded.skill.handler;
 
 import com.gustavoschip.expanded.service.ModServices;
-import com.gustavoschip.expanded.service.skill.AdvancedFlightService;
-import com.gustavoschip.expanded.service.skill.VampiricGroundingService;
+import com.gustavoschip.expanded.service.skill.VampireService;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import java.util.function.BiConsumer;
@@ -40,12 +39,24 @@ public final class VampireSkillHandlers {
 
     private VampireSkillHandlers() {}
 
-    public static <T extends IFactionPlayer<T>> Consumer<T> vampiricGroundingToggle(boolean vampiricGrounding) {
-        return createToggleAction("vampiric grounding", vampiricGrounding, VampiricGroundingService::setVampiricGrounding);
+    public static <T extends IFactionPlayer<T>> Consumer<T> batSpeedToggle(boolean enabled) {
+        return createToggleAction("Bat Speed", enabled, VampireService::setBatSpeed);
     }
 
-    public static <T extends IFactionPlayer<T>> Consumer<T> advancedFlightToggle(boolean advancedFlight) {
-        return createToggleAction("advanced flight", advancedFlight, AdvancedFlightService::setAdvancedFlight);
+    public static <T extends IFactionPlayer<T>> Consumer<T> batArmorToggle(boolean enabled) {
+        return createToggleAction("Bat Armor", enabled, VampireService::setBatArmor);
+    }
+
+    public static <T extends IFactionPlayer<T>> Consumer<T> batLiquidToggle(boolean enabled) {
+        return createToggleAction("Bat Liquid", enabled, VampireService::setBatLiquid);
+    }
+
+    public static <T extends IFactionPlayer<T>> Consumer<T> vampiricConstitutionToggle(boolean enabled) {
+        return createToggleAction("Vampiric Constitution", enabled, VampireService::setVampiricConstitution);
+    }
+
+    public static <T extends IFactionPlayer<T>> Consumer<T> dayWalkerToggle(boolean enabled) {
+        return createToggleAction("Day Walker", enabled, VampireService::setDayWalker);
     }
 
     private static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter) {

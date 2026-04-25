@@ -24,8 +24,7 @@
 
 package com.gustavoschip.expanded.event.holder;
 
-import com.gustavoschip.expanded.service.skill.GarlicBloodService;
-import com.gustavoschip.expanded.service.skill.PoisonousBloodService;
+import com.gustavoschip.expanded.service.skill.HunterService;
 import de.teamlapen.vampirism.api.event.BloodDrinkEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 
@@ -37,7 +36,6 @@ public final class VampirismEventHolders {
 
     @SubscribeEvent
     public void onPlayerDrinkBlood(BloodDrinkEvent.PlayerDrinkBloodEvent event) {
-        PoisonousBloodService.handlePlayerDrinkBlood(event);
-        GarlicBloodService.handlePlayerDrinkBlood(event);
+        HunterService.handlePlayerDrinkBlood(event);
     }
 }

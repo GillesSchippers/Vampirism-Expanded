@@ -3,15 +3,25 @@
         "requirements": [
             {
                 "type": "vampirism:item",
-                "description": { "translate": "item.minecraft.rotten_flesh" },
+                "description": {
+                    "translate": "item.minecraft.rotten_flesh"
+                },
                 "id": "minecraft:rotten_flesh",
-                "item": { "count": 32, "id": "minecraft:rotten_flesh" }
+                "item": {
+                    "count": 32,
+                    "id": "minecraft:rotten_flesh"
+                }
             },
             {
                 "type": "vampirism:item",
-                "description": { "translate": "item.minecraft.quartz" },
+                "description": {
+                    "translate": "item.minecraft.quartz"
+                },
                 "id": "minecraft:quartz",
-                "item": { "count": 16, "id": "minecraft:quartz" }
+                "item": {
+                    "count": 16,
+                    "id": "minecraft:quartz"
+                }
             }
         ]
     },
@@ -21,7 +31,9 @@
         "source": "expanded:vampire_skill_points_1",
         "faction": "vampirism:vampire"
     },
-    "title": { "translate": "task.expanded.vampire_skill_points_1" },
+    "title": {
+        "translate": "task.expanded.vampire_skill_points_1"
+    },
     "unlocker": [
         {
             "type": "expanded:faction_level",
