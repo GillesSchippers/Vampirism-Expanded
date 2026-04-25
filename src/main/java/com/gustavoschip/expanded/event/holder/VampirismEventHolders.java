@@ -30,12 +30,10 @@ import net.neoforged.bus.api.SubscribeEvent;
 
 public final class VampirismEventHolders {
 
-    public static final VampirismEventHolders INSTANCE = new VampirismEventHolders();
-
-    private VampirismEventHolders() {}
+    public VampirismEventHolders() {}
 
     @SubscribeEvent
-    public void onPlayerDrinkBlood(BloodDrinkEvent.PlayerDrinkBloodEvent event) {
+    private void onPlayerDrinkBlood(BloodDrinkEvent.PlayerDrinkBloodEvent event) {
         HunterService.handlePlayerDrinkBlood(event);
     }
 }

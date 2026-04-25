@@ -24,19 +24,18 @@
 
 package com.gustavoschip.expanded.event.holder;
 
-import com.gustavoschip.expanded.service.skill.*;
+import com.gustavoschip.expanded.service.skill.HunterService;
+import com.gustavoschip.expanded.service.skill.VampireService;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 public final class NeoForgeEventHolders {
 
-    public static final NeoForgeEventHolders INSTANCE = new NeoForgeEventHolders();
-
-    private NeoForgeEventHolders() {}
+    public NeoForgeEventHolders() {}
 
     @SubscribeEvent
-    public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+    private void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }

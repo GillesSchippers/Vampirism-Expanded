@@ -29,12 +29,10 @@ import com.gustavoschip.expanded.event.holder.VampirismEventHolders;
 import net.neoforged.neoforge.common.NeoForge;
 
 @SuppressWarnings("unused")
-public final class ModEvents {
-
-    private ModEvents() {}
+public abstract class ModEvents {
 
     public static void register() {
-        NeoForge.EVENT_BUS.register(VampirismEventHolders.INSTANCE);
-        NeoForge.EVENT_BUS.register(NeoForgeEventHolders.INSTANCE);
+        NeoForge.EVENT_BUS.register(new NeoForgeEventHolders());
+        NeoForge.EVENT_BUS.register(new VampirismEventHolders());
     }
 }

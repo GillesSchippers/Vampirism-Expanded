@@ -26,8 +26,6 @@ package com.gustavoschip.expanded.attachment;
 
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 
-import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
-import com.gustavoschip.expanded.attachment.holder.TaskAttachmentHolders;
 import com.mojang.serialization.Codec;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.bus.api.IEventBus;
@@ -37,23 +35,11 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 @SuppressWarnings("unused")
-public class ModAttachments {
+public abstract class ModAttachments {
 
-    public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MOD_ID);
+    protected static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MOD_ID);
 
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> POISONOUS_BLOOD_ATTACHMENT = SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> GARLIC_BLOOD_ATTACHMENT = SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_SPEED_ATTACHMENT = SkillAttachmentHolders.BAT_SPEED_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_ARMOR_ATTACHMENT = SkillAttachmentHolders.BAT_ARMOR_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_LIQUID_ATTACHMENT = SkillAttachmentHolders.BAT_LIQUID_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> VAMPIRIC_CONSTITUTION_ATTACHMENT = SkillAttachmentHolders.VAMPIRIC_CONSTITUTION_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> DAY_WALKER_ATTACHMENT = SkillAttachmentHolders.DAY_WALKER_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> HUNTER_TASK_SKILL_POINTS_ATTACHMENT = TaskAttachmentHolders.HUNTER_TASK_SKILL_POINTS_ATTACHMENT;
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT = TaskAttachmentHolders.VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT;
-
-    protected ModAttachments() {}
-
-    public static DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> registerBooleanAttachment(String id) {
+    protected static DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> registerBooleanAttachment(String id) {
         return ATTACHMENTS.register(id, () ->
             AttachmentType.builder(() -> false)
                 .serialize(Codec.BOOL)
@@ -63,7 +49,7 @@ public class ModAttachments {
         );
     }
 
-    public static DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> registerIntegerAttachment(String id) {
+    protected static DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> registerIntegerAttachment(String id) {
         return ATTACHMENTS.register(id, () ->
             AttachmentType.builder(() -> 0)
                 .serialize(Codec.INT)

@@ -27,7 +27,7 @@ package com.gustavoschip.expanded.task;
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
-import com.gustavoschip.expanded.attachment.ModAttachments;
+import com.gustavoschip.expanded.attachment.holder.TaskAttachmentHolders;
 import com.gustavoschip.expanded.task.holder.HunterTaskHolders;
 import com.gustavoschip.expanded.task.holder.VampireTaskHolders;
 import com.gustavoschip.expanded.task.reward.SkillPointTaskReward;
@@ -121,10 +121,10 @@ public final class ModTasks {
 
         private static @Nullable DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> getAttachmentForFaction(ResourceLocation factionId) {
             if (TaskHolders.HUNTER_FACTION_ID.equals(factionId)) {
-                return ModAttachments.HUNTER_TASK_SKILL_POINTS_ATTACHMENT;
+                return TaskAttachmentHolders.HUNTER_TASK_SKILL_POINTS_ATTACHMENT;
             }
             if (TaskHolders.VAMPIRE_FACTION_ID.equals(factionId)) {
-                return ModAttachments.VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT;
+                return TaskAttachmentHolders.VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT;
             }
             return null;
         }

@@ -28,23 +28,15 @@ import com.gustavoschip.expanded.attachment.ModAttachments;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-public final class SkillAttachmentHolders {
+public final class SkillAttachmentHolders extends ModAttachments {
 
-    public static final String POISONOUS_BLOOD_ATTACHMENT_ID = "poisonous_blood";
-    public static final String GARLIC_BLOOD_ATTACHMENT_ID = "garlic_blood";
-    public static final String BAT_SPEED_ATTACHMENT_ID = "bat_speed";
-    public static final String BAT_ARMOR_ATTACHMENT_ID = "bat_armor";
-    public static final String BAT_LIQUID_ATTACHMENT_ID = "bat_liquid";
-    public static final String VAMPIRIC_CONSTITUTION_ATTACHMENT_ID = "vampiric_constitution";
-    public static final String DAY_WALKER_ATTACHMENT_ID = "day_walker";
-
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> POISONOUS_BLOOD_ATTACHMENT = ModAttachments.registerBooleanAttachment(POISONOUS_BLOOD_ATTACHMENT_ID);
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> GARLIC_BLOOD_ATTACHMENT = ModAttachments.registerBooleanAttachment(GARLIC_BLOOD_ATTACHMENT_ID);
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_SPEED_ATTACHMENT = ModAttachments.registerBooleanAttachment(BAT_SPEED_ATTACHMENT_ID);
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_ARMOR_ATTACHMENT = ModAttachments.registerBooleanAttachment(BAT_ARMOR_ATTACHMENT_ID);
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_LIQUID_ATTACHMENT = ModAttachments.registerBooleanAttachment(BAT_LIQUID_ATTACHMENT_ID);
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> VAMPIRIC_CONSTITUTION_ATTACHMENT = ModAttachments.registerBooleanAttachment(VAMPIRIC_CONSTITUTION_ATTACHMENT_ID);
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> DAY_WALKER_ATTACHMENT = ModAttachments.registerBooleanAttachment(DAY_WALKER_ATTACHMENT_ID);
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> POISONOUS_BLOOD_ATTACHMENT = ModAttachments.registerBooleanAttachment("poisonous_blood");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> GARLIC_BLOOD_ATTACHMENT = ModAttachments.registerBooleanAttachment("garlic_blood");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_SPEED_ATTACHMENT = ModAttachments.registerBooleanAttachment("bat_speed");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_ARMOR_ATTACHMENT = ModAttachments.registerBooleanAttachment("bat_armor");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_LIQUID_ATTACHMENT = ModAttachments.registerBooleanAttachment("bat_liquid");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> VAMPIRIC_CONSTITUTION_ATTACHMENT = ModAttachments.registerBooleanAttachment("vampiric_constitution");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> DAY_WALKER_ATTACHMENT = ModAttachments.registerBooleanAttachment("day_walker");
 
     private SkillAttachmentHolders() {}
 }

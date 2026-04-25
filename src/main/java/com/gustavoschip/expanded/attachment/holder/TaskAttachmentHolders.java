@@ -28,17 +28,10 @@ import com.gustavoschip.expanded.attachment.ModAttachments;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-public final class TaskAttachmentHolders {
+public final class TaskAttachmentHolders extends ModAttachments {
 
-    public static final String HUNTER_TASK_SKILL_POINTS_ATTACHMENT_ID = "hunter_task_skill_points";
-    public static final String VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT_ID = "vampire_task_skill_points";
-
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> HUNTER_TASK_SKILL_POINTS_ATTACHMENT = ModAttachments.registerIntegerAttachment(
-        HUNTER_TASK_SKILL_POINTS_ATTACHMENT_ID
-    );
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT = ModAttachments.registerIntegerAttachment(
-        VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT_ID
-    );
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> HUNTER_TASK_SKILL_POINTS_ATTACHMENT = ModAttachments.registerIntegerAttachment("hunter_task_skill_points");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT = ModAttachments.registerIntegerAttachment("vampire_task_skill_points");
 
     private TaskAttachmentHolders() {}
 }
