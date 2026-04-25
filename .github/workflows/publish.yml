@@ -1,79 +1,79 @@
 name: Publish
 
 on:
-  workflow_dispatch:
-    inputs:
-      release_type:
-        description: Release channel
-        type: choice
-        required: true
-        default: stable
-        options:
-          - stable
-          - beta
-          - alpha
-      changelog:
-        description: Release notes
-        type: string
-        required: true
+    workflow_dispatch:
+        inputs:
+            release_type:
+                description: Release channel
+                type: choice
+                required: true
+                default: stable
+                options:
+                    - stable
+                    - beta
+                    - alpha
+            changelog:
+                description: Release notes
+                type: string
+                required: true
 
 permissions:
-  contents: read
+    contents: read
 
 concurrency:
-  group: publish
-  cancel-in-progress: false
+    group: publish
+    cancel-in-progress: false
 
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    env:
-      CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-      CURSEFORGE_PROJECT_ID: ${{ vars.CURSEFORGE_PROJECT_ID }}
-      PUBLISH_TYPE: ${{ inputs.release_type }}
-      PUBLISH_CHANGELOG: ${{ inputs.changelog }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          fetch-tags: true
+    publish:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+        env:
+            CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+            CURSEFORGE_PROJECT_ID: ${{ vars.CURSEFORGE_PROJECT_ID }}
+            PUBLISH_TYPE: ${{ inputs.release_type }}
+            PUBLISH_CHANGELOG: ${{ inputs.changelog }}
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
+                  fetch-tags: true
 
-      - name: Setup JDK 21
-        uses: actions/setup-java@v5
-        with:
-          java-version: '21'
-          distribution: 'temurin'
+            - name: Setup JDK 21
+              uses: actions/setup-java@v5
+              with:
+                  java-version: "21"
+                  distribution: "temurin"
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+            - name: Setup Gradle
+              uses: gradle/actions/setup-gradle@v6
 
-      - name: Make Gradle wrapper executable
-        run: chmod +x ./gradlew
+            - name: Make Gradle wrapper executable
+              run: chmod +x ./gradlew
 
-      - name: Validate release configuration
-        run: |
-          if [ -z "$CURSEFORGE_TOKEN" ]; then
-            echo "::error::CURSEFORGE_TOKEN secret is not configured."
-            exit 1
-          fi
-          if [ -z "$CURSEFORGE_PROJECT_ID" ]; then
-            echo "::error::CURSEFORGE_PROJECT_ID repository variable is not configured."
-            exit 1
-          fi
+            - name: Validate release configuration
+              run: |
+                  if [ -z "$CURSEFORGE_TOKEN" ]; then
+                    echo "::error::CURSEFORGE_TOKEN secret is not configured."
+                    exit 1
+                  fi
+                  if [ -z "$CURSEFORGE_PROJECT_ID" ]; then
+                    echo "::error::CURSEFORGE_PROJECT_ID repository variable is not configured."
+                    exit 1
+                  fi
 
-      - name: Build and publish to CurseForge
-        run: ./gradlew build publishMods
+            - name: Build and publish to CurseForge
+              run: ./gradlew build publishMods
 
-      - name: Read mod version
-        id: get_version
-        run: echo "mod_version=$(grep '^mod_version=' gradle.properties | cut -d'=' -f2)" >> "$GITHUB_OUTPUT"
+            - name: Read mod version
+              id: get_version
+              run: echo "mod_version=$(grep '^mod_version=' gradle.properties | cut -d'=' -f2)" >> "$GITHUB_OUTPUT"
 
-      - name: Upload built jar as workflow artifact
-        uses: actions/upload-artifact@v7
-        with:
-          path: build/libs/VampirismExpanded-${{ steps.get_version.outputs.mod_version }}.jar
-          archive: false
-          if-no-files-found: error
+            - name: Upload built jar as workflow artifact
+              uses: actions/upload-artifact@v7
+              with:
+                  path: build/libs/VampirismExpanded-${{ steps.get_version.outputs.mod_version }}.jar
+                  archive: false
+                  if-no-files-found: error

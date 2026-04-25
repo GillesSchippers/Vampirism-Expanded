@@ -46,14 +46,8 @@ public abstract class SkillHandlerMixin<T extends IFactionPlayer<T>> {
     @Final
     private ArrayList<ISkill<T>> enabledSkills;
 
-    @Redirect(
-        method = "canSkillBeEnabled",
-        at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/entity/player/skills/SkillHandler;getLeftSkillPoints()I")
-    )
-    private int expanded$useExpandedPointsForExpandedSkills(
-        de.teamlapen.vampirism.entity.player.skills.SkillHandler<?> instance,
-        ISkill<T> skill
-    ) {
+    @Redirect(method = "canSkillBeEnabled", at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/entity/player/skills/SkillHandler;getLeftSkillPoints()I"))
+    private int expanded$useExpandedPointsForExpandedSkills(SkillHandler<?> instance, ISkill<T> skill) {
         if (!ModSkills.ExpandedSkillPointHelper.usesExpandedPoints(skill)) {
             return instance.getLeftSkillPoints();
         }

@@ -66,11 +66,7 @@ public class GuideBookCompat {
 
     public static void createCategoriesEvent(VampirismGuideBookCategoriesEvent event) {
         BookHelper helper = new BookHelper.Builder(MOD_ID).build();
-        CategoryAbstract expandedCategory = new CategoryItemStack(
-            buildExpandedEntries(helper),
-            translateComponent("guide.expanded.title"),
-            new ItemStack(VAMPIRE_ORCHID)
-        );
+        CategoryAbstract expandedCategory = new CategoryItemStack(buildExpandedEntries(helper), translateComponent("guide.expanded.title"), new ItemStack(VAMPIRE_ORCHID));
         helper.registerLinkablePages(new ArrayList<>(List.of(expandedCategory)));
 
         event.categories.add(Math.max(event.categories.size() - 1, 0), expandedCategory);
@@ -79,13 +75,7 @@ public class GuideBookCompat {
     // TODO: Implement better documentation.
     private static Map<ResourceLocation, EntryAbstract> buildExpandedEntries(BookHelper helper) {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<>();
-        entries.put(
-            entry("overview"),
-            new EntryText(
-                textPage(helper, translateComponent("guide.expanded.overview.text")),
-                translateComponent("guide.expanded.overview")
-            )
-        );
+        entries.put(entry("overview"), new EntryText(textPage(helper, translateComponent("guide.expanded.overview.text")), translateComponent("guide.expanded.overview")));
 
         addEntry(entries, helper, ModTasks.TaskGuideEntries.TASKS);
         //      addEntry(entries, helper, ModTasks.TaskGuideEntries.HUNTER_SKILL_POINTS_1);
@@ -105,10 +95,7 @@ public class GuideBookCompat {
     }
 
     private static EntryAbstract buildEntry(BookHelper helper, GuideBookEntry guideEntry) {
-        List<IPage> pages =
-            guideEntry.getTexture() == null
-                ? textPage(helper, guideEntry.getDescription())
-                : imagePage(helper, guideEntry.getDescription(), guideEntry.getTexture());
+        List<IPage> pages = guideEntry.getTexture() == null ? textPage(helper, guideEntry.getDescription()) : imagePage(helper, guideEntry.getDescription(), guideEntry.getTexture());
         return new EntryText(pages, guideEntry.getName());
     }
 
@@ -119,21 +106,7 @@ public class GuideBookCompat {
 
     @SuppressWarnings("SameParameterValue")
     private static List<IPage> imagePage(BookHelper helper, FormattedText text, ResourceLocation image) {
-        return helper.addLinks(
-            new ArrayList<>(
-                List.of(
-                    new GuideBookScaledPageTextImage(
-                        text,
-                        image,
-                        GUIDE_TEXT_Y_OFFSET,
-                        GUIDE_IMAGE_X,
-                        GUIDE_IMAGE_Y,
-                        GUIDE_IMAGE_WIDTH,
-                        GUIDE_IMAGE_HEIGHT
-                    )
-                )
-            )
-        );
+        return helper.addLinks(new ArrayList<>(List.of(new GuideBookScaledPageTextImage(text, image, GUIDE_TEXT_Y_OFFSET, GUIDE_IMAGE_X, GUIDE_IMAGE_Y, GUIDE_IMAGE_WIDTH, GUIDE_IMAGE_HEIGHT))));
     }
 
     @SuppressWarnings("SameParameterValue")

@@ -36,11 +36,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
-public record SkillPointTaskReward(
-    int points,
-    ResourceLocation source,
-    ResourceLocation faction
-) implements TaskReward, ITaskRewardInstance {
+public record SkillPointTaskReward(int points, ResourceLocation source, ResourceLocation faction) implements TaskReward, ITaskRewardInstance {
     public static final MapCodec<SkillPointTaskReward> CODEC = RecordCodecBuilder.mapCodec(instance ->
         instance
             .group(

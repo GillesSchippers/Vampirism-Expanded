@@ -35,12 +35,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ActionFactionSkill<T extends IFactionPlayer<T>> extends FactionSkillBase<T> {
 
-    public ActionFactionSkill(
-        Either<ResourceKey<ISkillTree>, TagKey<ISkillTree>> tree,
-        ResourceLocation factionId,
-        int skillPointCost,
-        boolean hasDefaultDescription
-    ) {
+    public ActionFactionSkill(Either<ResourceKey<ISkillTree>, TagKey<ISkillTree>> tree, ResourceLocation factionId, int skillPointCost, boolean hasDefaultDescription) {
         super(tree, factionId, skillPointCost, hasDefaultDescription);
     }
 

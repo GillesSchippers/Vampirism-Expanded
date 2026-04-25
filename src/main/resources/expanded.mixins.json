@@ -1,26 +1,24 @@
 {
-  "required": true,
-  "minVersion": "0.8.7",
-  "package": "com.gustavoschip.expanded.mixin",
-  "plugin": "com.gustavoschip.expanded.mixin.plugin.ExpandedMixinPlugin",
-  "compatibilityLevel": "JAVA_21",
-  "mixins": [
-    "BatVampireActionMixin",
-    "EntityMixin",
-    "LivingEntityMixin",
-    "SkillHandlerAccessorMixin",
-    "SkillHandlerMixin",
-    "VampirePlayerMixin",
-    "compat.bloodlines.BatVampireActionMixin"
-  ],
-  "client": [
-    "client.GameRendererMixin",
-    "client.SkillsTabScreenMixin",
-    "client.SunOverlayMixin",
-    "client.VampirismHUDOverlayMixin",
-    "client.VampirismRenderHandlerMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+    "required": true,
+    "minVersion": "0.8.7",
+    "package": "com.gustavoschip.expanded.mixin",
+    "plugin": "com.gustavoschip.expanded.mixin.plugin.ExpandedMixinPlugin",
+    "compatibilityLevel": "JAVA_21",
+    "mixins": [
+        "BatVampireActionMixin",
+        "EntityMixin",
+        "LivingEntityMixin",
+        "SkillHandlerAccessorMixin",
+        "SkillHandlerMixin",
+        "VampirePlayerMixin",
+        "compat.bloodlines.BatVampireActionMixin"
+    ],
+    "client": [
+        "client.GameRendererMixin",
+        "client.SkillsTabScreenMixin",
+        "client.SunOverlayMixin",
+        "client.VampirismHUDOverlayMixin",
+        "client.VampirismRenderHandlerMixin"
+    ],
+    "injectors": { "defaultRequire": 1 }
 }

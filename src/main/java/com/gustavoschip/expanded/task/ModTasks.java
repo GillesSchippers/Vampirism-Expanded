@@ -52,27 +52,15 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("unused")
 public final class ModTasks {
 
-    public static final DeferredRegister<MapCodec<? extends TaskUnlocker>> TASK_UNLOCKER = DeferredRegister.create(
-        VampirismRegistries.Keys.TASK_UNLOCKER,
-        MOD_ID
-    );
-    public static final DeferredRegister<MapCodec<? extends TaskReward>> TASK_REWARDS = DeferredRegister.create(
-        VampirismRegistries.Keys.TASK_REWARD,
-        MOD_ID
-    );
-    public static final DeferredRegister<MapCodec<? extends ITaskRewardInstance>> TASK_REWARD_INSTANCES = DeferredRegister.create(
-        VampirismRegistries.Keys.TASK_REWARD_INSTANCE,
-        MOD_ID
-    );
+    public static final DeferredRegister<MapCodec<? extends TaskUnlocker>> TASK_UNLOCKER = DeferredRegister.create(VampirismRegistries.Keys.TASK_UNLOCKER, MOD_ID);
+    public static final DeferredRegister<MapCodec<? extends TaskReward>> TASK_REWARDS = DeferredRegister.create(VampirismRegistries.Keys.TASK_REWARD, MOD_ID);
+    public static final DeferredRegister<MapCodec<? extends ITaskRewardInstance>> TASK_REWARD_INSTANCES = DeferredRegister.create(VampirismRegistries.Keys.TASK_REWARD_INSTANCE, MOD_ID);
 
-    public static final DeferredHolder<MapCodec<? extends TaskUnlocker>, MapCodec<FactionLevelTaskUnlocker>> FACTION_LEVEL_UNLOCKER =
-        TASK_UNLOCKER.register("faction_level", () -> FactionLevelTaskUnlocker.CODEC);
-    public static final DeferredHolder<MapCodec<? extends TaskReward>, MapCodec<SkillPointTaskReward>> SKILL_POINT_REWARD =
-        TASK_REWARDS.register("skill_points", () -> SkillPointTaskReward.CODEC);
-    public static final DeferredHolder<
-        MapCodec<? extends ITaskRewardInstance>,
-        MapCodec<SkillPointTaskReward>
-    > SKILL_POINT_REWARD_INSTANCE = TASK_REWARD_INSTANCES.register("skill_points", () -> SkillPointTaskReward.CODEC);
+    public static final DeferredHolder<MapCodec<? extends TaskUnlocker>, MapCodec<FactionLevelTaskUnlocker>> FACTION_LEVEL_UNLOCKER = TASK_UNLOCKER.register("faction_level", () -> FactionLevelTaskUnlocker.CODEC);
+    public static final DeferredHolder<MapCodec<? extends TaskReward>, MapCodec<SkillPointTaskReward>> SKILL_POINT_REWARD = TASK_REWARDS.register("skill_points", () -> SkillPointTaskReward.CODEC);
+    public static final DeferredHolder<MapCodec<? extends ITaskRewardInstance>, MapCodec<SkillPointTaskReward>> SKILL_POINT_REWARD_INSTANCE = TASK_REWARD_INSTANCES.register("skill_points", () ->
+        SkillPointTaskReward.CODEC
+    );
 
     private ModTasks() {}
 
@@ -87,26 +75,10 @@ public final class ModTasks {
 
         public static final GuideBookEntry TASKS = guide("tasks", "guide.expanded.tasks", "guide.expanded.tasks.text");
 
-        public static final GuideBookEntry HUNTER_SKILL_POINTS_1 = guide(
-            HunterTaskHolders.HUNTER_SKILL_POINTS_1,
-            "task.expanded.hunter_skill_points_1",
-            "guide.expanded.hunter_skill_points_1.text"
-        );
-        public static final GuideBookEntry HUNTER_SKILL_POINTS_2 = guide(
-            HunterTaskHolders.HUNTER_SKILL_POINTS_2,
-            "task.expanded.hunter_skill_points_2",
-            "guide.expanded.hunter_skill_points_2.text"
-        );
-        public static final GuideBookEntry VAMPIRE_SKILL_POINTS_1 = guide(
-            VampireTaskHolders.VAMPIRE_SKILL_POINTS_1,
-            "task.expanded.vampire_skill_points_1",
-            "guide.expanded.vampire_skill_points_1.text"
-        );
-        public static final GuideBookEntry VAMPIRE_SKILL_POINTS_2 = guide(
-            VampireTaskHolders.VAMPIRE_SKILL_POINTS_2,
-            "task.expanded.vampire_skill_points_2",
-            "guide.expanded.vampire_skill_points_2.text"
-        );
+        public static final GuideBookEntry HUNTER_SKILL_POINTS_1 = guide(HunterTaskHolders.HUNTER_SKILL_POINTS_1, "task.expanded.hunter_skill_points_1", "guide.expanded.hunter_skill_points_1.text");
+        public static final GuideBookEntry HUNTER_SKILL_POINTS_2 = guide(HunterTaskHolders.HUNTER_SKILL_POINTS_2, "task.expanded.hunter_skill_points_2", "guide.expanded.hunter_skill_points_2.text");
+        public static final GuideBookEntry VAMPIRE_SKILL_POINTS_1 = guide(VampireTaskHolders.VAMPIRE_SKILL_POINTS_1, "task.expanded.vampire_skill_points_1", "guide.expanded.vampire_skill_points_1.text");
+        public static final GuideBookEntry VAMPIRE_SKILL_POINTS_2 = guide(VampireTaskHolders.VAMPIRE_SKILL_POINTS_2, "task.expanded.vampire_skill_points_2", "guide.expanded.vampire_skill_points_2.text");
 
         private TaskGuideEntries() {}
 
@@ -145,9 +117,7 @@ public final class ModTasks {
         private TaskSkillPointStorage() {}
 
         public static int getSkillPoints(IFactionPlayer<?> factionPlayer) {
-            DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> attachment = getAttachmentForFaction(
-                factionPlayer.getFaction().getID()
-            );
+            DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> attachment = getAttachmentForFaction(factionPlayer.getFaction().getID());
             return attachment == null ? 0 : factionPlayer.asEntity().getData(attachment);
         }
 
@@ -168,18 +138,12 @@ public final class ModTasks {
             addSkillPoints(factionPlayer, attachment, amount);
         }
 
-        private static void addSkillPoints(
-            IFactionPlayer<?> factionPlayer,
-            DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> attachment,
-            int amount
-        ) {
+        private static void addSkillPoints(IFactionPlayer<?> factionPlayer, DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> attachment, int amount) {
             Player player = factionPlayer.asEntity();
             player.setData(attachment, player.getData(attachment) + amount);
         }
 
-        private static @Nullable DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> getAttachmentForFaction(
-            ResourceLocation factionId
-        ) {
+        private static @Nullable DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> getAttachmentForFaction(ResourceLocation factionId) {
             if (TaskHolders.HUNTER_FACTION_ID.equals(factionId)) {
                 return ModAttachments.HUNTER_TASK_SKILL_POINTS_ATTACHMENT;
             }

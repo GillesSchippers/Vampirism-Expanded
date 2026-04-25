@@ -43,10 +43,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class VampirePlayerMixin {
 
     @Inject(method = "determineBiteType", at = @At("RETURN"), cancellable = true)
-    private void expanded$treatPoisonousPlayersAsHunterCreatures(
-        LivingEntity entity,
-        CallbackInfoReturnable<IVampirePlayer.BITE_TYPE> cir
-    ) {
+    private void expanded$treatPoisonousPlayersAsHunterCreatures(LivingEntity entity, CallbackInfoReturnable<IVampirePlayer.BITE_TYPE> cir) {
         if (cir.getReturnValue() != IVampirePlayer.BITE_TYPE.SUCK_BLOOD_PLAYER) {
             return;
         }
@@ -57,13 +54,7 @@ public abstract class VampirePlayerMixin {
         }
     }
 
-    @WrapOperation(
-        method = "handleSunDamage",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/player/Player;addEffect(Lnet/minecraft/world/effect/MobEffectInstance;)Z"
-        )
-    )
+    @WrapOperation(method = "handleSunDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;addEffect(Lnet/minecraft/world/effect/MobEffectInstance;)Z"))
     private boolean wrapEffects(Player player, MobEffectInstance effect, Operation<Boolean> original) {
         if (effect.getEffect().value() == MobEffects.CONFUSION && VampiricGroundingService.hasVampiricGrounding(player)) {
             return false;

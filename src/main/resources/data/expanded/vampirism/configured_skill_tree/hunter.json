@@ -1,15 +1,19 @@
 {
-  "children": [
-    {
-      "node": "expanded:hunter_1"
-    },
-    {
-      "node": "expanded:hunter_2"
-    },
-    {
-      "node": "expanded:hunter_3"
-    }
-  ],
-  "node": "expanded:hunter_root",
-  "skill_tree": "expanded:hunter/level"
+    "children": [
+        {
+            "node": "expanded:hunter_1",
+            "children": [
+                {
+                    "node": "expanded:hunter_3",
+                    "children": [{ "node": "expanded:hunter_4" }]
+                }
+            ]
+        },
+        {
+            "node": "expanded:hunter_2",
+            "children": [{ "node": "expanded:hunter_5" }]
+        }
+    ],
+    "node": "expanded:hunter_root",
+    "skill_tree": "expanded:hunter/level"
 }

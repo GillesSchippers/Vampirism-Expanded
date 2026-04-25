@@ -48,11 +48,7 @@ public final class VampireSkillHandlers {
         return createToggleAction("advanced flight", advancedFlight, AdvancedFlightService::setAdvancedFlight);
     }
 
-    private static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(
-        String label,
-        boolean value,
-        BiConsumer<ServerPlayer, Boolean> setter
-    ) {
+    private static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter) {
         return player -> {
             if (!(player.asEntity() instanceof ServerPlayer serverPlayer)) {
                 return;

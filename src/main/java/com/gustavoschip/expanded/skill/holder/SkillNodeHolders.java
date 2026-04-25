@@ -35,10 +35,14 @@ public final class SkillNodeHolders {
     public static final ResourceKey<ISkillNode> HUNTER_1 = ModSkills.node("hunter_1");
     public static final ResourceKey<ISkillNode> HUNTER_2 = ModSkills.node("hunter_2");
     public static final ResourceKey<ISkillNode> HUNTER_3 = ModSkills.node("hunter_3");
+    public static final ResourceKey<ISkillNode> HUNTER_4 = ModSkills.node("hunter_4");
+    public static final ResourceKey<ISkillNode> HUNTER_5 = ModSkills.node("hunter_5");
     public static final ResourceKey<ISkillNode> VAMPIRE_ROOT = ModSkills.node("vampire_root");
     public static final ResourceKey<ISkillNode> VAMPIRE_1 = ModSkills.node("vampire_1");
     public static final ResourceKey<ISkillNode> VAMPIRE_2 = ModSkills.node("vampire_2");
     public static final ResourceKey<ISkillNode> VAMPIRE_3 = ModSkills.node("vampire_3");
+    public static final ResourceKey<ISkillNode> VAMPIRE_4 = ModSkills.node("vampire_4");
+    public static final ResourceKey<ISkillNode> VAMPIRE_5 = ModSkills.node("vampire_5");
 
     private SkillNodeHolders() {}
 }

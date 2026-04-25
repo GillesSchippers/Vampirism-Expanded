@@ -1,15 +1,19 @@
 {
-  "children": [
-    {
-      "node": "expanded:vampire_1"
-    },
-    {
-      "node": "expanded:vampire_2"
-    },
-    {
-      "node": "expanded:vampire_3"
-    }
-  ],
-  "node": "expanded:vampire_root",
-  "skill_tree": "expanded:vampire/level"
+    "children": [
+        {
+            "node": "expanded:vampire_1",
+            "children": [{ "node": "expanded:vampire_3" }]
+        },
+        {
+            "node": "expanded:vampire_2",
+            "children": [
+                {
+                    "node": "expanded:vampire_4",
+                    "children": [{ "node": "expanded:vampire_5" }]
+                }
+            ]
+        }
+    ],
+    "node": "expanded:vampire_root",
+    "skill_tree": "expanded:vampire/level"
 }

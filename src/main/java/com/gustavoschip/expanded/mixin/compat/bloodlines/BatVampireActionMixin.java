@@ -46,17 +46,9 @@ public abstract class BatVampireActionMixin {
     @Restriction(require = @Condition(type = Condition.Type.MIXIN, value = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin"))
     @WrapOperation(
         method = "@MixinSquared:Handler",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addPermanentModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V"
-        )
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addPermanentModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V")
     )
-    private void expanded$blockBloodlinesArmor(
-        AttributeInstance instance,
-        AttributeModifier modifier,
-        Operation<Void> original,
-        @Local(argsOnly = true) Player player
-    ) {
+    private void expanded$blockBloodlinesArmor(AttributeInstance instance, AttributeModifier modifier, Operation<Void> original, @Local(argsOnly = true) Player player) {
         if (AdvancedFlightService.hasAdvancedFlight(player)) {
             return;
         }

@@ -59,14 +59,7 @@ public abstract class VampirismRenderHandlerMixin {
         this.expanded$currentBloodVisionEntity = event.getEntity();
     }
 
-    @ModifyArgs(
-        method = "onRenderLivingPost",
-        at = @At(
-            value = "INVOKE",
-            target = "Lde/teamlapen/vampirism/client/renderer/RenderHandler$OutlineBuffer;setColor(IIII)V",
-            remap = false
-        )
-    )
+    @ModifyArgs(method = "onRenderLivingPost", at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/client/renderer/RenderHandler$OutlineBuffer;setColor(IIII)V", remap = false))
     private void expanded$setGreenBloodVisionColorForPoisonousPlayers(Args args) {
         Entity entity = this.expanded$currentBloodVisionEntity;
         if (!(entity instanceof Player player) || !player.getData(SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT)) {

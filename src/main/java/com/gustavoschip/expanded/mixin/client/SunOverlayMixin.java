@@ -52,13 +52,7 @@ public abstract class SunOverlayMixin {
         return mc.player != null && mc.player.getData(SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT);
     }
 
-    @ModifyArgs(
-        method = "render",
-        at = @At(
-            value = "INVOKE",
-            target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;scaleBy(FFFFLnet/minecraft/client/gui/GuiGraphics;)V"
-        )
-    )
+    @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;scaleBy(FFFFLnet/minecraft/client/gui/GuiGraphics;)V"))
     private void expanded$modifySunOverlayScale(Args args) {
         if (!expanded$HasVampiricGrounding()) {
             return;
@@ -70,10 +64,7 @@ public abstract class SunOverlayMixin {
 
     @ModifyArg(
         method = "render",
-        at = @At(
-            value = "INVOKE",
-            target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;renderTextureOverlay(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;F)V"
-        ),
+        at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;renderTextureOverlay(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;F)V"),
         index = 2
     )
     private float expanded$modifySunOverlayAlpha(float originalAlpha) {

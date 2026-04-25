@@ -50,9 +50,4 @@ public final class NeoForgeEventHolders {
         VampiricGroundingService.syncFromVampireSkill(player);
         AdvancedFlightService.syncFromVampireSkill(player);
     }
-
-    @SubscribeEvent
-    public void onLivingKnockBack(LivingKnockBackEvent event) {
-        VampiricGroundingService.handleLivingKnockback(event);
-    }
 }

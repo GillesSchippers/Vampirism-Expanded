@@ -25,16 +25,18 @@
 package com.gustavoschip.expanded.mixin;
 
 import com.gustavoschip.expanded.service.skill.VampiricGroundingService;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = LivingEntity.class, priority = 1000, remap = true)
-public abstract class LivingEntityMixin implements VampiricGroundingService.LivingEntitySunDamageTracker {
+public abstract class LivingEntityMixin {
 
     @Unique
     private boolean expanded$lastDamageWasSun;
@@ -49,8 +51,14 @@ public abstract class LivingEntityMixin implements VampiricGroundingService.Livi
         this.expanded$lastDamageWasSun = false;
     }
 
-    @Override
-    public boolean expanded$isLastDamageWasSun() {
-        return this.expanded$lastDamageWasSun;
+    @Inject(method = "knockback", at = @At("HEAD"), cancellable = true)
+    private void expanded$cancelSunKnockback(double strength, double x, double z, CallbackInfo ci) {
+        if (!this.expanded$lastDamageWasSun) return;
+
+        LivingEntity self = (LivingEntity) (Object) this;
+
+        if (self instanceof ServerPlayer player && VampiricGroundingService.hasVampiricGrounding(player)) {
+            ci.cancel();
+        }
     }
 }

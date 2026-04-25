@@ -36,13 +36,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
-public record FactionLevelTaskUnlocker(
-    ResourceLocation faction,
-    int minLevel,
-    Optional<Integer> maxLevel,
-    int minLordRank,
-    Optional<Integer> maxLordRank
-) implements TaskUnlocker {
+public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, Optional<Integer> maxLevel, int minLordRank, Optional<Integer> maxLordRank) implements TaskUnlocker {
     public static final MapCodec<FactionLevelTaskUnlocker> CODEC = RecordCodecBuilder.mapCodec(instance ->
         instance
             .group(
@@ -69,15 +63,7 @@ public record FactionLevelTaskUnlocker(
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-            "Requires faction: %s, level: %d%s, lord rank: %d%s".formatted(
-                faction,
-                minLevel,
-                formatUpperBound(maxLevel.orElse(null)),
-                minLordRank,
-                formatUpperBound(maxLordRank.orElse(null))
-            )
-        );
+        return Component.literal("Requires faction: %s, level: %d%s, lord rank: %d%s".formatted(faction, minLevel, formatUpperBound(maxLevel.orElse(null)), minLordRank, formatUpperBound(maxLordRank.orElse(null))));
     }
 
     @Override

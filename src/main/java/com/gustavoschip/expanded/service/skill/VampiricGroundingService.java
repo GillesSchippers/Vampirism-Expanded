@@ -48,10 +48,7 @@ public final class VampiricGroundingService extends ModServices {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final ResourceLocation SUNDAMAGE_REDUCTION_ID = fromNamespaceAndPath(MOD_ID, "vampiric_grounding_sundamage");
-    private static final ResourceLocation BLOOD_EXHAUSTION_INCREASE_ID = fromNamespaceAndPath(
-        MOD_ID,
-        "vampiric_grounding_blood_exhaustion"
-    );
+    private static final ResourceLocation BLOOD_EXHAUSTION_INCREASE_ID = fromNamespaceAndPath(MOD_ID, "vampiric_grounding_blood_exhaustion");
     private static final double SUNDAMAGE_REDUCTION_MODIFIER = -0.75D;
     private static final double BLOOD_EXHAUSTION_INCREASE_MODIFIER = 0.5D;
 
@@ -66,15 +63,7 @@ public final class VampiricGroundingService extends ModServices {
     }
 
     public static void setVampiricGrounding(ServerPlayer player, boolean vampiricGrounding) {
-        if (
-            !setBooleanAttachment(
-                player,
-                SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT,
-                vampiricGrounding,
-                "vampiric grounding",
-                LOGGER
-            )
-        ) {
+        if (!setBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_GROUNDING_ATTACHMENT, vampiricGrounding, "vampiric grounding", LOGGER)) {
             return;
         }
 
@@ -103,21 +92,6 @@ public final class VampiricGroundingService extends ModServices {
             serverPlayer.displayClientMessage(Component.translatable("text.expanded.vampiric_grounding.bat_disabled"), true);
         }
         return false;
-    }
-
-    public static void handleLivingKnockback(LivingKnockBackEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer player) || !VampiricGroundingService.hasVampiricGrounding(player)) {
-            return;
-        }
-
-        if (!(event.getEntity() instanceof LivingEntitySunDamageTracker tracker) || !tracker.expanded$isLastDamageWasSun()) {
-            return;
-        }
-
-        event.setStrength(0.0F);
-        event.setRatioX(0.0D);
-        event.setRatioZ(0.0D);
-        event.setCanceled(true);
     }
 
     private static void deactivateBatMode(ServerPlayer player) {
@@ -160,10 +134,5 @@ public final class VampiricGroundingService extends ModServices {
             attribute.removeModifier(id);
         }
         attribute.addPermanentModifier(new AttributeModifier(id, amount, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-    }
-
-    // TODO: Create separate interface module
-    public interface LivingEntitySunDamageTracker {
-        boolean expanded$isLastDamageWasSun();
     }
 }

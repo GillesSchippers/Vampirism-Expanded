@@ -52,10 +52,7 @@ public final class ModSkills {
     public static final DeferredRegister<ISkill<?>> SKILLS = DeferredRegister.create(VampirismRegistries.Keys.SKILL, MOD_ID);
     public static final ResourceLocation HUNTER_FACTION_ID = fromNamespaceAndPath("vampirism", "hunter");
     public static final ResourceLocation VAMPIRE_FACTION_ID = fromNamespaceAndPath("vampirism", "vampire");
-    public static final ISkillPointProvider TASK_SKILL_POINTS = SkillPointProviders.register(
-        fromNamespaceAndPath(MOD_ID, "task_skill_points"),
-        ModTasks.TaskSkillPointStorage::getSkillPoints
-    );
+    public static final ISkillPointProvider TASK_SKILL_POINTS = SkillPointProviders.register(fromNamespaceAndPath(MOD_ID, "task_skill_points"), ModTasks.TaskSkillPointStorage::getSkillPoints);
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = SkillHolders.HUNTER_ROOT;
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SkillHolders.POISONOUS_BLOOD;
@@ -92,11 +89,15 @@ public final class ModSkills {
         public static final ResourceKey<ISkillNode> HUNTER_1 = SkillNodeHolders.HUNTER_1;
         public static final ResourceKey<ISkillNode> HUNTER_2 = SkillNodeHolders.HUNTER_2;
         public static final ResourceKey<ISkillNode> HUNTER_3 = SkillNodeHolders.HUNTER_3;
+        public static final ResourceKey<ISkillNode> HUNTER_4 = SkillNodeHolders.HUNTER_4;
+        public static final ResourceKey<ISkillNode> HUNTER_5 = SkillNodeHolders.HUNTER_5;
 
         public static final ResourceKey<ISkillNode> VAMPIRE_ROOT = SkillNodeHolders.VAMPIRE_ROOT;
         public static final ResourceKey<ISkillNode> VAMPIRE_1 = SkillNodeHolders.VAMPIRE_1;
         public static final ResourceKey<ISkillNode> VAMPIRE_2 = SkillNodeHolders.VAMPIRE_2;
         public static final ResourceKey<ISkillNode> VAMPIRE_3 = SkillNodeHolders.VAMPIRE_3;
+        public static final ResourceKey<ISkillNode> VAMPIRE_4 = SkillNodeHolders.VAMPIRE_4;
+        public static final ResourceKey<ISkillNode> VAMPIRE_5 = SkillNodeHolders.VAMPIRE_5;
 
         private Nodes() {}
     }
@@ -122,11 +123,7 @@ public final class ModSkills {
                 return Integer.MAX_VALUE;
             }
 
-            int spentPoints = enabledSkills
-                .stream()
-                .filter(ExpandedSkillPointHelper::usesExpandedPoints)
-                .mapToInt(ISkill::getSkillPointCost)
-                .sum();
+            int spentPoints = enabledSkills.stream().filter(ExpandedSkillPointHelper::usesExpandedPoints).mapToInt(ISkill::getSkillPointCost).sum();
             return Math.max(0, ModTasks.TaskSkillPointStorage.getSkillPoints(player) - spentPoints);
         }
     }

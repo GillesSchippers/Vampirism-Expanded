@@ -40,12 +40,7 @@ public class FactionSkillBase<T extends IFactionPlayer<T>> extends VampirismSkil
 
     private final ResourceLocation factionId;
 
-    public FactionSkillBase(
-        Either<ResourceKey<ISkillTree>, TagKey<ISkillTree>> tree,
-        ResourceLocation factionId,
-        int skillPointCost,
-        boolean hasDefaultDescription
-    ) {
+    public FactionSkillBase(Either<ResourceKey<ISkillTree>, TagKey<ISkillTree>> tree, ResourceLocation factionId, int skillPointCost, boolean hasDefaultDescription) {
         super(tree, skillPointCost, hasDefaultDescription);
         this.factionId = factionId;
     }

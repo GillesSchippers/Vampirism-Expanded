@@ -1,22 +1,13 @@
 {
-  "display": {
-    "count": 1,
-    "id": "vampirism:soul_orb_vampire"
-  },
-  "faction": {
-    "id": "vampirism:hunter"
-  },
-  "name": {
-    "translate": "tree.expanded.hunter"
-  },
-  "unlock_predicate": {
-    "type_specific": {
-      "type": "vampirism:player_faction",
-      "faction": {
-        "id": "vampirism:hunter"
-      },
-      "lord_level": 5,
-      "level": 14
+    "display": { "count": 1, "id": "vampirism:soul_orb_vampire" },
+    "faction": { "id": "vampirism:hunter" },
+    "name": { "translate": "tree.expanded.hunter" },
+    "unlock_predicate": {
+        "type_specific": {
+            "type": "vampirism:player_faction",
+            "faction": { "id": "vampirism:hunter" },
+            "lord_level": 5,
+            "level": 14
+        }
     }
-  }
 }

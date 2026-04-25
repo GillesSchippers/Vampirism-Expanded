@@ -50,15 +50,7 @@ public final class GuideBookScaledPageTextImage extends Page {
     private final int imageWidth;
     private final int imageHeight;
 
-    public GuideBookScaledPageTextImage(
-        FormattedText text,
-        ResourceLocation image,
-        int textYOffset,
-        int imageX,
-        int imageY,
-        int imageWidth,
-        int imageHeight
-    ) {
+    public GuideBookScaledPageTextImage(FormattedText text, ResourceLocation image, int textYOffset, int imageX, int imageY, int imageWidth, int imageHeight) {
         this.pageText = new PageText(text, textYOffset);
         this.image = image;
         this.imageX = imageX;
