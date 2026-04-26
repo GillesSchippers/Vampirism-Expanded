@@ -22,8 +22,18 @@
  * SOFTWARE.
  */
 
-package com.gustavoschip.expanded.service.tracker;
+package com.gustavoschip.expanded.event.holder;
 
-public interface SunDamageTracker {
-    boolean expanded$isLastDamageWasSun();
+import com.gustavoschip.expanded.command.ModCommands;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+
+public final class NeoForgeEventHolders {
+
+    public NeoForgeEventHolders() {}
+
+    @SubscribeEvent
+    private void onRegisterCommands(RegisterCommandsEvent event) {
+        ModCommands.register(event);
+    }
 }

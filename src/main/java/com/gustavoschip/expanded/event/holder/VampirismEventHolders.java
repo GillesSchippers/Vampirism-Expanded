@@ -24,7 +24,7 @@
 
 package com.gustavoschip.expanded.event.holder;
 
-import com.gustavoschip.expanded.service.skill.HunterService;
+import com.gustavoschip.expanded.service.skill.HunterSkillService;
 import de.teamlapen.vampirism.api.event.BloodDrinkEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 
@@ -32,9 +32,8 @@ public final class VampirismEventHolders {
 
     public VampirismEventHolders() {}
 
-    // TODO: Replace with dedicated mixin.
     @SubscribeEvent
     private void onPlayerDrinkBlood(BloodDrinkEvent.PlayerDrinkBloodEvent event) {
-        HunterService.handlePlayerDrinkBlood(event);
+        HunterSkillService.handlePlayerDrinkBlood(event);
     }
 }

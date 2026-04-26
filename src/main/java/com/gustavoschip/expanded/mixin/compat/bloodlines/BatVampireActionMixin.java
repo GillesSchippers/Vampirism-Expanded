@@ -25,7 +25,7 @@
 package com.gustavoschip.expanded.mixin.compat.bloodlines;
 
 import com.bawnorton.mixinsquared.TargetHandler;
-import com.gustavoschip.expanded.service.skill.VampireService;
+import com.gustavoschip.expanded.service.skill.VampireSkillService;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -49,7 +49,7 @@ public abstract class BatVampireActionMixin {
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;addPermanentModifier(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V")
     )
     private void expanded$blockBloodlinesArmor(AttributeInstance instance, AttributeModifier modifier, Operation<Void> original, @Local(argsOnly = true) Player player) {
-        if (VampireService.hasBatArmor(player)) {
+        if (VampireSkillService.hasBatArmor(player)) {
             return;
         }
 

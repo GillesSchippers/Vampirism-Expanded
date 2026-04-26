@@ -39,6 +39,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 @SuppressWarnings("unused")
 public abstract class ModAttachments {
 
+    // TODO: Make a single attachment that holds all data.
     protected static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MOD_ID);
 
     protected static DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> registerBooleanAttachment(String id) {

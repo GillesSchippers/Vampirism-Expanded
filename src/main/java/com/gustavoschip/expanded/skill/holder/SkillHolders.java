@@ -46,13 +46,13 @@ public final class SkillHolders {
             HunterSkillHandlers.innateToughnessToggle(false)
         )
     );
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> ___ = ModSkills.SKILLS.register("hunters_growth", () ->
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTERS_GROWTH = ModSkills.SKILLS.register("hunters_growth", () ->
         new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 3, true).setToggleActions(
             HunterSkillHandlers.huntersGrowthToggle(true),
             HunterSkillHandlers.huntersGrowthToggle(false)
         )
     );
-    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> __ = ModSkills.SKILLS.register("prepared_hunt", () ->
+    public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> PREPARED_HUNT = ModSkills.SKILLS.register("prepared_hunt", () ->
         new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 5, true).setToggleActions(
             HunterSkillHandlers.preparedHuntToggle(true),
             HunterSkillHandlers.preparedHuntToggle(false)

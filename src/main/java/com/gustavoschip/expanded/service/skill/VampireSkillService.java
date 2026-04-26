@@ -43,7 +43,7 @@ import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
 @SuppressWarnings("unused")
-public class VampireService extends ModServices {
+public class VampireSkillService extends ModServices {
 
     private static final ResourceLocation SUNDAMAGE_REDUCTION_ID = fromNamespaceAndPath(MOD_ID, "sun_damage_reduction");
     private static final ResourceLocation BLOOD_EXHAUSTION_REDUCTION_ID = fromNamespaceAndPath(MOD_ID, "blood_exhaustion_reduction");
@@ -122,7 +122,7 @@ public class VampireService extends ModServices {
         if (bloodExhaustion == null) return;
 
         if (enabled) {
-            replaceModifier(bloodExhaustion, BLOOD_EXHAUSTION_REDUCTION_ID, BLOOD_EXHAUSTION_REDUCTION_MODIFIER);
+            replaceModifier(bloodExhaustion, BLOOD_EXHAUSTION_REDUCTION_ID, BLOOD_EXHAUSTION_REDUCTION_MODIFIER, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         } else {
             bloodExhaustion.removeModifier(BLOOD_EXHAUSTION_REDUCTION_ID);
         }
@@ -134,7 +134,7 @@ public class VampireService extends ModServices {
         if (sunDamage == null) return;
 
         if (enabled) {
-            replaceModifier(sunDamage, SUNDAMAGE_REDUCTION_ID, SUNDAMAGE_REDUCTION_MODIFIER);
+            replaceModifier(sunDamage, SUNDAMAGE_REDUCTION_ID, SUNDAMAGE_REDUCTION_MODIFIER, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         } else {
             sunDamage.removeModifier(SUNDAMAGE_REDUCTION_ID);
         }
@@ -157,15 +157,15 @@ public class VampireService extends ModServices {
         player.setSwimming(false);
     }
 
-    private static void replaceModifier(AttributeInstance attribute, ResourceLocation id, double amount) {
+    private static void replaceModifier(AttributeInstance attribute, ResourceLocation id, double amount, AttributeModifier.Operation operation) {
         AttributeModifier current = attribute.getModifier(id);
-        if (current != null && current.amount() == amount && current.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
+        if (current != null && current.amount() == amount && current.operation() == operation) {
             return;
         }
         if (current != null) {
             attribute.removeModifier(id);
         }
-        attribute.addPermanentModifier(new AttributeModifier(id, amount, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        attribute.addPermanentModifier(new AttributeModifier(id, amount, operation));
     }
 
     private static void applyBatFlightBonuses(ServerPlayer player, boolean requireBatActive) {

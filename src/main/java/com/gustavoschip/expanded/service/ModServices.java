@@ -40,8 +40,6 @@ public abstract class ModServices {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    protected ModServices() {}
-
     public static boolean canSyncAttachment(ServerPlayer player) {
         return player != null && player.connection != null && !player.hasDisconnected();
     }

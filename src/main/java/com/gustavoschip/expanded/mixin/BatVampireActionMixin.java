@@ -24,7 +24,7 @@
 
 package com.gustavoschip.expanded.mixin;
 
-import com.gustavoschip.expanded.service.skill.VampireService;
+import com.gustavoschip.expanded.service.skill.VampireSkillService;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -50,13 +50,13 @@ public abstract class BatVampireActionMixin {
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isInWater()Z")
     )
     private boolean expanded$allowBatModeInLiquids(Player player) {
-        return player.isInWater() && !VampireService.canUseBatModeInLiquids(player);
+        return player.isInWater() && !VampireSkillService.canUseBatModeInLiquids(player);
     }
 
     @Inject(method = "activate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;Lde/teamlapen/vampirism/api/entity/player/actions/IAction$ActivationContext;)Z", at = @At("TAIL"))
     private void expanded$applyBatModeBonusesOnActivate(IVampirePlayer vampire, IAction.ActivationContext context, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValueZ() && (vampire.asEntity() instanceof ServerPlayer player)) {
-            VampireService.onBatActivated(player);
+            VampireSkillService.onBatActivated(player);
         }
     }
 
@@ -71,7 +71,7 @@ public abstract class BatVampireActionMixin {
         @Local(argsOnly = true) Player player,
         @Local(argsOnly = true) boolean enabled
     ) {
-        if (enabled && VampireService.hasBatArmor(player) && (instance == player.getAttribute(Attributes.ARMOR) || instance == player.getAttribute(Attributes.ARMOR_TOUGHNESS))) {
+        if (enabled && VampireSkillService.hasBatArmor(player) && (instance == player.getAttribute(Attributes.ARMOR) || instance == player.getAttribute(Attributes.ARMOR_TOUGHNESS))) {
             return;
         }
 

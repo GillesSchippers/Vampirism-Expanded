@@ -26,7 +26,7 @@ package com.gustavoschip.expanded.skill.handler;
 
 import static com.gustavoschip.expanded.skill.ModSkills.createToggleAction;
 
-import com.gustavoschip.expanded.service.skill.HunterService;
+import com.gustavoschip.expanded.service.skill.HunterSkillService;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import java.util.function.Consumer;
 
@@ -35,25 +35,22 @@ public final class HunterSkillHandlers {
     private HunterSkillHandlers() {}
 
     public static <T extends IFactionPlayer<T>> Consumer<T> innateToughnessToggle(boolean enabled) {
-        //return createToggleAction("Innate Toughness", enabled, HunterService::setInnateToughness);
-        return createToggleAction("Innate Toughness", enabled, null); // TODO
+        return createToggleAction("Innate Toughness", enabled, HunterSkillService::setInnateToughness);
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> huntersGrowthToggle(boolean enabled) {
-        //return createToggleAction("Hunters Growth", enabled, HunterService::setHuntersGrowth);
-        return createToggleAction("Hunters Growth", enabled, null); // TODO
+        return createToggleAction("Hunters Growth", enabled, HunterSkillService::setHuntersGrowth);
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> preparedHuntToggle(boolean enabled) {
-        //return createToggleAction("Prepared Hunt", enabled, HunterService::setPreparedHunt);
-        return createToggleAction("Prepared Hunt", enabled, null); // TODO
+        return createToggleAction("Prepared Hunt", enabled, HunterSkillService::setPreparedHunt); // TODO: Implement
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> garlicBloodToggle(boolean enabled) {
-        return createToggleAction("Garlic Blood", enabled, HunterService::setGarlicBlood);
+        return createToggleAction("Garlic Blood", enabled, HunterSkillService::setGarlicBlood);
     }
 
     public static <T extends IFactionPlayer<T>> Consumer<T> poisonousBloodToggle(boolean enabled) {
-        return createToggleAction("Poisonous Blood", enabled, HunterService::setPoisonousBlood);
+        return createToggleAction("Poisonous Blood", enabled, HunterSkillService::setPoisonousBlood);
     }
 }

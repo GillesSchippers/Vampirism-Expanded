@@ -146,8 +146,8 @@ dependencies {
 
     compileOnly("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
 
-    localRuntime("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
-    localRuntime("curse.maven:Guide-API-VP-380771:5618709") // TODO: Specify in gradle.properties
+    //localRuntime("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
+    //localRuntime("curse.maven:Guide-API-VP-380771:5618709") // TODO: Specify in gradle.properties
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

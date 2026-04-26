@@ -22,31 +22,20 @@
  * SOFTWARE.
  */
 
-package com.gustavoschip.expanded.mixin;
+package com.gustavoschip.expanded.command;
 
-import com.gustavoschip.expanded.service.skill.VampireSkillService;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import com.gustavoschip.expanded.command.holder.ExpandedCommandHolders;
+import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.commands.CommandSourceStack;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
-@Mixin(value = Entity.class, priority = 1000, remap = true)
-public abstract class EntityMixin {
+public abstract class ModCommands {
 
-    @Inject(method = "setSwimming(Z)V", at = @At("HEAD"), cancellable = true)
-    private void expanded$preventSwimmingWhileBatFormActive(boolean swimming, CallbackInfo ci) {
-        if (!swimming) {
-            return;
-        }
+    private ModCommands() {}
 
-        if (!((Object) this instanceof Player player)) {
-            return;
-        }
+    public static void register(RegisterCommandsEvent event) {
+        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
-        if (VampireSkillService.shouldPreventSwimming(player)) {
-            ci.cancel();
-        }
+        ExpandedCommandHolders.register(dispatcher);
     }
 }

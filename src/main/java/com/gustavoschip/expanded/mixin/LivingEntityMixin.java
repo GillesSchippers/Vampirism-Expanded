@@ -24,8 +24,7 @@
 
 package com.gustavoschip.expanded.mixin;
 
-import com.gustavoschip.expanded.service.skill.VampireService;
-import com.gustavoschip.expanded.service.tracker.SunDamageTracker;
+import com.gustavoschip.expanded.service.skill.VampireSkillService;
 import de.teamlapen.vampirism.core.ModDamageTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -38,7 +37,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = LivingEntity.class, priority = 1000, remap = true)
-public abstract class LivingEntityMixin implements SunDamageTracker {
+public abstract class LivingEntityMixin {
 
     @Unique
     private boolean expanded$lastDamageWasSun;
@@ -59,13 +58,8 @@ public abstract class LivingEntityMixin implements SunDamageTracker {
 
         LivingEntity self = (LivingEntity) (Object) this;
 
-        if (self instanceof ServerPlayer player && VampireService.hasDayWalker(player)) {
+        if (self instanceof ServerPlayer player && VampireSkillService.hasDayWalker(player)) {
             ci.cancel();
         }
-    }
-
-    @Override
-    public boolean expanded$isLastDamageWasSun() {
-        return this.expanded$lastDamageWasSun;
     }
 }

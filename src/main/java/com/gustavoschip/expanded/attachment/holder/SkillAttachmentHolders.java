@@ -30,6 +30,9 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class SkillAttachmentHolders extends ModAttachments {
 
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> INNATE_TOUGHNESS_ATTACHMENT = registerBooleanAttachment("innate_toughness");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> HUNTERS_GROWTH_ATTACHMENT = registerBooleanAttachment("hunters_growth");
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> PREPARED_HUNT_ATTACHMENT = registerBooleanAttachment("prepared_hunt");
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> POISONOUS_BLOOD_ATTACHMENT = registerBooleanAttachment("poisonous_blood");
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> GARLIC_BLOOD_ATTACHMENT = registerBooleanAttachment("garlic_blood");
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> BAT_SPEED_ATTACHMENT = registerBooleanAttachment("bat_speed");

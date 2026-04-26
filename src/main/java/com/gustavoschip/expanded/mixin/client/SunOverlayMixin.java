@@ -24,7 +24,7 @@
 
 package com.gustavoschip.expanded.mixin.client;
 
-import com.gustavoschip.expanded.service.skill.VampireService;
+import com.gustavoschip.expanded.service.skill.VampireSkillService;
 import de.teamlapen.vampirism.client.gui.overlay.SunOverlay;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
@@ -49,7 +49,7 @@ public abstract class SunOverlayMixin {
     @Unique
     private static boolean expanded$HasDayWalker() {
         Minecraft mc = Minecraft.getInstance();
-        return mc.player != null && mc.player.connection != null && VampireService.hasDayWalker(mc.player);
+        return mc.player != null && mc.player.connection != null && VampireSkillService.hasDayWalker(mc.player);
     }
 
     @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;scaleBy(FFFFLnet/minecraft/client/gui/GuiGraphics;)V"))

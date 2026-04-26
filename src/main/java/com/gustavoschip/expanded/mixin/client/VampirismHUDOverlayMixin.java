@@ -24,7 +24,7 @@
 
 package com.gustavoschip.expanded.mixin.client;
 
-import com.gustavoschip.expanded.service.skill.HunterService;
+import com.gustavoschip.expanded.service.skill.HunterSkillService;
 import de.teamlapen.vampirism.client.gui.overlay.VampirismHUDOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
@@ -50,7 +50,7 @@ public abstract class VampirismHUDOverlayMixin {
         }
 
         Entity target = ((EntityHitResult) mc.hitResult).getEntity();
-        if (target instanceof Player player && !target.isInvisible() && HunterService.hasPoisonousBlood(player)) {
+        if (target instanceof Player player && !target.isInvisible() && HunterSkillService.hasPoisonousBlood(player)) {
             return POISONOUS_BLOOD_FANGS_COLOR;
         }
         return color;

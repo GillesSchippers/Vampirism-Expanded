@@ -24,8 +24,8 @@
 
 package com.gustavoschip.expanded.mixin;
 
-import com.gustavoschip.expanded.service.skill.HunterService;
-import com.gustavoschip.expanded.service.skill.VampireService;
+import com.gustavoschip.expanded.service.skill.HunterSkillService;
+import com.gustavoschip.expanded.service.skill.VampireSkillService;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
@@ -49,14 +49,14 @@ public abstract class VampirePlayerMixin {
             return;
         }
 
-        if (HunterService.isPoisonousBloodTarget(entity)) {
+        if (HunterSkillService.isPoisonousBloodTarget(entity)) {
             cir.setReturnValue(IVampirePlayer.BITE_TYPE.HUNTER_CREATURE);
         }
     }
 
     @WrapOperation(method = "handleSunDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;addEffect(Lnet/minecraft/world/effect/MobEffectInstance;)Z"))
     private boolean wrapEffects(Player player, MobEffectInstance effect, Operation<Boolean> original) {
-        if (effect.is(MobEffects.CONFUSION) && VampireService.hasDayWalkerSkill(player instanceof ServerPlayer sp ? sp : null)) {
+        if (effect.is(MobEffects.CONFUSION) && VampireSkillService.hasDayWalkerSkill(player instanceof ServerPlayer sp ? sp : null)) {
             return false;
         }
 

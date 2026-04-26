@@ -49,7 +49,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("unused")
-public final class ModTasks {
+public abstract class ModTasks {
 
     public static final DeferredRegister<MapCodec<? extends TaskUnlocker>> TASK_UNLOCKER = DeferredRegister.create(VampirismRegistries.Keys.TASK_UNLOCKER, MOD_ID);
     public static final DeferredRegister<MapCodec<? extends TaskReward>> TASK_REWARDS = DeferredRegister.create(VampirismRegistries.Keys.TASK_REWARD, MOD_ID);
@@ -62,8 +62,6 @@ public final class ModTasks {
     public static final DeferredHolder<MapCodec<? extends ITaskRewardInstance>, MapCodec<SkillPointTaskReward>> SKILL_POINT_REWARD_INSTANCE = TASK_REWARD_INSTANCES.register("skill_points", () ->
         SkillPointTaskReward.CODEC
     );
-
-    private ModTasks() {}
 
     public static void register(IEventBus modEventBus) {
         TASK_UNLOCKER.register(modEventBus);

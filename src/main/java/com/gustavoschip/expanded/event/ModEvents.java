@@ -24,6 +24,7 @@
 
 package com.gustavoschip.expanded.event;
 
+import com.gustavoschip.expanded.event.holder.NeoForgeEventHolders;
 import com.gustavoschip.expanded.event.holder.VampirismEventHolders;
 import net.neoforged.neoforge.common.NeoForge;
 
@@ -31,6 +32,7 @@ import net.neoforged.neoforge.common.NeoForge;
 public abstract class ModEvents {
 
     public static void register() {
+        NeoForge.EVENT_BUS.register(new NeoForgeEventHolders());
         NeoForge.EVENT_BUS.register(new VampirismEventHolders());
     }
 }
