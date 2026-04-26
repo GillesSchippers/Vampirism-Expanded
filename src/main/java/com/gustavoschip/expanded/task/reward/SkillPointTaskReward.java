@@ -56,7 +56,7 @@ public record SkillPointTaskReward(int points, ResourceLocation source, Resource
     }
 
     @Override
-    public @NotNull ITaskRewardInstance createInstance(IFactionPlayer<?> player) {
+    public ITaskRewardInstance createInstance(IFactionPlayer<?> player) {
         return this;
     }
 
