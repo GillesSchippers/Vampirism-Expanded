@@ -18,9 +18,10 @@ installed.
 
 ## Compatibility Information
 
-- **Vampirism Version:** 1.10.x (required)
-- **Guide-API Version:** 2.3.x (optional)
-- **Bloodlines Version:** 3.0.x (optional)
+- **Guide-API**
+- **Bloodlines**
+- **Create**
+- **Sable**
 
 ## Installation
 

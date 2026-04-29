@@ -34,7 +34,6 @@ import de.teamlapen.vampirism.api.entity.player.task.TaskReward;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import org.jetbrains.annotations.NotNull;
 
 public record SkillPointTaskReward(int points, ResourceLocation source, ResourceLocation faction) implements TaskReward, ITaskRewardInstance {
     public static final MapCodec<SkillPointTaskReward> CODEC = RecordCodecBuilder.mapCodec(instance ->
