@@ -24,21 +24,105 @@
 
 package com.gustavoschip.expanded.compat.create;
 
+import com.gustavoschip.expanded.mixin.compat.create.AbstractContraptionEntityAccessorMixin;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
+import com.simibubi.create.content.contraptions.Contraption;
+import de.teamlapen.vampirism.config.VampirismConfig;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class CreateCompat {
 
     public static boolean isInContraption(@NotNull LivingEntity entity, @NotNull Level level) {
-        if (level.isClientSide) {
-            return false;
+        Entity vehicle = entity.getVehicle();
+        if (!(vehicle instanceof AbstractContraptionEntity contraptionEntity)) {
+            return isUnderContraption(level, entity.getEyePosition());
         }
 
-        Entity vehicle = entity.getVehicle();
-        return vehicle instanceof AbstractContraptionEntity;
+        Contraption contraption = ((AbstractContraptionEntityAccessorMixin) contraptionEntity).expanded$getContraption();
+        if (contraption == null) {
+            return isUnderContraption(level, entity.getEyePosition());
+        }
+
+        Vec3 localEyePos = entity.getEyePosition().subtract(contraptionEntity.position());
+        if (isContraptionSunBlocked(contraption, localEyePos)) {
+            return true;
+        }
+
+        return isUnderContraption(level, entity.getEyePosition());
+    }
+
+    private static boolean isUnderContraption(@NotNull Level level, @NotNull Vec3 eyePos) {
+        AABB searchBox = new AABB(eyePos.x - 32.0D, level.getMinBuildHeight(), eyePos.z - 32.0D, eyePos.x + 32.0D, level.getMinBuildHeight() + level.getHeight(), eyePos.z + 32.0D);
+
+        for (AbstractContraptionEntity contraptionEntity : level.getEntitiesOfClass(AbstractContraptionEntity.class, searchBox)) {
+            // First try a precise contraption-local check using the contraption's internal world
+            try {
+                Contraption contraption = ((AbstractContraptionEntityAccessorMixin) contraptionEntity).expanded$getContraption();
+                if (contraption != null) {
+                    Vec3 localEyePos = eyePos.subtract(contraptionEntity.position());
+                    if (isContraptionSunBlocked(contraption, localEyePos)) {
+                        return true;
+                    }
+                }
+            } catch (Throwable ignored) {
+                // fall back to bounding-box check below
+            }
+
+            // Fallback: check entity bounding box (coarse). Only used when we can't perform the precise check.
+            if (isUnderBoundingBox(contraptionEntity.getBoundingBox(), eyePos)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static boolean isUnderBoundingBox(@NotNull AABB box, @NotNull Vec3 eyePos) {
+        return eyePos.x >= box.minX && eyePos.x <= box.maxX && eyePos.z >= box.minZ && eyePos.z <= box.maxZ && eyePos.y <= box.maxY;
+    }
+
+    private static boolean isContraptionSunBlocked(@NotNull Contraption contraption, @NotNull Vec3 pos) {
+        try {
+            java.lang.reflect.Method method = contraption.getClass().getMethod("getContraptionWorld");
+            Object world = method.invoke(contraption);
+            if (!(world instanceof LevelAccessor levelAccessor)) {
+                return false;
+            }
+
+            return !canBlockSeeSun(levelAccessor, pos);
+        } catch (ReflectiveOperationException e) {
+            return false;
+        }
+    }
+
+    private static boolean canBlockSeeSun(@NotNull LevelAccessor world, @NotNull Vec3 pos) {
+        int y = (int) Math.floor(pos.y);
+        int maxY = world.getMinBuildHeight() + world.getHeight();
+        int liquidBlocks = 0;
+        BlockPos basePos = new BlockPos((int) Math.floor(pos.x), y, (int) Math.floor(pos.z));
+
+        for (int currentY = y + 1; currentY < maxY; currentY++) {
+            BlockPos checkPos = new BlockPos(basePos.getX(), currentY, basePos.getZ());
+            BlockState state = world.getBlockState(checkPos);
+            if (!state.getFluidState().isEmpty()) {
+                liquidBlocks++;
+                if (liquidBlocks >= VampirismConfig.BALANCE.vpSundamageWaterblocks.get()) {
+                    return false;
+                }
+            } else if (state.canOcclude()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public static final class CreateContraptionHelper {

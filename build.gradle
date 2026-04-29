@@ -132,7 +132,6 @@ dependencies {
             prefer "${mixinsquared_version}"
         }
     }
-
     jarJar(implementation("me.fallenbreath:conditional-mixin-neoforge:${conditional_mixin_version}")) {
         version {
             strictly "${conditional_mixin_version_range}"
@@ -146,22 +145,13 @@ dependencies {
         transitive = false
     }
 
-    compileOnly("de.maxanier.guideapi:Guide-API-VP:${guideapi_version}") {
-        transitive = false
-    }
-
-    compileOnly("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") {
-        transitive = false
-    }
-
+    compileOnly("de.maxanier.guideapi:Guide-API-VP:${guideapi_version}")
+    compileOnly("net.createmod.catnip:Catnip-NeoForge-${minecraft_version}:${catnip_version}")
+    compileOnly("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
+    compileOnly("com.simibubi.create:create-${minecraft_version}:${create_version}")
     compileOnly("dev.ryanhcode.sable:sable-common-${minecraft_version}:${sable_version}")
 
-    compileOnly("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
-
-    //localRuntime("curse.maven:bloodlines-1073052:7965289") // TODO: Specify in gradle.properties
-    //localRuntime("curse.maven:Guide-API-VP-380771:5618709") // TODO: Specify in gradle.properties
-    //localRuntime("curse.maven:Create-328085:7963363") // TODO: Specify in gradle.properties
-    //localRuntime("curse.maven:Sable-1312371:8007005") // TODO: Specify in gradle.properties
+    compileOnly("curse.maven:bloodlines-1073052:7965289") // TODO: Get a better way then using cursemaven.
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

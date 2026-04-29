@@ -39,7 +39,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Restriction(require = @Condition(type = Condition.Type.MOD, value = "bloodlines"))
-@Mixin(value = BatVampireAction.class, priority = 1500, remap = false)
+@Mixin(value = BatVampireAction.class, priority = 1100, remap = false)
 public abstract class BatVampireActionMixin {
 
     @TargetHandler(mixin = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin", name = "setNobleBatSpeedMultiplier")
