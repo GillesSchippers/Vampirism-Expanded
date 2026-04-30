@@ -31,6 +31,7 @@ import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -43,7 +44,11 @@ public abstract class ModServices {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static boolean canSyncAttachment(ServerPlayer player) {
-        return player != null && player.connection != null && !player.hasDisconnected();
+        return player != null && player.server != null && player.connection != null && !player.hasDisconnected() && !player.isRemoved();
+    }
+
+    public static boolean canSyncAttachment(LocalPlayer player) {
+        return player != null && player.connection != null && !player.isRemoved();
     }
 
     protected static boolean hasBooleanAttachment(Player player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment) {

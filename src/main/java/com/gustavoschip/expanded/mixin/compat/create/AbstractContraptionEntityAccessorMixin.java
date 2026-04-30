@@ -32,7 +32,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Restriction(require = @Condition(type = Condition.Type.MOD, value = "create"))
-@Mixin(value = AbstractContraptionEntity.class, priority = 1000, remap = false)
+@Mixin(value = AbstractContraptionEntity.class, priority = 1100, remap = false)
 public interface AbstractContraptionEntityAccessorMixin {
     @Accessor("contraption")
     Contraption expanded$getContraption();
