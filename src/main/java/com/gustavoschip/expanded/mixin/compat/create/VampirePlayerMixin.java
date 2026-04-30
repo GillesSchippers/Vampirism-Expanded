@@ -34,9 +34,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * Stops Vampirism's sun-damage tick when the player is currently sheltered inside a Create
+ * contraption.
+ */
+
 @Restriction(require = @Condition(type = Condition.Type.MOD, value = "create"))
 @Mixin(value = VampirePlayer.class, priority = 1100, remap = false)
 public abstract class VampirePlayerMixin {
+
+    /**
+     * Mixin hook that prevent contraption sun damage tick.
+     */
 
     @Inject(method = "handleSunDamage", at = @At("HEAD"), cancellable = true, remap = false)
     private void expanded$preventContraptionSunDamageTick(boolean isRemote, CallbackInfo ci) {

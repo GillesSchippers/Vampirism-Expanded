@@ -38,9 +38,18 @@ import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+/**
+ * Compatibility mixin that prevents Bloodlines from reapplying bat-armor bonuses already
+ * handled by Expanded.
+ */
+
 @Restriction(require = @Condition(type = Condition.Type.MOD, value = "bloodlines"))
 @Mixin(value = BatVampireAction.class, priority = 1100, remap = false)
 public abstract class BatVampireActionMixin {
+
+    /**
+     * Mixin hook that block bloodlines armor.
+     */
 
     @TargetHandler(mixin = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin", name = "setNobleBatSpeedMultiplier")
     @Restriction(require = @Condition(type = Condition.Type.MIXIN, value = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin"))

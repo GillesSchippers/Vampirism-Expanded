@@ -40,25 +40,54 @@ import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
+/**
+ * Recolors Vampirism's blood-vision outline when the rendered player has Poisonous Blood
+ * and the viewer has garlic blood vision.
+ */
+
 @Mixin(value = RenderHandler.class, priority = 1000, remap = false)
 public abstract class VampirismRenderHandlerMixin {
+
+    /**
+     * Red channel used for the poisonous-blood outline color.
+     */
 
     @Unique
     private static final int POISONOUS_BLOOD_VISION_RED = 0x07;
 
+    /**
+     * Green channel used for the poisonous-blood outline color.
+     */
+
     @Unique
     private static final int POISONOUS_BLOOD_VISION_GREEN = 0xE0;
+
+    /**
+     * Blue channel used for the poisonous-blood outline color.
+     */
 
     @Unique
     private static final int POISONOUS_BLOOD_VISION_BLUE = 0x07;
 
+    /**
+     * Cached value for current blood vision entity.
+     */
+
     @Unique
     private Entity expanded$currentBloodVisionEntity;
+
+    /**
+     * Mixin hook that capture blood vision entity.
+     */
 
     @Inject(method = "onRenderLivingPost", at = @At("HEAD"))
     private void expanded$captureBloodVisionEntity(@NotNull Post<?, ?> event, CallbackInfo ci) {
         this.expanded$currentBloodVisionEntity = event.getEntity();
     }
+
+    /**
+     * Mixin hook that set green blood vision color for poisonous players.
+     */
 
     @ModifyArgs(method = "onRenderLivingPost", at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/client/renderer/RenderHandler$OutlineBuffer;setColor(IIII)V", remap = false))
     private void expanded$setGreenBloodVisionColorForPoisonousPlayers(Args args) {
@@ -76,6 +105,10 @@ public abstract class VampirismRenderHandlerMixin {
         args.set(1, POISONOUS_BLOOD_VISION_GREEN);
         args.set(2, POISONOUS_BLOOD_VISION_BLUE);
     }
+
+    /**
+     * Mixin hook that clear blood vision entity.
+     */
 
     @Inject(method = "onRenderLivingPost", at = @At("RETURN"))
     private void expanded$clearBloodVisionEntity(Post<?, ?> event, CallbackInfo ci) {

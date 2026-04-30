@@ -28,15 +28,32 @@ import java.util.List;
 import java.util.Set;
 import me.fallenbreath.conditionalmixin.api.mixin.RestrictiveMixinConfigPlugin;
 
+/**
+ * Conditional mixin plugin stub used to satisfy the mod's mixin configuration and
+ * restrictive loading rules.
+ */
+
 public class ExpandedMixinPlugin extends RestrictiveMixinConfigPlugin {
+
+    /**
+     * Returns ref mapper config.
+     */
 
     @Override
     public String getRefMapperConfig() {
         return null;
     }
 
+    /**
+     * Performs the accept targets operation.
+     */
+
     @Override
     public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {}
+
+    /**
+     * Returns mixins.
+     */
 
     @Override
     public List<String> getMixins() {

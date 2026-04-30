@@ -38,7 +38,16 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Create compatibility helpers that detect whether an entity is sheltered by a contraption
+ * when Vampirism checks sunlight exposure.
+ */
+
 public class CreateCompat {
+
+    /**
+     * Returns whether the entity is sheltered by a Create contraption or its bounding box.
+     */
 
     public static boolean isInContraption(@NotNull LivingEntity entity, @NotNull Level level) {
         Entity vehicle = entity.getVehicle();
@@ -58,6 +67,10 @@ public class CreateCompat {
 
         return isUnderContraption(level, entity.getEyePosition());
     }
+
+    /**
+     * Checks nearby contraptions around the eye position.
+     */
 
     private static boolean isUnderContraption(@NotNull Level level, @NotNull Vec3 eyePos) {
         AABB searchBox = new AABB(eyePos.x - 32.0D, level.getMinBuildHeight(), eyePos.z - 32.0D, eyePos.x + 32.0D, level.getMinBuildHeight() + level.getHeight(), eyePos.z + 32.0D);
@@ -85,9 +98,17 @@ public class CreateCompat {
         return false;
     }
 
+    /**
+     * Returns whether the eye position lies inside the contraption's bounding box.
+     */
+
     private static boolean isUnderBoundingBox(@NotNull AABB box, @NotNull Vec3 eyePos) {
         return eyePos.x >= box.minX && eyePos.x <= box.maxX && eyePos.z >= box.minZ && eyePos.z <= box.maxZ && eyePos.y <= box.maxY;
     }
+
+    /**
+     * Returns whether the contraption world blocks direct sunlight at the local position.
+     */
 
     private static boolean isContraptionSunBlocked(@NotNull Contraption contraption, @NotNull Vec3 pos) {
         try {
@@ -102,6 +123,10 @@ public class CreateCompat {
             return false;
         }
     }
+
+    /**
+     * Determines whether sunlight reaches the supplied position inside a contraption world.
+     */
 
     private static boolean canBlockSeeSun(@NotNull LevelAccessor world, @NotNull Vec3 pos) {
         int y = (int) Math.floor(pos.y);

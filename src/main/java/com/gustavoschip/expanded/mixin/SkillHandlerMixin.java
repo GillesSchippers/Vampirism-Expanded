@@ -35,16 +35,33 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+/**
+ * Redirects Vampirism's skill-point checks so Expanded trees spend their task-based point
+ * pool instead of the vanilla faction pool.
+ */
+
 @Mixin(value = SkillHandler.class, priority = 1000, remap = false)
 public abstract class SkillHandlerMixin<T extends IFactionPlayer<T>> {
+
+    /**
+     * Cached value for player.
+     */
 
     @Shadow
     @Final
     private T player;
 
+    /**
+     * Cached value for enabled skills.
+     */
+
     @Shadow
     @Final
     private ArrayList<ISkill<T>> enabledSkills;
+
+    /**
+     * Mixin hook that use expanded points for expanded skills.
+     */
 
     @Redirect(method = "canSkillBeEnabled", at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/entity/player/skills/SkillHandler;getLeftSkillPoints()I"))
     private int expanded$useExpandedPointsForExpandedSkills(SkillHandler<?> instance, ISkill<T> skill) {

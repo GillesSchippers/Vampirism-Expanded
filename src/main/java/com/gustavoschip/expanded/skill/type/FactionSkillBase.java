@@ -36,14 +36,30 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Base Vampirism skill implementation bound to a specific playable faction.
+ */
+
 public class FactionSkillBase<T extends IFactionPlayer<T>> extends VampirismSkill<T> {
 
+    /**
+     * Cached value for faction id.
+     */
+
     private final ResourceLocation factionId;
+
+    /**
+     * Creates a new instance of FactionSkillBase.
+     */
 
     public FactionSkillBase(Either<ResourceKey<ISkillTree>, TagKey<ISkillTree>> tree, ResourceLocation factionId, int skillPointCost, boolean hasDefaultDescription) {
         super(tree, skillPointCost, hasDefaultDescription);
         this.factionId = factionId;
     }
+
+    /**
+     * Returns faction.
+     */
 
     @Override
     public @NotNull Optional<IPlayableFaction<?>> getFaction() {

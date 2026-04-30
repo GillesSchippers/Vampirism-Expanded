@@ -31,9 +31,18 @@ import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
+/**
+ * Accessor bridge for Create contraption entities so Expanded can inspect the backing
+ * contraption during sunlight checks.
+ */
+
 @Restriction(require = @Condition(type = Condition.Type.MOD, value = "create"))
 @Mixin(value = AbstractContraptionEntity.class, priority = 1100, remap = false)
 public interface AbstractContraptionEntityAccessorMixin {
+    /**
+     * Mixin hook that get contraption.
+     */
+
     @Accessor("contraption")
     Contraption expanded$getContraption();
 }

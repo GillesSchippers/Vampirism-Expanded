@@ -30,9 +30,21 @@ import net.minecraft.commands.CommandSourceStack;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Registers the mod's command tree with NeoForge's command event.
+ */
+
 public abstract class ModCommands {
 
+    /**
+     * Creates a new instance of ModCommands.
+     */
+
     private ModCommands() {}
+
+    /**
+     * Registers the command tree for the mod.
+     */
 
     public static void register(@NotNull RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();

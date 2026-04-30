@@ -45,15 +45,51 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
+/**
+ * Applies hunter skill state to attachments, attributes, and blood-drink side effects.
+ */
+
 public class HunterSkillService extends ModServices {
 
+    /**
+     * Resource location used to identify the armor bonus modifier.
+     */
+
     private static final ResourceLocation ARMOR_ADDITION_ID = fromNamespaceAndPath(MOD_ID, "armor_addition");
+    /**
+     * Resource location used to identify the scale bonus modifier.
+     */
+
     private static final ResourceLocation SCALE_ADDITION_ID = fromNamespaceAndPath(MOD_ID, "scale_addition");
+    /**
+     * Attribute modifier amount applied to armor when Innate Toughness is enabled.
+     */
+
     private static final double ARMOR_ADDITION_MODIFIER = 10.0D;
+    /**
+     * Attribute modifier amount applied to player scale when Hunters Growth is enabled.
+     */
+
     private static final double SCALE_ADDITION_MODIFIER = 0.1D;
+    /**
+     * Effect duration in ticks for poisonous blood effect duration.
+     */
+
     private static final int POISONOUS_BLOOD_EFFECT_DURATION_TICKS = 60;
+    /**
+     * Effect duration in ticks for garlic effect duration.
+     */
+
     private static final int GARLIC_EFFECT_DURATION_TICKS = 200;
+    /**
+     * Logger used for hunter-skill side effect debug messages.
+     */
+
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    /**
+     * Updates the cached hunter skill state and reapplies the toughness bonus.
+     */
 
     public static void setInnateToughness(ServerPlayer player, boolean enabled) {
         ExpandedAttachmentHolders data = getSharedAttachment(player);
@@ -62,6 +98,10 @@ public class HunterSkillService extends ModServices {
         handleInnateToughnessStats(player, enabled);
     }
 
+    /**
+     * Updates the cached hunter skill state and reapplies the size bonus.
+     */
+
     public static void setHuntersGrowth(ServerPlayer player, boolean enabled) {
         ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.huntersGrowth = enabled;
@@ -69,11 +109,19 @@ public class HunterSkillService extends ModServices {
         handleHuntersGrowthStats(player, enabled);
     }
 
+    /**
+     * Updates the cached prepared hunt flag.
+     */
+
     public static void setPreparedHunt(ServerPlayer player, boolean enabled) {
         ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.preparedHunt = enabled;
         setSharedAttachment(player, data);
     }
+
+    /**
+     * Updates the cached poisonous blood flag.
+     */
 
     public static void setPoisonousBlood(ServerPlayer player, boolean enabled) {
         ExpandedAttachmentHolders data = getSharedAttachment(player);
@@ -81,69 +129,133 @@ public class HunterSkillService extends ModServices {
         setSharedAttachment(player, data);
     }
 
+    /**
+     * Updates the cached garlic blood flag.
+     */
+
     public static void setGarlicBlood(ServerPlayer player, boolean enabled) {
         ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.garlicBlood = enabled;
         setSharedAttachment(player, data);
     }
 
+    /**
+     * Returns whether has innate toughness skill.
+     */
+
     public static boolean hasInnateToughnessSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.INNATE_TOUGHNESS);
     }
+
+    /**
+     * Returns whether has hunters growth skill.
+     */
 
     public static boolean hasHuntersGrowthSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.HUNTERS_GROWTH);
     }
 
+    /**
+     * Returns whether has prepared hunt skill.
+     */
+
     public static boolean hasPreparedHuntSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.PREPARED_HUNT);
     }
+
+    /**
+     * Returns whether has garlic blood skill.
+     */
 
     public static boolean hasGarlicBloodSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.GARLIC_BLOOD);
     }
 
+    /**
+     * Returns whether has poisonous blood skill.
+     */
+
     public static boolean hasPoisonousBloodSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.POISONOUS_BLOOD);
     }
+
+    /**
+     * Returns whether has innate toughness.
+     */
 
     public static boolean hasInnateToughness(Player player) {
         return getSharedAttachment(player).innateToughness;
     }
 
+    /**
+     * Returns whether has hunters growth.
+     */
+
     public static boolean hasHuntersGrowth(Player player) {
         return getSharedAttachment(player).huntersGrowth;
     }
+
+    /**
+     * Returns whether has prepared hunt.
+     */
 
     public static boolean hasPreparedHunt(Player player) {
         return getSharedAttachment(player).preparedHunt;
     }
 
+    /**
+     * Returns whether has poisonous blood.
+     */
+
     public static boolean hasPoisonousBlood(Player player) {
         return getSharedAttachment(player).poisonousBlood;
     }
+
+    /**
+     * Returns whether has garlic blood.
+     */
 
     public static boolean hasGarlicBlood(Player player) {
         return getSharedAttachment(player).garlicBlood;
     }
 
+    /**
+     * Returns whether is poisonous blood target.
+     */
+
     public static boolean isPoisonousBloodTarget(Entity entity) {
         return entity instanceof Player player && hasPoisonousBlood(player);
     }
 
+    /**
+     * Returns whether is garlic blood target.
+     */
+
     public static boolean isGarlicBloodTarget(Entity entity) {
         return entity instanceof Player player && hasGarlicBlood(player);
     }
+
+    /**
+     * Stops a vampire bite attempt when the target is marked as poisonous blood.
+     */
 
     public static boolean interruptPoisonousBiteAttempt(ServerPlayer vampire, Entity target) {
         if (!isPoisonousBloodTarget(target)) {
             return false;
         }
 
+        if (ModServices.shouldLogDebug()) {
+            LOGGER.debug("Stopped a blood drink from poisonous target {} for {}", target.getName().getString(), vampire.getName().getString());
+        }
+
         VampirePlayer.get(vampire).endFeeding(true);
         vampire.addEffect(new MobEffectInstance(ModEffects.POISON, POISONOUS_BLOOD_EFFECT_DURATION_TICKS));
         return true;
     }
+
+    /**
+     * Applies or removes the hunter armor bonus.
+     */
 
     public static void handleInnateToughnessStats(@NotNull ServerPlayer player, boolean enabled) {
         AttributeInstance armor = player.getAttribute(Attributes.ARMOR);
@@ -157,6 +269,10 @@ public class HunterSkillService extends ModServices {
         }
     }
 
+    /**
+     * Applies or removes the hunter scale bonus.
+     */
+
     public static void handleHuntersGrowthStats(@NotNull ServerPlayer player, boolean enabled) {
         AttributeInstance scale = player.getAttribute(Attributes.SCALE);
 
@@ -168,6 +284,10 @@ public class HunterSkillService extends ModServices {
             scale.removeModifier(SCALE_ADDITION_ID);
         }
     }
+
+    /**
+     * Processes a blood-drink event and applies hunter side effects when needed.
+     */
 
     public static void handlePlayerDrinkBlood(@NotNull PlayerDrinkBloodEvent event) {
         if (event.getAmount() <= 0) {
@@ -195,13 +315,25 @@ public class HunterSkillService extends ModServices {
         }
     }
 
+    /**
+     * Applies garlic effect.
+     */
+
     private static void applyGarlicEffect(ServerPlayer vampire, ServerPlayer sourcePlayer) {
         if (!isGarlicBloodTarget(sourcePlayer)) {
             return;
         }
 
+        if (ModServices.shouldLogDebug()) {
+            LOGGER.debug("Applied garlic backlash to {} after drinking from {}", vampire.getName().getString(), sourcePlayer.getName().getString());
+        }
+
         vampire.addEffect(new MobEffectInstance(ModEffects.GARLIC, GARLIC_EFFECT_DURATION_TICKS));
     }
+
+    /**
+     * Performs the replace modifier operation.
+     */
 
     private static void replaceModifier(AttributeInstance attribute, ResourceLocation id, double amount, AttributeModifier.Operation operation) {
         AttributeModifier current = attribute.getModifier(id);

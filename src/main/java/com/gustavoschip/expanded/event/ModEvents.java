@@ -28,7 +28,15 @@ import com.gustavoschip.expanded.event.holder.NeoForgeEventHolders;
 import com.gustavoschip.expanded.event.holder.VampirismEventHolders;
 import net.neoforged.neoforge.common.NeoForge;
 
+/**
+ * Registers the NeoForge and Vampirism event holder classes used by the mod at runtime.
+ */
+
 public abstract class ModEvents {
+
+    /**
+     * Registers all runtime event listeners for the mod.
+     */
 
     public static void register() {
         NeoForge.EVENT_BUS.register(new NeoForgeEventHolders());

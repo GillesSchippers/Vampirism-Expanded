@@ -38,9 +38,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * Redirects Vampirism's sun-damage helper so Create contraptions can count as valid
+ * shelter.
+ */
+
 @Restriction(require = @Condition(type = Condition.Type.MOD, value = "create"))
 @Mixin(value = Helper.class, priority = 1100, remap = false)
 public abstract class HelperMixin {
+
+    /**
+     * Mixin hook that check contraption sun damage.
+     */
 
     @Inject(method = "gettingSundamge", at = @At("HEAD"), cancellable = true, remap = false)
     private static void expanded$checkContraptionSunDamage(LivingEntity entity, LevelAccessor world, @Nullable ProfilerFiller profiler, CallbackInfoReturnable<Boolean> cir) {

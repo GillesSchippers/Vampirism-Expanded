@@ -38,9 +38,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * Redirects Vampirism's sun-damage helper so Sable sub-levels can count as valid shelter.
+ */
+
 @Restriction(require = @Condition(type = Condition.Type.MOD, value = "sable"))
 @Mixin(value = Helper.class, priority = 1100, remap = false)
 public abstract class HelperMixin {
+
+    /**
+     * Mixin hook that check sub level sun damage.
+     */
 
     @Inject(method = "gettingSundamge", at = @At("HEAD"), cancellable = true, remap = false)
     private static void expanded$checkSubLevelSunDamage(LivingEntity entity, LevelAccessor world, @Nullable ProfilerFiller profiler, CallbackInfoReturnable<Boolean> cir) {

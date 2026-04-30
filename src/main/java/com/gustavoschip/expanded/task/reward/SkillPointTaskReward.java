@@ -36,6 +36,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Task reward that grants Expanded skill points to the matching faction when a task
+ * completes.
+ */
+
 public record SkillPointTaskReward(int points, ResourceLocation source, ResourceLocation faction) implements TaskReward, ITaskRewardInstance {
     public static final MapCodec<SkillPointTaskReward> CODEC = RecordCodecBuilder.mapCodec(instance ->
         instance
@@ -47,6 +52,10 @@ public record SkillPointTaskReward(int points, ResourceLocation source, Resource
             .apply(instance, SkillPointTaskReward::new)
     );
 
+    /**
+     * Applies the reward to a faction player by adding the configured task skill points.
+     */
+
     @Override
     public void applyReward(@NotNull IFactionPlayer<?> player) {
         if (!(player.asEntity() instanceof ServerPlayer)) {
@@ -55,15 +64,27 @@ public record SkillPointTaskReward(int points, ResourceLocation source, Resource
         ModTasks.TaskSkillPointStorage.addSkillPoints(player, this.faction, this.points);
     }
 
+    /**
+     * Returns this reward as its own reward instance.
+     */
+
     @Override
     public ITaskRewardInstance createInstance(IFactionPlayer<?> player) {
         return this;
     }
 
+    /**
+     * Returns the codec used to serialize and deserialize this reward.
+     */
+
     @Override
     public @NotNull MapCodec<SkillPointTaskReward> codec() {
         return ModTasks.SKILL_POINT_REWARD.get();
     }
+
+    /**
+     * Returns the localized reward description shown in task listings.
+     */
 
     @Override
     public @NotNull Component description() {

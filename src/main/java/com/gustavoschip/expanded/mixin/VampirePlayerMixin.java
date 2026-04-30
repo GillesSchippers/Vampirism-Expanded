@@ -41,8 +41,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * Tweaks vampire bite targeting and sun-damage effects based on Expanded's hunter and
+ * vampire skill flags.
+ */
+
 @Mixin(value = VampirePlayer.class, priority = 1000, remap = false)
 public abstract class VampirePlayerMixin {
+
+    /**
+     * Mixin hook that treat poisonous players as hunter creatures.
+     */
 
     @Inject(method = "determineBiteType", at = @At("RETURN"), cancellable = true)
     private void expanded$treatPoisonousPlayersAsHunterCreatures(LivingEntity entity, @NotNull CallbackInfoReturnable<IVampirePlayer.BITE_TYPE> cir) {
@@ -54,6 +63,10 @@ public abstract class VampirePlayerMixin {
             cir.setReturnValue(IVampirePlayer.BITE_TYPE.HUNTER_CREATURE);
         }
     }
+
+    /**
+     * Mixin hook that prevents nausea from sun damage for vampires with Day Walker.
+     */
 
     @WrapOperation(method = "handleSunDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;addEffect(Lnet/minecraft/world/effect/MobEffectInstance;)Z"))
     private boolean wrapEffects(Player player, @NotNull MobEffectInstance effect, Operation<Boolean> original) {

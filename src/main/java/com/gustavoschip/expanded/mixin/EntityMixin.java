@@ -32,8 +32,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * Prevents swimming-state changes while bat flight is active.
+ */
+
 @Mixin(value = Entity.class, priority = 1000, remap = true)
 public abstract class EntityMixin {
+
+    /**
+     * Mixin hook that prevent swimming while bat form active.
+     */
 
     @Inject(method = "setSwimming(Z)V", at = @At("HEAD"), cancellable = true)
     private void expanded$preventSwimmingWhileBatFormActive(boolean swimming, CallbackInfo ci) {

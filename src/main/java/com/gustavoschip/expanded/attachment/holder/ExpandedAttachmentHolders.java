@@ -27,6 +27,11 @@ package com.gustavoschip.expanded.attachment.holder;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+/**
+ * Attachment payload that stores all Expanded skill flags and per-faction task skill
+ * points for a player.
+ */
+
 public final class ExpandedAttachmentHolders {
 
     public static final Codec<ExpandedAttachmentHolders> CODEC = RecordCodecBuilder.create(instance ->
@@ -71,18 +76,70 @@ public final class ExpandedAttachmentHolders {
             )
             .apply(instance, ExpandedAttachmentHolders::new)
     );
+    /**
+     * Cached value for innate toughness.
+     */
+
     public boolean innateToughness;
+    /**
+     * Cached value for hunters growth.
+     */
+
     public boolean huntersGrowth;
+    /**
+     * Cached value for prepared hunt.
+     */
+
     public boolean preparedHunt;
+    /**
+     * Cached value for poisonous blood.
+     */
+
     public boolean poisonousBlood;
+    /**
+     * Cached value for garlic blood.
+     */
+
     public boolean garlicBlood;
+    /**
+     * Cached value for bat speed.
+     */
+
     public boolean batSpeed;
+    /**
+     * Cached value for bat armor.
+     */
+
     public boolean batArmor;
+    /**
+     * Cached value for bat liquid.
+     */
+
     public boolean batLiquid;
+    /**
+     * Cached value for vampiric constitution.
+     */
+
     public boolean vampiricConstitution;
+    /**
+     * Cached value for day walker.
+     */
+
     public boolean dayWalker;
+    /**
+     * Cached value for hunter task skill points.
+     */
+
     public int hunterTaskSkillPoints;
+    /**
+     * Cached value for vampire task skill points.
+     */
+
     public int vampireTaskSkillPoints;
+
+    /**
+     * Creates a new instance of ExpandedAttachmentHolders.
+     */
 
     public ExpandedAttachmentHolders() {
         // defaults

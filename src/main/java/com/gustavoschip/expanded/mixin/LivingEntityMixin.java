@@ -36,21 +36,42 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * Suppresses sun-damage knockback after the hurt call reports Vampirism's sun damage
+ * source.
+ */
+
 @Mixin(value = LivingEntity.class, priority = 1000, remap = true)
 public abstract class LivingEntityMixin {
 
+    /**
+     * Cached value for last damage was sun.
+     */
+
     @Unique
     private boolean expanded$lastDamageWasSun;
+
+    /**
+     * Mixin hook that capture damage source.
+     */
 
     @Inject(method = "hurt", at = @At("HEAD"))
     private void expanded$captureDamageSource(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         this.expanded$lastDamageWasSun = source != null && source.is(ModDamageTypes.SUN_DAMAGE);
     }
 
+    /**
+     * Mixin hook that clear damage source.
+     */
+
     @Inject(method = "hurt", at = @At("RETURN"))
     private void expanded$clearDamageSource(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         this.expanded$lastDamageWasSun = false;
     }
+
+    /**
+     * Mixin hook that cancel sun knockback.
+     */
 
     @Inject(method = "knockback", at = @At("HEAD"), cancellable = true)
     private void expanded$cancelSunKnockback(double strength, double x, double z, CallbackInfo ci) {

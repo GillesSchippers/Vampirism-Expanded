@@ -37,9 +37,22 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Defines the `/expanded points` command used by operators to grant task-based skill
+ * points to faction players.
+ */
+
 public final class ExpandedCommandHolders {
 
+    /**
+     * Creates a new instance of ExpandedCommandHolders.
+     */
+
     private ExpandedCommandHolders() {}
+
+    /**
+     * Registers the `/expanded` command tree.
+     */
 
     public static void register(@NotNull CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
@@ -56,6 +69,11 @@ public final class ExpandedCommandHolders {
                 )
         );
     }
+
+    /**
+     * Grants task skill points to the selected faction players and reports how many were
+     * affected.
+     */
 
     private static int givePoints(CommandSourceStack source, @NotNull Collection<ServerPlayer> targets, int points) {
         int affected = 0;

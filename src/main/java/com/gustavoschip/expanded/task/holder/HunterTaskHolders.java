@@ -28,10 +28,26 @@ import com.gustavoschip.expanded.task.ModTasks;
 import de.teamlapen.vampirism.api.entity.player.task.Task;
 import net.minecraft.resources.ResourceKey;
 
+/**
+ * Named task keys for the hunter-side skill point rewards.
+ */
+
 public final class HunterTaskHolders {
 
+    /**
+     * Performs the task operation.
+     */
+
     public static final ResourceKey<Task> HUNTER_SKILL_POINTS_1 = ModTasks.TaskHolders.task("hunter_skill_points_1");
+    /**
+     * Performs the task operation.
+     */
+
     public static final ResourceKey<Task> HUNTER_SKILL_POINTS_2 = ModTasks.TaskHolders.task("hunter_skill_points_2");
+
+    /**
+     * Creates a new instance of HunterTaskHolders.
+     */
 
     private HunterTaskHolders() {}
 }

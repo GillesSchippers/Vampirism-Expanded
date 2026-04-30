@@ -28,9 +28,21 @@ import com.gustavoschip.expanded.service.skill.HunterSkillService;
 import de.teamlapen.vampirism.api.event.BloodDrinkEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 
+/**
+ * Forwards Vampirism blood-drink events into the hunter skill service.
+ */
+
 public final class VampirismEventHolders {
 
+    /**
+     * Creates a new instance of VampirismEventHolders.
+     */
+
     public VampirismEventHolders() {}
+
+    /**
+     * Forwards Vampirism blood-drink events into the hunter skill service.
+     */
 
     @SubscribeEvent
     private void onPlayerDrinkBlood(BloodDrinkEvent.PlayerDrinkBloodEvent event) {

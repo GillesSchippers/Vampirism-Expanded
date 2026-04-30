@@ -36,11 +36,23 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
+/**
+ * Recolors the blood-fangs targeting overlay when the hovered player has Poisonous Blood.
+ */
+
 @Mixin(value = VampirismHUDOverlay.class, priority = 1000, remap = false)
 public abstract class VampirismHUDOverlayMixin {
 
+    /**
+     * Tint used for the blood-fangs overlay when targeting a poisonous-blood player.
+     */
+
     @Unique
     private static final int POISONOUS_BLOOD_FANGS_COLOR = 0x099022;
+
+    /**
+     * Mixin hook that force green fangs for poisonous players.
+     */
 
     @ModifyVariable(method = "renderBloodFangs", at = @At("HEAD"), argsOnly = true, ordinal = 2)
     private int expanded$forceGreenFangsForPoisonousPlayers(int color) {

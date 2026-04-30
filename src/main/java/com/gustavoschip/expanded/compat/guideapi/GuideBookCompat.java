@@ -48,13 +48,30 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Client-side GuideAPI integration that adds Expanded's overview and task pages to
+ * Vampirism's guidebook.
+ */
+
 public class GuideBookCompat {
 
+    /**
+     * Creates a new instance of GuideBookCompat.
+     */
+
     protected GuideBookCompat() {}
+
+    /**
+     * Registers the guidebook event listener on the NeoForge bus.
+     */
 
     public static void register() {
         NeoForge.EVENT_BUS.register(new GuideBookCompat());
     }
+
+    /**
+     * Adds the Expanded category to the Vampirism guidebook.
+     */
 
     public static void createCategoriesEvent(@NotNull VampirismGuideBookCategoriesEvent event) {
         BookHelper helper = new BookHelper.Builder(MOD_ID).build();
@@ -64,6 +81,10 @@ public class GuideBookCompat {
         event.categories.add(Math.max(event.categories.size() - 1, 0), expandedCategory);
     }
 
+    /**
+     * Builds the guidebook entries shown inside the Expanded category.
+     */
+
     private static @NotNull Map<ResourceLocation, EntryAbstract> buildExpandedEntries(BookHelper helper) {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<>();
         entries.put(entry("overview"), new EntryText(textPage(helper, translateComponent("guide.expanded.overview.text")), translateComponent("guide.expanded.overview")));
@@ -71,14 +92,26 @@ public class GuideBookCompat {
         return entries;
     }
 
+    /**
+     * Creates a text page and lets the guide helper add cross-links.
+     */
+
     @SuppressWarnings("SameParameterValue")
     private static List<IPage> textPage(@NotNull BookHelper helper, FormattedText text) {
         return helper.addLinks(new ArrayList<>(List.of(new PageText(text))));
     }
 
+    /**
+     * Creates a namespaced guidebook entry id.
+     */
+
     private static @NotNull ResourceLocation entry(String path) {
         return fromNamespaceAndPath(MOD_ID, path);
     }
+
+    /**
+     * Handles Vampirism's guidebook category event.
+     */
 
     @SubscribeEvent
     public void onVampirismGuideBookCategories(VampirismGuideBookCategoriesEvent event) {

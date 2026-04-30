@@ -37,17 +37,38 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
+/**
+ * Softens Vampirism's sun overlay for Day Walker players once the local player has synced
+ * state.
+ */
+
 @Mixin(value = SunOverlay.class, priority = 1000, remap = false)
 public abstract class SunOverlayMixin {
+
+    /**
+     * Constant value for grounding start scale.
+     */
 
     @Unique
     private static final float GROUNDING_START_SCALE = 1.5F;
 
+    /**
+     * Constant value for grounding end scale.
+     */
+
     @Unique
     private static final float GROUNDING_END_SCALE = 1.0F;
 
+    /**
+     * Constant value for grounding alpha.
+     */
+
     @Unique
     private static final float GROUNDING_ALPHA = 0.5F;
+
+    /**
+     * Mixin hook that has day walker.
+     */
 
     @Unique
     private static boolean expanded$HasDayWalker() {
@@ -61,6 +82,10 @@ public abstract class SunOverlayMixin {
         return canSyncAttachment(localPlayer) && VampireSkillService.hasDayWalker(localPlayer);
     }
 
+    /**
+     * Mixin hook that modify sun overlay scale.
+     */
+
     @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lde/teamlapen/vampirism/client/gui/overlay/SunOverlay;scaleBy(FFFFLnet/minecraft/client/gui/GuiGraphics;)V"))
     private void expanded$modifySunOverlayScale(Args args) {
         if (!expanded$HasDayWalker()) {
@@ -71,6 +96,9 @@ public abstract class SunOverlayMixin {
         args.set(3, GROUNDING_END_SCALE);
     }
 
+    /**
+     * Mixin hook that modify sun overlay alpha.
+     */
     @ModifyArg(
         method = "render",
         at = @At(

@@ -31,10 +31,23 @@ import java.util.ArrayList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
+/**
+ * Accessor bridge into Vampirism's skill handler so the client screen can read the owner
+ * and enabled skill list.
+ */
+
 @Mixin(value = SkillHandler.class, priority = 1000, remap = false)
 public interface SkillHandlerAccessorMixin {
+    /**
+     * Mixin hook that get enabled skills.
+     */
+
     @Accessor("enabledSkills")
     ArrayList<ISkill<?>> expanded$getEnabledSkills();
+
+    /**
+     * Mixin hook that get player.
+     */
 
     @Accessor("player")
     IFactionPlayer<?> expanded$getPlayer();

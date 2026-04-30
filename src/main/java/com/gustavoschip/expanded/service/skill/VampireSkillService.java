@@ -43,14 +43,48 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
+/**
+ * Applies vampire skill state to attachments, attributes, bat form, and sun-damage side
+ * effects.
+ */
+
 public class VampireSkillService extends ModServices {
 
+    /**
+     * Resource location used to identify the sun-damage reduction modifier.
+     */
+
     private static final ResourceLocation SUNDAMAGE_REDUCTION_ID = fromNamespaceAndPath(MOD_ID, "sun_damage_reduction");
+    /**
+     * Resource location used to identify the blood-exhaustion reduction modifier.
+     */
+
     private static final ResourceLocation BLOOD_EXHAUSTION_REDUCTION_ID = fromNamespaceAndPath(MOD_ID, "blood_exhaustion_reduction");
+    /**
+     * Attribute modifier amount applied to sun damage when Day Walker is enabled.
+     */
+
     private static final double SUNDAMAGE_REDUCTION_MODIFIER = -0.5D;
+    /**
+     * Attribute modifier amount applied to blood exhaustion when Vampiric Constitution is
+     * enabled.
+     */
+
     private static final double BLOOD_EXHAUSTION_REDUCTION_MODIFIER = -0.25D;
+    /**
+     * Multiplier applied to flying speed while bat flight bonuses are active.
+     */
+
     private static final float FLIGHT_SPEED_MULTIPLIER = 1.5F;
+    /**
+     * Logger used for vampire-skill side effect debug messages.
+     */
+
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    /**
+     * Updates the cached bat speed flag and reapplies flight bonuses when appropriate.
+     */
 
     public static void setBatSpeed(ServerPlayer player, boolean enabled) {
         ExpandedAttachmentHolders data = getSharedAttachment(player);
@@ -60,17 +94,29 @@ public class VampireSkillService extends ModServices {
         if (enabled) applyBatFlightBonuses(player, true);
     }
 
+    /**
+     * Updates the cached bat armor flag.
+     */
+
     public static void setBatArmor(ServerPlayer player, boolean enabled) {
         ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.batArmor = enabled;
         setSharedAttachment(player, data);
     }
 
+    /**
+     * Updates the cached bat liquid flag.
+     */
+
     public static void setBatLiquid(ServerPlayer player, boolean enabled) {
         ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.batLiquid = enabled;
         setSharedAttachment(player, data);
     }
+
+    /**
+     * Updates the cached vampiric constitution flag and reapplies the attribute bonus.
+     */
 
     public static void setVampiricConstitution(ServerPlayer player, boolean enabled) {
         ExpandedAttachmentHolders data = getSharedAttachment(player);
@@ -79,6 +125,10 @@ public class VampireSkillService extends ModServices {
         handleVampiricConstitutionStats(player, enabled);
     }
 
+    /**
+     * Updates the cached day walker flag and reapplies the sunlight resistance bonus.
+     */
+
     public static void setDayWalker(ServerPlayer player, boolean enabled) {
         ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.dayWalker = enabled;
@@ -86,45 +136,89 @@ public class VampireSkillService extends ModServices {
         handleDayWalkerStats(player, enabled);
     }
 
+    /**
+     * Returns whether has bat speed skill.
+     */
+
     public static boolean hasBatSpeedSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.BAT_SPEED);
     }
+
+    /**
+     * Returns whether has bat armor skill.
+     */
 
     public static boolean hasBatArmorSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.BAT_ARMOR);
     }
 
+    /**
+     * Returns whether has bat liquid skill.
+     */
+
     public static boolean hasBatLiquidSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.BAT_LIQUID);
     }
+
+    /**
+     * Returns whether has vampiric constitution skill.
+     */
 
     public static boolean hasVampiricConstitutionSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.VAMPIRIC_CONSTITUTION);
     }
 
+    /**
+     * Returns whether has day walker skill.
+     */
+
     public static boolean hasDayWalkerSkill(ServerPlayer player) {
         return hasSkillEnabled(player, SkillHolders.DAY_WALKER);
     }
+
+    /**
+     * Returns whether has bat speed.
+     */
 
     public static boolean hasBatSpeed(Player player) {
         return getSharedAttachment(player).batSpeed;
     }
 
+    /**
+     * Returns whether has bat armor.
+     */
+
     public static boolean hasBatArmor(Player player) {
         return getSharedAttachment(player).batArmor;
     }
+
+    /**
+     * Returns whether has bat liquid.
+     */
 
     public static boolean hasBatLiquid(Player player) {
         return getSharedAttachment(player).batLiquid;
     }
 
+    /**
+     * Returns whether has vampiric constitution.
+     */
+
     public static boolean hasVampiricConstitution(Player player) {
         return getSharedAttachment(player).vampiricConstitution;
     }
 
+    /**
+     * Returns whether has day walker.
+     */
+
     public static boolean hasDayWalker(Player player) {
         return getSharedAttachment(player).dayWalker;
     }
+
+    /**
+     * Applies or removes the blood exhaustion reduction modifier.
+     */
 
     public static void handleVampiricConstitutionStats(@NotNull ServerPlayer player, boolean enabled) {
         AttributeInstance bloodExhaustion = player.getAttribute(ModAttributes.BLOOD_EXHAUSTION);
@@ -138,6 +232,10 @@ public class VampireSkillService extends ModServices {
         }
     }
 
+    /**
+     * Applies or removes the sun damage reduction modifier.
+     */
+
     public static void handleDayWalkerStats(@NotNull ServerPlayer player, boolean enabled) {
         AttributeInstance sunDamage = player.getAttribute(ModAttributes.SUNDAMAGE);
 
@@ -150,22 +248,42 @@ public class VampireSkillService extends ModServices {
         }
     }
 
+    /**
+     * Returns whether the player is currently in bat form.
+     */
+
     public static boolean isBatActive(Player player) {
         return VampirePlayer.get(player).getActionHandler().isActionActive(VampireActions.BAT.get());
     }
+
+    /**
+     * Returns whether bat form may be used in liquids.
+     */
 
     public static boolean canUseBatModeInLiquids(Player player) {
         return hasBatLiquid(player);
     }
 
+    /**
+     * Returns whether swimming should be suppressed while bat flight is active.
+     */
+
     public static boolean shouldPreventSwimming(Player player) {
         return isBatActive(player) && hasBatSpeedFlight(player);
     }
+
+    /**
+     * Applies bat-flight bonuses immediately after bat form activates.
+     */
 
     public static void onBatActivated(ServerPlayer player) {
         applyBatFlightBonuses(player, false);
         player.setSwimming(false);
     }
+
+    /**
+     * Performs the replace modifier operation.
+     */
 
     private static void replaceModifier(@NotNull AttributeInstance attribute, ResourceLocation id, double amount, AttributeModifier.Operation operation) {
         AttributeModifier current = attribute.getModifier(id);
@@ -178,6 +296,10 @@ public class VampireSkillService extends ModServices {
         attribute.addPermanentModifier(new AttributeModifier(id, amount, operation));
     }
 
+    /**
+     * Applies bat flight bonuses.
+     */
+
     private static void applyBatFlightBonuses(ServerPlayer player, boolean requireBatActive) {
         if (!hasBatSpeedFlight(player) || (requireBatActive && !isBatActive(player))) {
             return;
@@ -185,6 +307,10 @@ public class VampireSkillService extends ModServices {
 
         setFlightSpeedBuff(player);
     }
+
+    /**
+     * Returns whether has bat speed flight.
+     */
 
     private static boolean hasBatSpeedFlight(Player player) {
         if (hasBatSpeed(player)) {
@@ -194,10 +320,16 @@ public class VampireSkillService extends ModServices {
         return player instanceof ServerPlayer serverPlayer && hasBatSpeedSkill(serverPlayer);
     }
 
+    /**
+     * Sets flight speed buff.
+     */
+
     private static void setFlightSpeedBuff(@NotNull Player player) {
         Abilities abilities = player.getAbilities();
         float speed = abilities.getFlyingSpeed() * FLIGHT_SPEED_MULTIPLIER;
-        LOGGER.debug("Setting flight speed for {} to {}", player.getName().getString(), speed);
+        if (ModServices.shouldLogDebug()) {
+            LOGGER.debug("Expanded bat flight speed for {} -> {}", player.getName().getString(), speed);
+        }
         abilities.setFlyingSpeed(speed);
         player.onUpdateAbilities();
     }

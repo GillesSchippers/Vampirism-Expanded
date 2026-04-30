@@ -31,65 +31,71 @@ import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
+import java.lang.management.ManagementFactory;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
+/**
+ * Shared service helpers for attachment sync, skill lookups, and debugger-gated debug
+ * logging.
+ */
+
 public abstract class ModServices {
 
+    /**
+     * Logger used by the shared service helpers for sync and debug diagnostics.
+     */
+
     private static final Logger LOGGER = LogUtils.getLogger();
+    /**
+     * System property that enables debug logging without a debugger attached.
+     */
+
+    private static final String DEBUG_PROPERTY = "expanded.debug";
+
+    /**
+     * Returns whether debug logging should be emitted for this mod.
+     * <p>
+     * Debug output stays quiet during normal play and only activates when a debugger
+     * is attached, or when the optional -Dexpanded.debug=true override is supplied.
+     */
+    public static boolean shouldLogDebug() {
+        return LOGGER.isDebugEnabled() && (isDebuggerAttached() || Boolean.getBoolean(DEBUG_PROPERTY));
+    }
+
+    /**
+     * Detects the standard JVM debug-agent arguments used by JDWP-based debuggers.
+     */
+    private static boolean isDebuggerAttached() {
+        return ManagementFactory.getRuntimeMXBean()
+            .getInputArguments()
+            .stream()
+            .anyMatch(arg -> arg.contains("jdwp") || arg.contains("Xrunjdwp"));
+    }
+
+    /**
+     * Returns whether the supplied server player is still valid for attachment sync.
+     */
 
     public static boolean canSyncAttachment(ServerPlayer player) {
         return player != null && player.server != null && player.connection != null && !player.hasDisconnected() && !player.isRemoved();
     }
 
+    /**
+     * Returns whether the supplied server player is still valid for attachment sync.
+     */
+
     public static boolean canSyncAttachment(LocalPlayer player) {
         return player != null && player.connection != null && !player.isRemoved();
     }
 
-    protected static boolean hasBooleanAttachment(Player player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment) {
-        if (player instanceof ServerPlayer sp && !canSyncAttachment(sp)) {
-            LOGGER.debug("Cannot check {} for {} until login sync", attachment.getId().getPath(), player.getName().getString());
-            return false;
-        }
-
-        return player.hasData(attachment) && player.getData(attachment);
-    }
-
-    protected static boolean hasBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment) {
-        return hasBooleanAttachment((Player) player, attachment);
-    }
-
-    protected static void setBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment, boolean value, String label) {
-        setBooleanAttachment(player, attachment, value, label, 0);
-    }
-
-    private static void setBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment, boolean value, String label, int attempts) {
-        if (!canSyncAttachment(player)) {
-            if (attempts >= 40) {
-                LOGGER.warn("Failed to sync {} for {} after retries", label, player.getName().getString());
-                return;
-            }
-
-            LOGGER.debug("Deferred {} toggle {} for {} (attempt {})", label, value, player.getName().getString(), attempts + 1);
-
-            player.server.tell(new net.minecraft.server.TickTask(player.server.getTickCount() + 1, () -> setBooleanAttachment(player, attachment, value, label, attempts + 1)));
-
-            return;
-        }
-
-        if (hasBooleanAttachment(player, attachment) == value) {
-            LOGGER.debug("{} for {} already {}", label, player.getName().getString(), value);
-            return;
-        }
-
-        player.setData(attachment, value);
-        LOGGER.debug("Set {} for {} to {}", label, player.getName().getString(), value);
-    }
+    /**
+     * Returns the shared Expanded attachment, creating a fresh copy when needed.
+     */
 
     public static @NotNull ExpandedAttachmentHolders getSharedAttachment(@NotNull Player player) {
         if (player.hasData(ModAttachments.SHARED_ATTACHMENT)) {
@@ -98,9 +104,17 @@ public abstract class ModServices {
         return new ExpandedAttachmentHolders();
     }
 
+    /**
+     * Syncs the shared Expanded attachment back to the server player.
+     */
+
     public static void setSharedAttachment(ServerPlayer player, ExpandedAttachmentHolders data) {
         setSharedAttachment(player, data, 0);
     }
+
+    /**
+     * Syncs the shared Expanded attachment back to the server player.
+     */
 
     private static void setSharedAttachment(ServerPlayer player, ExpandedAttachmentHolders data, int attempts) {
         if (!canSyncAttachment(player)) {
@@ -114,8 +128,14 @@ public abstract class ModServices {
         }
 
         player.setData(ModAttachments.SHARED_ATTACHMENT, data);
-        LOGGER.debug("Set shared attachment for {}", player.getName().getString());
+        if (shouldLogDebug()) {
+            LOGGER.debug("Synced shared attachment for {}", player.getName().getString());
+        }
     }
+
+    /**
+     * Returns whether the supplied skill is currently enabled for the player's faction.
+     */
 
     protected static boolean hasSkillEnabled(ServerPlayer player, DeferredHolder<ISkill<?>, ? extends ISkill<? extends IFactionPlayer<?>>> skill) {
         return factionPlayerHandler(player)

@@ -28,10 +28,26 @@ import com.gustavoschip.expanded.task.ModTasks;
 import de.teamlapen.vampirism.api.entity.player.task.Task;
 import net.minecraft.resources.ResourceKey;
 
+/**
+ * Named task keys for the vampire-side skill point rewards.
+ */
+
 public final class VampireTaskHolders {
 
+    /**
+     * Performs the task operation.
+     */
+
     public static final ResourceKey<Task> VAMPIRE_SKILL_POINTS_1 = ModTasks.TaskHolders.task("vampire_skill_points_1");
+    /**
+     * Performs the task operation.
+     */
+
     public static final ResourceKey<Task> VAMPIRE_SKILL_POINTS_2 = ModTasks.TaskHolders.task("vampire_skill_points_2");
+
+    /**
+     * Creates a new instance of VampireTaskHolders.
+     */
 
     private VampireTaskHolders() {}
 }

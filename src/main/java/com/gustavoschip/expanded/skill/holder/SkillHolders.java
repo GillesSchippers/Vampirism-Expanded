@@ -34,74 +34,131 @@ import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
+/**
+ * Registers the hunter and vampire skills that make up Expanded's custom progression
+ * branches.
+ */
+
 public final class SkillHolders {
+
+    /**
+     * Registers the mod content handled by this helper.
+     */
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = ModSkills.SKILLS.register("hunter_root", () ->
         new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 0, false)
     );
+    /**
+     * Registers the mod content handled by this helper.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> INNATE_TOUGHNESS = ModSkills.SKILLS.register("innate_toughness", () ->
         new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 1, true).setToggleActions(
             HunterSkillHandlers.innateToughnessToggle(true),
             HunterSkillHandlers.innateToughnessToggle(false)
         )
     );
+    /**
+     * Registers the mod content handled by this helper.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTERS_GROWTH = ModSkills.SKILLS.register("hunters_growth", () ->
         new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 3, true).setToggleActions(
             HunterSkillHandlers.huntersGrowthToggle(true),
             HunterSkillHandlers.huntersGrowthToggle(false)
         )
     );
+    /**
+     * Registers the mod content handled by this helper.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> PREPARED_HUNT = ModSkills.SKILLS.register("prepared_hunt", () ->
         new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 5, true).setToggleActions(
             HunterSkillHandlers.preparedHuntToggle(true),
             HunterSkillHandlers.preparedHuntToggle(false)
         )
     );
+    /**
+     * Registers the mod content handled by this helper.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> GARLIC_BLOOD = ModSkills.SKILLS.register("garlic_blood", () ->
         new FactionSkillBase<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 7, true).setToggleActions(
             HunterSkillHandlers.garlicBloodToggle(true),
             HunterSkillHandlers.garlicBloodToggle(false)
         )
     );
+    /**
+     * Registers the mod content handled by this helper.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = ModSkills.SKILLS.register("poisonous_blood", () ->
         new ActionFactionSkill<>(Either.left(SkillTreeHolders.HUNTER_LEVEL), ModSkills.HUNTER_FACTION_ID, 9, true).setToggleActions(
             HunterSkillHandlers.poisonousBloodToggle(true),
             HunterSkillHandlers.poisonousBloodToggle(false)
         )
     );
+    /**
+     * Registers the mod content handled by this helper.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = ModSkills.SKILLS.register("vampire_root", () ->
         new FactionSkillBase<>(Either.left(SkillTreeHolders.VAMPIRE_LEVEL), ModSkills.VAMPIRE_FACTION_ID, 0, false)
     );
+    /**
+     * Registers the mod content handled by this helper.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BAT_SPEED = ModSkills.SKILLS.register("bat_speed", () ->
         new ActionFactionSkill<>(Either.left(SkillTreeHolders.VAMPIRE_LEVEL), ModSkills.VAMPIRE_FACTION_ID, 1, true).setToggleActions(
             VampireSkillHandlers.batSpeedToggle(true),
             VampireSkillHandlers.batSpeedToggle(false)
         )
     );
+    /**
+     * Registers the mod content handled by this helper.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BAT_ARMOR = ModSkills.SKILLS.register("bat_armor", () ->
         new ActionFactionSkill<>(Either.left(SkillTreeHolders.VAMPIRE_LEVEL), ModSkills.VAMPIRE_FACTION_ID, 3, true).setToggleActions(
             VampireSkillHandlers.batArmorToggle(true),
             VampireSkillHandlers.batArmorToggle(false)
         )
     );
+    /**
+     * Registers the mod content handled by this helper.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BAT_LIQUID = ModSkills.SKILLS.register("bat_liquid", () ->
         new ActionFactionSkill<>(Either.left(SkillTreeHolders.VAMPIRE_LEVEL), ModSkills.VAMPIRE_FACTION_ID, 5, true).setToggleActions(
             VampireSkillHandlers.batLiquidToggle(true),
             VampireSkillHandlers.batLiquidToggle(false)
         )
     );
+    /**
+     * Registers the mod content handled by this helper.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRIC_CONSTITUTION = ModSkills.SKILLS.register("vampiric_constitution", () ->
         new ActionFactionSkill<>(Either.left(SkillTreeHolders.VAMPIRE_LEVEL), ModSkills.VAMPIRE_FACTION_ID, 7, true).setToggleActions(
             VampireSkillHandlers.vampiricConstitutionToggle(true),
             VampireSkillHandlers.vampiricConstitutionToggle(false)
         )
     );
+    /**
+     * Registers the mod content handled by this helper.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> DAY_WALKER = ModSkills.SKILLS.register("day_walker", () ->
         new ActionFactionSkill<>(Either.left(SkillTreeHolders.VAMPIRE_LEVEL), ModSkills.VAMPIRE_FACTION_ID, 9, true).setToggleActions(
             VampireSkillHandlers.dayWalkerToggle(true),
             VampireSkillHandlers.dayWalkerToggle(false)
         )
     );
+
+    /**
+     * Creates a new instance of SkillHolders.
+     */
 
     private SkillHolders() {}
 }

@@ -34,10 +34,23 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
 
+/**
+ * Main mod entry point that registers Expanded's attachments, tasks, skills, and event
+ * listeners, then enables optional client guidebook integration.
+ */
+
 @Mod(Expanded.MOD_ID)
 public class Expanded {
 
+    /**
+     * Mod namespace used for all Expanded registry entries.
+     */
+
     public static final String MOD_ID = "expanded";
+
+    /**
+     * Initializes the mod and registers its runtime content.
+     */
 
     @SuppressWarnings("unused")
     public Expanded(IEventBus modEventBus) {

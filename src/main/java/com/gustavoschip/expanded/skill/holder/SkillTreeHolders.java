@@ -28,10 +28,27 @@ import com.gustavoschip.expanded.skill.ModSkills;
 import de.teamlapen.vampirism.api.entity.factions.ISkillTree;
 import net.minecraft.resources.ResourceKey;
 
+/**
+ * Resource keys for the custom hunter and vampire skill trees that spend Expanded task
+ * points.
+ */
+
 public final class SkillTreeHolders {
 
+    /**
+     * Performs the tree operation.
+     */
+
     public static final ResourceKey<ISkillTree> HUNTER_LEVEL = ModSkills.tree("hunter/level");
+    /**
+     * Performs the tree operation.
+     */
+
     public static final ResourceKey<ISkillTree> VAMPIRE_LEVEL = ModSkills.tree("vampire/level");
+
+    /**
+     * Creates a new instance of SkillTreeHolders.
+     */
 
     private SkillTreeHolders() {}
 }

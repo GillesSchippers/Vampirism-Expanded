@@ -53,37 +53,126 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
+/**
+ * Registers Expanded's skill entries, skill trees, skill nodes, and task-based skill point
+ * helper methods.
+ */
+
 public abstract class ModSkills {
 
+    /**
+     * Deferred register for Expanded skill entries.
+     */
+
     public static final DeferredRegister<ISkill<?>> SKILLS = DeferredRegister.create(VampirismRegistries.Keys.SKILL, MOD_ID);
+    /**
+     * Registry id for Vampirism's hunter faction.
+     */
+
     public static final ResourceLocation HUNTER_FACTION_ID = fromNamespaceAndPath("vampirism", "hunter");
+    /**
+     * Registry id for Vampirism's vampire faction.
+     */
+
     public static final ResourceLocation VAMPIRE_FACTION_ID = fromNamespaceAndPath("vampirism", "vampire");
+    /**
+     * Task-based skill point provider used by the Expanded skill trees.
+     */
+
     public static final ISkillPointProvider TASK_SKILL_POINTS = SkillPointProviders.register(fromNamespaceAndPath(MOD_ID, "task_skill_points"), ModTasks.TaskSkillPointStorage::getSkillPoints);
+    /**
+     * Resource key for the hunter root skill node.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = SkillHolders.HUNTER_ROOT;
+    /**
+     * Deferred holder for innate toughness.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> INNATE_TOUGHNESS = SkillHolders.INNATE_TOUGHNESS;
+    /**
+     * Deferred holder for hunters growth.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTERS_GROWTH = SkillHolders.HUNTERS_GROWTH;
+    /**
+     * Deferred holder for prepared hunt.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> PREPARED_HUNT = SkillHolders.PREPARED_HUNT;
+    /**
+     * Deferred holder for poisonous blood.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> POISONOUS_BLOOD = SkillHolders.POISONOUS_BLOOD;
+    /**
+     * Deferred holder for garlic blood.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> GARLIC_BLOOD = SkillHolders.GARLIC_BLOOD;
+    /**
+     * Resource key for the vampire root skill node.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRE_ROOT = SkillHolders.VAMPIRE_ROOT;
+    /**
+     * Deferred holder for bat speed.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BAT_SPEED = SkillHolders.BAT_SPEED;
+    /**
+     * Deferred holder for bat armor.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BAT_ARMOR = SkillHolders.BAT_ARMOR;
+    /**
+     * Deferred holder for bat liquid.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> BAT_LIQUID = SkillHolders.BAT_LIQUID;
+    /**
+     * Deferred holder for vampiric constitution.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> VAMPIRIC_CONSTITUTION = SkillHolders.VAMPIRIC_CONSTITUTION;
+    /**
+     * Deferred holder for day walker.
+     */
+
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> DAY_WALKER = SkillHolders.DAY_WALKER;
+    /**
+     * Logger used for skill registration and toggle diagnostics.
+     */
+
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    /**
+     * Registers this mod's skills with Vampirism's skill registry.
+     */
 
     public static void register(IEventBus modEventBus) {
         SKILLS.register(modEventBus);
     }
 
+    /**
+     * Creates a resource key for an Expanded skill tree.
+     */
+
     public static @NotNull ResourceKey<ISkillTree> tree(String path) {
         return ResourceKey.create(VampirismRegistries.Keys.SKILL_TREE, fromNamespaceAndPath(MOD_ID, path));
     }
 
+    /**
+     * Creates a resource key for an Expanded skill node.
+     */
+
     public static @NotNull ResourceKey<ISkillNode> node(String path) {
         return ResourceKey.create(VampirismRegistries.Keys.SKILL_NODE, fromNamespaceAndPath(MOD_ID, path));
     }
+
+    /**
+     * Creates a faction-player action that retries the toggle once the server player can sync.
+     */
 
     public static <T extends IFactionPlayer<T>> Consumer<T> createToggleAction(String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter) {
         return factionPlayer -> {
@@ -95,26 +184,38 @@ public abstract class ModSkills {
         };
     }
 
+    /**
+     * Retries the toggle until the server player is valid and the attachment state can sync.
+     */
+
     private static void runToggleWhenReady(@NotNull ServerPlayer player, String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter, int attempts) {
         if (player.isRemoved() || !player.isAlive()) {
-            LOGGER.debug("Cancelled {} toggle for {} (player invalid)", label, player.getName().getString());
+            if (ModServices.shouldLogDebug()) {
+                LOGGER.debug("Cancelled '{}'={} for {} because the player is no longer valid", label, value, player.getName().getString());
+            }
             return;
         }
 
         if (!ModServices.canSyncAttachment(player)) {
             if (attempts >= 40) {
                 // ~2 seconds at 20 TPS
-                LOGGER.debug("Aborted {} toggle {} for {} after {} retries", label, value, player.getName().getString(), attempts);
+                if (ModServices.shouldLogDebug()) {
+                    LOGGER.debug("Aborted '{}'={} for {} after {} sync retries", label, value, player.getName().getString(), attempts);
+                }
                 return;
             }
 
-            LOGGER.debug("Deferred {} toggle {} for {} until login sync (attempt {})", label, value, player.getName().getString(), attempts + 1);
+            if (ModServices.shouldLogDebug()) {
+                LOGGER.debug("Deferring '{}'={} for {} until login sync (attempt {}/40)", label, value, player.getName().getString(), attempts + 1);
+            }
 
             player.server.execute(() -> runToggleWhenReady(player, label, value, setter, attempts + 1));
             return;
         }
 
-        LOGGER.debug("Toggling {} to {} for {}", label, value, player.getName().getString());
+        if (ModServices.shouldLogDebug()) {
+            LOGGER.debug("Applying '{}'={} to {}", label, value, player.getName().getString());
+        }
         setter.accept(player, value);
     }
 
