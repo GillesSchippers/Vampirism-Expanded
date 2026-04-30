@@ -36,6 +36,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -49,12 +50,12 @@ public abstract class BatVampireActionMixin {
         method = { "canBeUsedBy(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z", "onUpdate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z" },
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isInWater()Z")
     )
-    private boolean expanded$allowBatModeInLiquids(Player player) {
+    private boolean expanded$allowBatModeInLiquids(@NotNull Player player) {
         return player.isInWater() && !VampireSkillService.canUseBatModeInLiquids(player);
     }
 
     @Inject(method = "activate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;Lde/teamlapen/vampirism/api/entity/player/actions/IAction$ActivationContext;)Z", at = @At("TAIL"))
-    private void expanded$applyBatModeBonusesOnActivate(IVampirePlayer vampire, IAction.ActivationContext context, CallbackInfoReturnable<Boolean> cir) {
+    private void expanded$applyBatModeBonusesOnActivate(IVampirePlayer vampire, IAction.ActivationContext context, @NotNull CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValueZ() && (vampire.asEntity() instanceof ServerPlayer player)) {
             VampireSkillService.onBatActivated(player);
         }

@@ -26,9 +26,7 @@ package com.gustavoschip.expanded.attachment;
 
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 
-import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
-import com.gustavoschip.expanded.attachment.holder.TaskAttachmentHolders;
-import com.mojang.serialization.Codec;
+import com.gustavoschip.expanded.attachment.holder.SharedAttachmentHolders;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -36,36 +34,15 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
-@SuppressWarnings("unused")
 public abstract class ModAttachments {
 
-    // TODO: Make a single attachment that holds all data.
     protected static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MOD_ID);
 
-    protected static DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> registerBooleanAttachment(String id) {
-        return ATTACHMENTS.register(id, () ->
-            AttachmentType.builder(() -> false)
-                .serialize(Codec.BOOL)
-                .sync(ByteBufCodecs.BOOL)
-                .copyOnDeath()
-                .build()
-        );
-    }
-
-    protected static DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> registerIntegerAttachment(String id) {
-        return ATTACHMENTS.register(id, () ->
-            AttachmentType.builder(() -> 0)
-                .serialize(Codec.INT)
-                .sync(ByteBufCodecs.INT)
-                .copyOnDeath()
-                .build()
-        );
-    }
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<SharedAttachmentHolders>> SHARED_ATTACHMENT = ATTACHMENTS.register("shared_data", () ->
+        AttachmentType.builder(SharedAttachmentHolders::new).serialize(SharedAttachmentHolders.CODEC).sync(ByteBufCodecs.fromCodec(SharedAttachmentHolders.CODEC)).copyOnDeath().build()
+    );
 
     public static void register(IEventBus modEventBus) {
-        SkillAttachmentHolders.init();
-        TaskAttachmentHolders.init();
-
         ATTACHMENTS.register(modEventBus);
     }
 }

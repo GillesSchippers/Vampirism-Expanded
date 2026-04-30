@@ -46,6 +46,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import org.jetbrains.annotations.NotNull;
 
 public class GuideBookCompat {
 
@@ -55,7 +56,7 @@ public class GuideBookCompat {
         NeoForge.EVENT_BUS.register(new GuideBookCompat());
     }
 
-    public static void createCategoriesEvent(VampirismGuideBookCategoriesEvent event) {
+    public static void createCategoriesEvent(@NotNull VampirismGuideBookCategoriesEvent event) {
         BookHelper helper = new BookHelper.Builder(MOD_ID).build();
         CategoryAbstract expandedCategory = new CategoryItemStack(buildExpandedEntries(helper), translateComponent("guide.expanded.title"), new ItemStack(VAMPIRE_ORCHID));
         helper.registerLinkablePages(new ArrayList<>(List.of(expandedCategory)));
@@ -63,7 +64,7 @@ public class GuideBookCompat {
         event.categories.add(Math.max(event.categories.size() - 1, 0), expandedCategory);
     }
 
-    private static Map<ResourceLocation, EntryAbstract> buildExpandedEntries(BookHelper helper) {
+    private static @NotNull Map<ResourceLocation, EntryAbstract> buildExpandedEntries(BookHelper helper) {
         Map<ResourceLocation, EntryAbstract> entries = new LinkedHashMap<>();
         entries.put(entry("overview"), new EntryText(textPage(helper, translateComponent("guide.expanded.overview.text")), translateComponent("guide.expanded.overview")));
         entries.put(entry("tasks"), new EntryText(textPage(helper, translateComponent("guide.expanded.tasks.text")), translateComponent("guide.expanded.tasks")));
@@ -71,12 +72,11 @@ public class GuideBookCompat {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private static List<IPage> textPage(BookHelper helper, FormattedText text) {
+    private static List<IPage> textPage(@NotNull BookHelper helper, FormattedText text) {
         return helper.addLinks(new ArrayList<>(List.of(new PageText(text))));
     }
 
-    @SuppressWarnings("SameParameterValue")
-    private static ResourceLocation entry(String path) {
+    private static @NotNull ResourceLocation entry(String path) {
         return fromNamespaceAndPath(MOD_ID, path);
     }
 

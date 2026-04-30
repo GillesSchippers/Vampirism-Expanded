@@ -28,7 +28,6 @@ import com.gustavoschip.expanded.skill.ModSkills;
 import de.teamlapen.vampirism.api.entity.factions.ISkillTree;
 import net.minecraft.resources.ResourceKey;
 
-@SuppressWarnings("unused")
 public final class SkillTreeHolders {
 
     public static final ResourceKey<ISkillTree> HUNTER_LEVEL = ModSkills.tree("hunter/level");

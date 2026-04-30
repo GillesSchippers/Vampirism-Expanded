@@ -215,6 +215,9 @@ if (curseforgeToken.isPresent() && curseforgeProjectId.isPresent()) {
             requires("vampirism-become-a-vampire")
             optional("guide-api-village-and-pillage")
             optional("bloodlines")
+            optional("create")
+            optional("sable")
+            optional("create-aeronautics")
         }
     }
 }

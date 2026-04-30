@@ -27,11 +27,11 @@ package com.gustavoschip.expanded.service.skill;
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
-import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
+import com.gustavoschip.expanded.attachment.holder.SharedAttachmentHolders;
 import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
-import de.teamlapen.vampirism.api.event.BloodDrinkEvent;
+import de.teamlapen.vampirism.api.event.BloodDrinkEvent.PlayerDrinkBloodEvent;
 import de.teamlapen.vampirism.core.ModEffects;
 import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
 import net.minecraft.resources.ResourceLocation;
@@ -42,9 +42,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
-@SuppressWarnings("unused")
 public class HunterSkillService extends ModServices {
 
     private static final ResourceLocation ARMOR_ADDITION_ID = fromNamespaceAndPath(MOD_ID, "armor_addition");
@@ -56,25 +56,35 @@ public class HunterSkillService extends ModServices {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static void setInnateToughness(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.INNATE_TOUGHNESS_ATTACHMENT, enabled, "Innate Toughness");
+        SharedAttachmentHolders data = getSharedAttachment(player);
+        data.innateToughness = enabled;
+        setSharedAttachment(player, data);
         handleInnateToughnessStats(player, enabled);
     }
 
     public static void setHuntersGrowth(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.HUNTERS_GROWTH_ATTACHMENT, enabled, "Hunter's Growth");
+        SharedAttachmentHolders data = getSharedAttachment(player);
+        data.huntersGrowth = enabled;
+        setSharedAttachment(player, data);
         handleHuntersGrowthStats(player, enabled);
     }
 
     public static void setPreparedHunt(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.PREPARED_HUNT_ATTACHMENT, enabled, "Prepared Hunt");
+        SharedAttachmentHolders data = getSharedAttachment(player);
+        data.preparedHunt = enabled;
+        setSharedAttachment(player, data);
     }
 
     public static void setPoisonousBlood(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT, enabled, "Poisonous Blood");
+        SharedAttachmentHolders data = getSharedAttachment(player);
+        data.poisonousBlood = enabled;
+        setSharedAttachment(player, data);
     }
 
     public static void setGarlicBlood(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT, enabled, "Garlic Blood");
+        SharedAttachmentHolders data = getSharedAttachment(player);
+        data.garlicBlood = enabled;
+        setSharedAttachment(player, data);
     }
 
     public static boolean hasInnateToughnessSkill(ServerPlayer player) {
@@ -98,23 +108,23 @@ public class HunterSkillService extends ModServices {
     }
 
     public static boolean hasInnateToughness(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.INNATE_TOUGHNESS_ATTACHMENT);
+        return getSharedAttachment(player).innateToughness;
     }
 
     public static boolean hasHuntersGrowth(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.HUNTERS_GROWTH_ATTACHMENT);
+        return getSharedAttachment(player).huntersGrowth;
     }
 
     public static boolean hasPreparedHunt(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.PREPARED_HUNT_ATTACHMENT);
+        return getSharedAttachment(player).preparedHunt;
     }
 
     public static boolean hasPoisonousBlood(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.POISONOUS_BLOOD_ATTACHMENT);
+        return getSharedAttachment(player).poisonousBlood;
     }
 
     public static boolean hasGarlicBlood(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.GARLIC_BLOOD_ATTACHMENT);
+        return getSharedAttachment(player).garlicBlood;
     }
 
     public static boolean isPoisonousBloodTarget(Entity entity) {
@@ -135,7 +145,7 @@ public class HunterSkillService extends ModServices {
         return true;
     }
 
-    public static void handleInnateToughnessStats(ServerPlayer player, boolean enabled) {
+    public static void handleInnateToughnessStats(@NotNull ServerPlayer player, boolean enabled) {
         AttributeInstance armor = player.getAttribute(Attributes.ARMOR);
 
         if (armor == null) return;
@@ -147,7 +157,7 @@ public class HunterSkillService extends ModServices {
         }
     }
 
-    public static void handleHuntersGrowthStats(ServerPlayer player, boolean enabled) {
+    public static void handleHuntersGrowthStats(@NotNull ServerPlayer player, boolean enabled) {
         AttributeInstance scale = player.getAttribute(Attributes.SCALE);
 
         if (scale == null) return;
@@ -159,7 +169,7 @@ public class HunterSkillService extends ModServices {
         }
     }
 
-    public static void handlePlayerDrinkBlood(BloodDrinkEvent.PlayerDrinkBloodEvent event) {
+    public static void handlePlayerDrinkBlood(@NotNull PlayerDrinkBloodEvent event) {
         if (event.getAmount() <= 0) {
             return;
         }

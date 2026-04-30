@@ -27,7 +27,8 @@ package com.gustavoschip.expanded.task;
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
-import com.gustavoschip.expanded.attachment.holder.TaskAttachmentHolders;
+import com.gustavoschip.expanded.attachment.holder.SharedAttachmentHolders;
+import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.task.holder.HunterTaskHolders;
 import com.gustavoschip.expanded.task.holder.VampireTaskHolders;
 import com.gustavoschip.expanded.task.reward.SkillPointTaskReward;
@@ -41,14 +42,13 @@ import de.teamlapen.vampirism.api.entity.player.task.TaskReward;
 import de.teamlapen.vampirism.api.entity.player.task.TaskUnlocker;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("unused")
 public abstract class ModTasks {
 
     public static final DeferredRegister<MapCodec<? extends TaskUnlocker>> TASK_UNLOCKER = DeferredRegister.create(VampirismRegistries.Keys.TASK_UNLOCKER, MOD_ID);
@@ -81,7 +81,7 @@ public abstract class ModTasks {
 
         private TaskHolders() {}
 
-        public static ResourceKey<Task> task(String path) {
+        public static @NotNull ResourceKey<Task> task(String path) {
             return ResourceKey.create(VampirismRegistries.Keys.TASK, fromNamespaceAndPath(MOD_ID, path));
         }
     }
@@ -90,9 +90,13 @@ public abstract class ModTasks {
 
         private TaskSkillPointStorage() {}
 
-        public static int getSkillPoints(IFactionPlayer<?> factionPlayer) {
-            DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> attachment = getAttachmentForFaction(factionPlayer.getFaction().getID());
-            return attachment == null ? 0 : factionPlayer.asEntity().getData(attachment);
+        public static int getSkillPoints(@NotNull IFactionPlayer<?> factionPlayer) {
+            Player player = factionPlayer.asEntity();
+            if (player == null) return 0;
+            SharedAttachmentHolders data = ModServices.getSharedAttachment(player);
+            if (TaskHolders.HUNTER_FACTION_ID.equals(factionPlayer.getFaction().getID())) return data.hunterTaskSkillPoints;
+            if (TaskHolders.VAMPIRE_FACTION_ID.equals(factionPlayer.getFaction().getID())) return data.vampireTaskSkillPoints;
+            return 0;
         }
 
         public static void addSkillPoints(IFactionPlayer<?> factionPlayer, int amount) {
@@ -104,27 +108,17 @@ public abstract class ModTasks {
                 return;
             }
 
-            DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> attachment = getAttachmentForFaction(factionId);
-            if (attachment == null) {
-                return;
-            }
-
-            addSkillPoints(factionPlayer, attachment, amount);
-        }
-
-        private static void addSkillPoints(IFactionPlayer<?> factionPlayer, DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> attachment, int amount) {
-            Player player = factionPlayer.asEntity();
-            player.setData(attachment, player.getData(attachment) + amount);
-        }
-
-        private static @Nullable DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> getAttachmentForFaction(ResourceLocation factionId) {
+            SharedAttachmentHolders data = ModServices.getSharedAttachment(factionPlayer.asEntity());
             if (TaskHolders.HUNTER_FACTION_ID.equals(factionId)) {
-                return TaskAttachmentHolders.HUNTER_TASK_SKILL_POINTS_ATTACHMENT;
+                data.hunterTaskSkillPoints += amount;
+            } else if (TaskHolders.VAMPIRE_FACTION_ID.equals(factionId)) {
+                data.vampireTaskSkillPoints += amount;
             }
-            if (TaskHolders.VAMPIRE_FACTION_ID.equals(factionId)) {
-                return TaskAttachmentHolders.VAMPIRE_TASK_SKILL_POINTS_ATTACHMENT;
+
+            Player player = factionPlayer.asEntity();
+            if (player instanceof ServerPlayer sp) {
+                ModServices.setSharedAttachment(sp, data);
             }
-            return null;
         }
     }
 }

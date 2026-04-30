@@ -34,6 +34,7 @@ import de.teamlapen.vampirism.api.entity.player.task.TaskReward;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.NotNull;
 
 public record SkillPointTaskReward(int points, ResourceLocation source, ResourceLocation faction) implements TaskReward, ITaskRewardInstance {
     public static final MapCodec<SkillPointTaskReward> CODEC = RecordCodecBuilder.mapCodec(instance ->
@@ -47,7 +48,7 @@ public record SkillPointTaskReward(int points, ResourceLocation source, Resource
     );
 
     @Override
-    public void applyReward(IFactionPlayer<?> player) {
+    public void applyReward(@NotNull IFactionPlayer<?> player) {
         if (!(player.asEntity() instanceof ServerPlayer)) {
             return;
         }
@@ -60,12 +61,12 @@ public record SkillPointTaskReward(int points, ResourceLocation source, Resource
     }
 
     @Override
-    public MapCodec<SkillPointTaskReward> codec() {
+    public @NotNull MapCodec<SkillPointTaskReward> codec() {
         return ModTasks.SKILL_POINT_REWARD.get();
     }
 
     @Override
-    public Component description() {
+    public @NotNull Component description() {
         return Component.translatable("task_reward.expanded.skill_points", this.points);
     }
 }

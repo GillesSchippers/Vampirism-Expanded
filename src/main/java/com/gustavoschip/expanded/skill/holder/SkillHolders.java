@@ -34,7 +34,6 @@ import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-@SuppressWarnings("unused")
 public final class SkillHolders {
 
     public static final DeferredHolder<ISkill<?>, ISkill<? extends IFactionPlayer<?>>> HUNTER_ROOT = ModSkills.SKILLS.register("hunter_root", () ->

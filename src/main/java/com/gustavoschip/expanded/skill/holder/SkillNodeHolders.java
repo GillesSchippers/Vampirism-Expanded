@@ -28,7 +28,6 @@ import com.gustavoschip.expanded.skill.ModSkills;
 import de.teamlapen.vampirism.api.entity.factions.ISkillNode;
 import net.minecraft.resources.ResourceKey;
 
-@SuppressWarnings("unused")
 public final class SkillNodeHolders {
 
     public static final ResourceKey<ISkillNode> HUNTER_ROOT = ModSkills.node("hunter_root");

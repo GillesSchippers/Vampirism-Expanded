@@ -37,6 +37,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Restriction(require = @Condition(type = Condition.Type.MOD, value = "sable"))
 @Mixin(value = VampirePlayer.class, priority = 1100, remap = false)
 public abstract class VampirePlayerMixin {
+
     @Inject(method = "handleSunDamage", at = @At("HEAD"), cancellable = true, remap = false)
     private void expanded$preventSubLevelSunDamageTick(boolean isRemote, CallbackInfo ci) {
         VampirePlayer vp = (VampirePlayer) (Object) this;
@@ -47,7 +48,3 @@ public abstract class VampirePlayerMixin {
         }
     }
 }
-
-
-
-

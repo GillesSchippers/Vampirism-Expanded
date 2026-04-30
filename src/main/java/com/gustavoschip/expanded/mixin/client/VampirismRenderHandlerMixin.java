@@ -30,7 +30,8 @@ import de.teamlapen.vampirism.entity.player.VampirismPlayerAttributes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.client.event.RenderLivingEvent;
+import net.neoforged.neoforge.client.event.RenderLivingEvent.Post;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -55,7 +56,7 @@ public abstract class VampirismRenderHandlerMixin {
     private Entity expanded$currentBloodVisionEntity;
 
     @Inject(method = "onRenderLivingPost", at = @At("HEAD"))
-    private void expanded$captureBloodVisionEntity(RenderLivingEvent.Post<?, ?> event, CallbackInfo ci) {
+    private void expanded$captureBloodVisionEntity(@NotNull Post<?, ?> event, CallbackInfo ci) {
         this.expanded$currentBloodVisionEntity = event.getEntity();
     }
 
@@ -77,7 +78,7 @@ public abstract class VampirismRenderHandlerMixin {
     }
 
     @Inject(method = "onRenderLivingPost", at = @At("RETURN"))
-    private void expanded$clearBloodVisionEntity(RenderLivingEvent.Post<?, ?> event, CallbackInfo ci) {
+    private void expanded$clearBloodVisionEntity(Post<?, ?> event, CallbackInfo ci) {
         this.expanded$currentBloodVisionEntity = null;
     }
 }

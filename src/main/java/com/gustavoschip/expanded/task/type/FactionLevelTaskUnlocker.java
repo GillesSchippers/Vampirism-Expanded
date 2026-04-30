@@ -34,6 +34,7 @@ import de.teamlapen.vampirism.entity.factions.FactionPlayerHandler;
 import java.util.Optional;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, Optional<Integer> maxLevel, int minLordRank, Optional<Integer> maxLordRank) implements TaskUnlocker {
@@ -57,19 +58,19 @@ public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, O
         return maxValue == null || value <= maxValue;
     }
 
-    private static String formatUpperBound(@Nullable Integer maxValue) {
+    private static @NotNull String formatUpperBound(@Nullable Integer maxValue) {
         return maxValue == null ? "+" : "-" + maxValue;
     }
 
     @Override
-    public Component getDescription() {
+    public @NotNull Component getDescription() {
         return Component.literal(
             "Requires faction: %s, level: %d%s, lord rank: %d%s".formatted(faction, minLevel, formatUpperBound(maxLevel.orElse(null)), minLordRank, formatUpperBound(maxLordRank.orElse(null)))
         );
     }
 
     @Override
-    public boolean isUnlocked(IFactionPlayer<?> playerEntity) {
+    public boolean isUnlocked(@NotNull IFactionPlayer<?> playerEntity) {
         if (!this.faction.equals(playerEntity.getFaction().getID())) {
             return false;
         }
@@ -83,7 +84,7 @@ public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, O
     }
 
     @Override
-    public MapCodec<? extends TaskUnlocker> codec() {
+    public @NotNull MapCodec<? extends TaskUnlocker> codec() {
         return ModTasks.FACTION_LEVEL_UNLOCKER.get();
     }
 }

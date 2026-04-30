@@ -26,6 +26,8 @@ package com.gustavoschip.expanded.service;
 
 import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
 
+import com.gustavoschip.expanded.attachment.ModAttachments;
+import com.gustavoschip.expanded.attachment.holder.SharedAttachmentHolders;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
@@ -33,9 +35,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
-@SuppressWarnings("unused")
 public abstract class ModServices {
 
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -54,10 +56,6 @@ public abstract class ModServices {
     }
 
     protected static boolean hasBooleanAttachment(ServerPlayer player, DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> attachment) {
-        if (!canSyncAttachment(player)) {
-            LOGGER.debug("Cannot check {} for {} until login sync", attachment.getId().getPath(), player.getName().getString());
-            return false;
-        }
         return hasBooleanAttachment((Player) player, attachment);
     }
 
@@ -86,6 +84,32 @@ public abstract class ModServices {
 
         player.setData(attachment, value);
         LOGGER.debug("Set {} for {} to {}", label, player.getName().getString(), value);
+    }
+
+    public static @NotNull SharedAttachmentHolders getSharedAttachment(@NotNull Player player) {
+        if (player.hasData(ModAttachments.SHARED_ATTACHMENT)) {
+            return player.getData(ModAttachments.SHARED_ATTACHMENT);
+        }
+        return new SharedAttachmentHolders();
+    }
+
+    public static void setSharedAttachment(ServerPlayer player, SharedAttachmentHolders data) {
+        setSharedAttachment(player, data, 0);
+    }
+
+    private static void setSharedAttachment(ServerPlayer player, SharedAttachmentHolders data, int attempts) {
+        if (!canSyncAttachment(player)) {
+            if (attempts >= 40) {
+                LOGGER.warn("Failed to sync shared attachment for {} after retries", player.getName().getString());
+                return;
+            }
+
+            player.server.tell(new net.minecraft.server.TickTask(player.server.getTickCount() + 1, () -> setSharedAttachment(player, data, attempts + 1)));
+            return;
+        }
+
+        player.setData(ModAttachments.SHARED_ATTACHMENT, data);
+        LOGGER.debug("Set shared attachment for {}", player.getName().getString());
     }
 
     protected static boolean hasSkillEnabled(ServerPlayer player, DeferredHolder<ISkill<?>, ? extends ISkill<? extends IFactionPlayer<?>>> skill) {

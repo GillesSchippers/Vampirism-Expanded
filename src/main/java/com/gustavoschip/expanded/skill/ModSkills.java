@@ -50,9 +50,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
-@SuppressWarnings("unused")
 public abstract class ModSkills {
 
     public static final DeferredRegister<ISkill<?>> SKILLS = DeferredRegister.create(VampirismRegistries.Keys.SKILL, MOD_ID);
@@ -77,11 +77,11 @@ public abstract class ModSkills {
         SKILLS.register(modEventBus);
     }
 
-    public static ResourceKey<ISkillTree> tree(String path) {
+    public static @NotNull ResourceKey<ISkillTree> tree(String path) {
         return ResourceKey.create(VampirismRegistries.Keys.SKILL_TREE, fromNamespaceAndPath(MOD_ID, path));
     }
 
-    public static ResourceKey<ISkillNode> node(String path) {
+    public static @NotNull ResourceKey<ISkillNode> node(String path) {
         return ResourceKey.create(VampirismRegistries.Keys.SKILL_NODE, fromNamespaceAndPath(MOD_ID, path));
     }
 
@@ -95,7 +95,7 @@ public abstract class ModSkills {
         };
     }
 
-    private static void runToggleWhenReady(ServerPlayer player, String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter, int attempts) {
+    private static void runToggleWhenReady(@NotNull ServerPlayer player, String label, boolean value, BiConsumer<ServerPlayer, Boolean> setter, int attempts) {
         if (player.isRemoved() || !player.isAlive()) {
             LOGGER.debug("Cancelled {} toggle for {} (player invalid)", label, player.getName().getString());
             return;
@@ -149,11 +149,11 @@ public abstract class ModSkills {
 
         private ExpandedSkillPointHelper() {}
 
-        public static boolean usesExpandedPoints(ISkill<?> skill) {
+        public static boolean usesExpandedPoints(@NotNull ISkill<?> skill) {
             return skill.allowedSkillTrees().map(ExpandedSkillPointHelper::isExpandedTree, tag -> false);
         }
 
-        public static boolean isExpandedTree(Holder<ISkillTree> tree) {
+        public static boolean isExpandedTree(@NotNull Holder<ISkillTree> tree) {
             return tree.is(SkillTreeHolders.HUNTER_LEVEL) || tree.is(SkillTreeHolders.VAMPIRE_LEVEL);
         }
 

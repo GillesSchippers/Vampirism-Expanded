@@ -29,28 +29,29 @@ import static com.gustavoschip.expanded.skill.ModSkills.createToggleAction;
 import com.gustavoschip.expanded.service.skill.HunterSkillService;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import java.util.function.Consumer;
+import org.jetbrains.annotations.NotNull;
 
 public final class HunterSkillHandlers {
 
     private HunterSkillHandlers() {}
 
-    public static <T extends IFactionPlayer<T>> Consumer<T> innateToughnessToggle(boolean enabled) {
+    public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> innateToughnessToggle(boolean enabled) {
         return createToggleAction("Innate Toughness", enabled, HunterSkillService::setInnateToughness);
     }
 
-    public static <T extends IFactionPlayer<T>> Consumer<T> huntersGrowthToggle(boolean enabled) {
+    public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> huntersGrowthToggle(boolean enabled) {
         return createToggleAction("Hunters Growth", enabled, HunterSkillService::setHuntersGrowth);
     }
 
-    public static <T extends IFactionPlayer<T>> Consumer<T> preparedHuntToggle(boolean enabled) {
+    public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> preparedHuntToggle(boolean enabled) {
         return createToggleAction("Prepared Hunt", enabled, HunterSkillService::setPreparedHunt); // TODO: Implement
     }
 
-    public static <T extends IFactionPlayer<T>> Consumer<T> garlicBloodToggle(boolean enabled) {
+    public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> garlicBloodToggle(boolean enabled) {
         return createToggleAction("Garlic Blood", enabled, HunterSkillService::setGarlicBlood);
     }
 
-    public static <T extends IFactionPlayer<T>> Consumer<T> poisonousBloodToggle(boolean enabled) {
+    public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> poisonousBloodToggle(boolean enabled) {
         return createToggleAction("Poisonous Blood", enabled, HunterSkillService::setPoisonousBlood);
     }
 }

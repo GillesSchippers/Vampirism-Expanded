@@ -27,7 +27,7 @@ package com.gustavoschip.expanded.service.skill;
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
-import com.gustavoschip.expanded.attachment.holder.SkillAttachmentHolders;
+import com.gustavoschip.expanded.attachment.holder.SharedAttachmentHolders;
 import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
@@ -40,9 +40,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
-@SuppressWarnings("unused")
 public class VampireSkillService extends ModServices {
 
     private static final ResourceLocation SUNDAMAGE_REDUCTION_ID = fromNamespaceAndPath(MOD_ID, "sun_damage_reduction");
@@ -53,26 +53,36 @@ public class VampireSkillService extends ModServices {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static void setBatSpeed(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.BAT_SPEED_ATTACHMENT, enabled, "Bat Speed");
+        SharedAttachmentHolders data = getSharedAttachment(player);
+        data.batSpeed = enabled;
+        setSharedAttachment(player, data);
 
         if (enabled) applyBatFlightBonuses(player, true);
     }
 
     public static void setBatArmor(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.BAT_ARMOR_ATTACHMENT, enabled, "Bat Armor");
+        SharedAttachmentHolders data = getSharedAttachment(player);
+        data.batArmor = enabled;
+        setSharedAttachment(player, data);
     }
 
     public static void setBatLiquid(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.BAT_LIQUID_ATTACHMENT, enabled, "Bat Liquid");
+        SharedAttachmentHolders data = getSharedAttachment(player);
+        data.batLiquid = enabled;
+        setSharedAttachment(player, data);
     }
 
     public static void setVampiricConstitution(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_CONSTITUTION_ATTACHMENT, enabled, "Vampiric Constitution");
+        SharedAttachmentHolders data = getSharedAttachment(player);
+        data.vampiricConstitution = enabled;
+        setSharedAttachment(player, data);
         handleVampiricConstitutionStats(player, enabled);
     }
 
     public static void setDayWalker(ServerPlayer player, boolean enabled) {
-        setBooleanAttachment(player, SkillAttachmentHolders.DAY_WALKER_ATTACHMENT, enabled, "Day Walker");
+        SharedAttachmentHolders data = getSharedAttachment(player);
+        data.dayWalker = enabled;
+        setSharedAttachment(player, data);
         handleDayWalkerStats(player, enabled);
     }
 
@@ -97,26 +107,26 @@ public class VampireSkillService extends ModServices {
     }
 
     public static boolean hasBatSpeed(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.BAT_SPEED_ATTACHMENT);
+        return getSharedAttachment(player).batSpeed;
     }
 
     public static boolean hasBatArmor(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.BAT_ARMOR_ATTACHMENT);
+        return getSharedAttachment(player).batArmor;
     }
 
     public static boolean hasBatLiquid(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.BAT_LIQUID_ATTACHMENT);
+        return getSharedAttachment(player).batLiquid;
     }
 
     public static boolean hasVampiricConstitution(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.VAMPIRIC_CONSTITUTION_ATTACHMENT);
+        return getSharedAttachment(player).vampiricConstitution;
     }
 
     public static boolean hasDayWalker(Player player) {
-        return hasBooleanAttachment(player, SkillAttachmentHolders.DAY_WALKER_ATTACHMENT);
+        return getSharedAttachment(player).dayWalker;
     }
 
-    public static void handleVampiricConstitutionStats(ServerPlayer player, boolean enabled) {
+    public static void handleVampiricConstitutionStats(@NotNull ServerPlayer player, boolean enabled) {
         AttributeInstance bloodExhaustion = player.getAttribute(ModAttributes.BLOOD_EXHAUSTION);
 
         if (bloodExhaustion == null) return;
@@ -128,7 +138,7 @@ public class VampireSkillService extends ModServices {
         }
     }
 
-    public static void handleDayWalkerStats(ServerPlayer player, boolean enabled) {
+    public static void handleDayWalkerStats(@NotNull ServerPlayer player, boolean enabled) {
         AttributeInstance sunDamage = player.getAttribute(ModAttributes.SUNDAMAGE);
 
         if (sunDamage == null) return;
@@ -157,7 +167,7 @@ public class VampireSkillService extends ModServices {
         player.setSwimming(false);
     }
 
-    private static void replaceModifier(AttributeInstance attribute, ResourceLocation id, double amount, AttributeModifier.Operation operation) {
+    private static void replaceModifier(@NotNull AttributeInstance attribute, ResourceLocation id, double amount, AttributeModifier.Operation operation) {
         AttributeModifier current = attribute.getModifier(id);
         if (current != null && current.amount() == amount && current.operation() == operation) {
             return;
@@ -184,7 +194,7 @@ public class VampireSkillService extends ModServices {
         return player instanceof ServerPlayer serverPlayer && hasBatSpeedSkill(serverPlayer);
     }
 
-    private static void setFlightSpeedBuff(Player player) {
+    private static void setFlightSpeedBuff(@NotNull Player player) {
         Abilities abilities = player.getAbilities();
         float speed = abilities.getFlyingSpeed() * FLIGHT_SPEED_MULTIPLIER;
         LOGGER.debug("Setting flight speed for {} to {}", player.getName().getString(), speed);

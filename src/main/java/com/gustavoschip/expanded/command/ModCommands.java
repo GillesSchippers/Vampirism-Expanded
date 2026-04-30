@@ -28,12 +28,13 @@ import com.gustavoschip.expanded.command.holder.ExpandedCommandHolders;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class ModCommands {
 
     private ModCommands() {}
 
-    public static void register(RegisterCommandsEvent event) {
+    public static void register(@NotNull RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
         ExpandedCommandHolders.register(dispatcher);

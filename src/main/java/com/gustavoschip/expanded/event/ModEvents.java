@@ -28,7 +28,6 @@ import com.gustavoschip.expanded.event.holder.NeoForgeEventHolders;
 import com.gustavoschip.expanded.event.holder.VampirismEventHolders;
 import net.neoforged.neoforge.common.NeoForge;
 
-@SuppressWarnings("unused")
 public abstract class ModEvents {
 
     public static void register() {

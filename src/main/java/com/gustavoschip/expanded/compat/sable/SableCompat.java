@@ -34,6 +34,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class SableCompat {
 
@@ -101,7 +102,7 @@ public class SableCompat {
         }
     }
 
-    private static Vec3 transformPositionInverse(@NotNull SubLevel subLevel, @NotNull Vec3 eyePos) {
+    private static @Nullable Vec3 transformPositionInverse(@NotNull SubLevel subLevel, @NotNull Vec3 eyePos) {
         try {
             Object pose = subLevel.logicalPose();
             java.lang.reflect.Method transform = pose.getClass().getMethod("transformPositionInverse", Vec3.class);

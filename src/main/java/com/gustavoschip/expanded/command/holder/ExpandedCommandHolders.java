@@ -35,12 +35,13 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.NotNull;
 
 public final class ExpandedCommandHolders {
 
     private ExpandedCommandHolders() {}
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+    public static void register(@NotNull CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
             Commands.literal("expanded")
                 .requires(source -> source.hasPermission(2))
@@ -56,7 +57,7 @@ public final class ExpandedCommandHolders {
         );
     }
 
-    private static int givePoints(CommandSourceStack source, Collection<ServerPlayer> targets, int points) {
+    private static int givePoints(CommandSourceStack source, @NotNull Collection<ServerPlayer> targets, int points) {
         int affected = 0;
         ServerPlayer singleAffectedPlayer = null;
 
