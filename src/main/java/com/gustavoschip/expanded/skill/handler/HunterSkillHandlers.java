@@ -44,7 +44,7 @@ public final class HunterSkillHandlers {
     }
 
     public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> preparedHuntToggle(boolean enabled) {
-        return createToggleAction("Prepared Hunt", enabled, HunterSkillService::setPreparedHunt);
+        return createToggleAction("Prepared Hunt", enabled, HunterSkillService::setPreparedHunt); // TODO: Implement this
     }
 
     public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> garlicBloodToggle(boolean enabled) {
