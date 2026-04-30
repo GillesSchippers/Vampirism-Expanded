@@ -1,0 +1,32 @@
+repos:
+    - repo: local
+      hooks:
+          - id: gradle-prettier
+            name: Run Gradle prettier check/write
+            language: system
+            pass_filenames: false
+            entry: python
+            args:
+                - -c
+                - |
+                    import os, subprocess, sys
+
+                    # Cross-platform Gradle wrapper
+                    gradlew = "gradlew.bat" if os.name == "nt" else "./gradlew"
+
+                    # Run prettierCheck first
+                    result = subprocess.run([gradlew, "prettierCheck"], shell=(os.name=="nt"))
+
+                    if result.returncode != 0:
+                        print("prettierCheck failed, running prettierWrite...")
+                        fix = subprocess.run([gradlew, "prettierWrite"], shell=(os.name=="nt"))
+
+                        if fix.returncode != 0:
+                            sys.exit(fix.returncode)
+
+                        # Re-stage formatted files
+                        subprocess.run(["git", "add", "-u"])
+                        print("Formatting applied. Please review and re-commit.")
+                        sys.exit(1)
+
+                    sys.exit(0)
