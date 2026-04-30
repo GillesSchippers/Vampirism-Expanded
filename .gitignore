@@ -4,6 +4,11 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/**/build/
 
+### NodeJS ###
+package-lock.json
+package.json
+**/node_modules/
+
 ### IntelliJ IDEA ###
 .idea/
 *.iws
