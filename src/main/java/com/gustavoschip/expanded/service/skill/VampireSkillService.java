@@ -27,7 +27,7 @@ package com.gustavoschip.expanded.service.skill;
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
-import com.gustavoschip.expanded.attachment.holder.SharedAttachmentHolders;
+import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
@@ -53,7 +53,7 @@ public class VampireSkillService extends ModServices {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static void setBatSpeed(ServerPlayer player, boolean enabled) {
-        SharedAttachmentHolders data = getSharedAttachment(player);
+        ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.batSpeed = enabled;
         setSharedAttachment(player, data);
 
@@ -61,26 +61,26 @@ public class VampireSkillService extends ModServices {
     }
 
     public static void setBatArmor(ServerPlayer player, boolean enabled) {
-        SharedAttachmentHolders data = getSharedAttachment(player);
+        ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.batArmor = enabled;
         setSharedAttachment(player, data);
     }
 
     public static void setBatLiquid(ServerPlayer player, boolean enabled) {
-        SharedAttachmentHolders data = getSharedAttachment(player);
+        ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.batLiquid = enabled;
         setSharedAttachment(player, data);
     }
 
     public static void setVampiricConstitution(ServerPlayer player, boolean enabled) {
-        SharedAttachmentHolders data = getSharedAttachment(player);
+        ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.vampiricConstitution = enabled;
         setSharedAttachment(player, data);
         handleVampiricConstitutionStats(player, enabled);
     }
 
     public static void setDayWalker(ServerPlayer player, boolean enabled) {
-        SharedAttachmentHolders data = getSharedAttachment(player);
+        ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.dayWalker = enabled;
         setSharedAttachment(player, data);
         handleDayWalkerStats(player, enabled);

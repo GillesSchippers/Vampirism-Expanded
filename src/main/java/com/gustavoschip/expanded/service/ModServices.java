@@ -27,7 +27,7 @@ package com.gustavoschip.expanded.service;
 import static de.teamlapen.vampirism.api.VampirismAPI.factionPlayerHandler;
 
 import com.gustavoschip.expanded.attachment.ModAttachments;
-import com.gustavoschip.expanded.attachment.holder.SharedAttachmentHolders;
+import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
@@ -86,18 +86,18 @@ public abstract class ModServices {
         LOGGER.debug("Set {} for {} to {}", label, player.getName().getString(), value);
     }
 
-    public static @NotNull SharedAttachmentHolders getSharedAttachment(@NotNull Player player) {
+    public static @NotNull ExpandedAttachmentHolders getSharedAttachment(@NotNull Player player) {
         if (player.hasData(ModAttachments.SHARED_ATTACHMENT)) {
             return player.getData(ModAttachments.SHARED_ATTACHMENT);
         }
-        return new SharedAttachmentHolders();
+        return new ExpandedAttachmentHolders();
     }
 
-    public static void setSharedAttachment(ServerPlayer player, SharedAttachmentHolders data) {
+    public static void setSharedAttachment(ServerPlayer player, ExpandedAttachmentHolders data) {
         setSharedAttachment(player, data, 0);
     }
 
-    private static void setSharedAttachment(ServerPlayer player, SharedAttachmentHolders data, int attempts) {
+    private static void setSharedAttachment(ServerPlayer player, ExpandedAttachmentHolders data, int attempts) {
         if (!canSyncAttachment(player)) {
             if (attempts >= 40) {
                 LOGGER.warn("Failed to sync shared attachment for {} after retries", player.getName().getString());

@@ -27,7 +27,7 @@ package com.gustavoschip.expanded.service.skill;
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
-import com.gustavoschip.expanded.attachment.holder.SharedAttachmentHolders;
+import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
@@ -56,33 +56,33 @@ public class HunterSkillService extends ModServices {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static void setInnateToughness(ServerPlayer player, boolean enabled) {
-        SharedAttachmentHolders data = getSharedAttachment(player);
+        ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.innateToughness = enabled;
         setSharedAttachment(player, data);
         handleInnateToughnessStats(player, enabled);
     }
 
     public static void setHuntersGrowth(ServerPlayer player, boolean enabled) {
-        SharedAttachmentHolders data = getSharedAttachment(player);
+        ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.huntersGrowth = enabled;
         setSharedAttachment(player, data);
         handleHuntersGrowthStats(player, enabled);
     }
 
     public static void setPreparedHunt(ServerPlayer player, boolean enabled) {
-        SharedAttachmentHolders data = getSharedAttachment(player);
+        ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.preparedHunt = enabled;
         setSharedAttachment(player, data);
     }
 
     public static void setPoisonousBlood(ServerPlayer player, boolean enabled) {
-        SharedAttachmentHolders data = getSharedAttachment(player);
+        ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.poisonousBlood = enabled;
         setSharedAttachment(player, data);
     }
 
     public static void setGarlicBlood(ServerPlayer player, boolean enabled) {
-        SharedAttachmentHolders data = getSharedAttachment(player);
+        ExpandedAttachmentHolders data = getSharedAttachment(player);
         data.garlicBlood = enabled;
         setSharedAttachment(player, data);
     }

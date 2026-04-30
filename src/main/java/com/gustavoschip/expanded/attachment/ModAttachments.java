@@ -26,7 +26,7 @@ package com.gustavoschip.expanded.attachment;
 
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 
-import com.gustavoschip.expanded.attachment.holder.SharedAttachmentHolders;
+import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -38,8 +38,8 @@ public abstract class ModAttachments {
 
     protected static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MOD_ID);
 
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<SharedAttachmentHolders>> SHARED_ATTACHMENT = ATTACHMENTS.register("shared_data", () ->
-        AttachmentType.builder(SharedAttachmentHolders::new).serialize(SharedAttachmentHolders.CODEC).sync(ByteBufCodecs.fromCodec(SharedAttachmentHolders.CODEC)).copyOnDeath().build()
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<ExpandedAttachmentHolders>> SHARED_ATTACHMENT = ATTACHMENTS.register("shared_data", () ->
+        AttachmentType.builder(ExpandedAttachmentHolders::new).serialize(ExpandedAttachmentHolders.CODEC).sync(ByteBufCodecs.fromCodec(ExpandedAttachmentHolders.CODEC)).copyOnDeath().build()
     );
 
     public static void register(IEventBus modEventBus) {

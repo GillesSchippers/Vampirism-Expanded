@@ -27,7 +27,7 @@ package com.gustavoschip.expanded.task;
 import static com.gustavoschip.expanded.Expanded.MOD_ID;
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
-import com.gustavoschip.expanded.attachment.holder.SharedAttachmentHolders;
+import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import com.gustavoschip.expanded.service.ModServices;
 import com.gustavoschip.expanded.task.holder.HunterTaskHolders;
 import com.gustavoschip.expanded.task.holder.VampireTaskHolders;
@@ -93,7 +93,7 @@ public abstract class ModTasks {
         public static int getSkillPoints(@NotNull IFactionPlayer<?> factionPlayer) {
             Player player = factionPlayer.asEntity();
             if (player == null) return 0;
-            SharedAttachmentHolders data = ModServices.getSharedAttachment(player);
+            ExpandedAttachmentHolders data = ModServices.getSharedAttachment(player);
             if (TaskHolders.HUNTER_FACTION_ID.equals(factionPlayer.getFaction().getID())) return data.hunterTaskSkillPoints;
             if (TaskHolders.VAMPIRE_FACTION_ID.equals(factionPlayer.getFaction().getID())) return data.vampireTaskSkillPoints;
             return 0;
@@ -108,7 +108,7 @@ public abstract class ModTasks {
                 return;
             }
 
-            SharedAttachmentHolders data = ModServices.getSharedAttachment(factionPlayer.asEntity());
+            ExpandedAttachmentHolders data = ModServices.getSharedAttachment(factionPlayer.asEntity());
             if (TaskHolders.HUNTER_FACTION_ID.equals(factionId)) {
                 data.hunterTaskSkillPoints += amount;
             } else if (TaskHolders.VAMPIRE_FACTION_ID.equals(factionId)) {

@@ -27,9 +27,9 @@ package com.gustavoschip.expanded.attachment.holder;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-public final class SharedAttachmentHolders {
+public final class ExpandedAttachmentHolders {
 
-    public static final Codec<SharedAttachmentHolders> CODEC = RecordCodecBuilder.create(instance ->
+    public static final Codec<ExpandedAttachmentHolders> CODEC = RecordCodecBuilder.create(instance ->
         instance
             .group(
                 Codec.BOOL.fieldOf("innate_toughness")
@@ -69,7 +69,7 @@ public final class SharedAttachmentHolders {
                     .orElse(0)
                     .forGetter(d -> d.vampireTaskSkillPoints)
             )
-            .apply(instance, SharedAttachmentHolders::new)
+            .apply(instance, ExpandedAttachmentHolders::new)
     );
     public boolean innateToughness;
     public boolean huntersGrowth;
@@ -84,11 +84,11 @@ public final class SharedAttachmentHolders {
     public int hunterTaskSkillPoints;
     public int vampireTaskSkillPoints;
 
-    public SharedAttachmentHolders() {
+    public ExpandedAttachmentHolders() {
         // defaults
     }
 
-    public SharedAttachmentHolders(
+    public ExpandedAttachmentHolders(
         boolean innateToughness,
         boolean huntersGrowth,
         boolean preparedHunt,
