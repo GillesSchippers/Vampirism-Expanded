@@ -33,6 +33,7 @@ import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import de.teamlapen.vampirism.api.entity.player.skills.ISkill;
 import java.lang.management.ManagementFactory;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -123,7 +124,7 @@ public abstract class ModServices {
                 return;
             }
 
-            player.server.tell(new net.minecraft.server.TickTask(player.server.getTickCount() + 1, () -> setSharedAttachment(player, data, attempts + 1)));
+            player.server.tell(new TickTask(player.server.getTickCount() + 1, () -> setSharedAttachment(player, data, attempts + 1)));
             return;
         }
 
