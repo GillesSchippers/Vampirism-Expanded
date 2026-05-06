@@ -13,9 +13,7 @@
         "VampirePlayerMixin",
         "compat.bloodlines.BatVampireActionMixin",
         "compat.create.HelperMixin",
-        "compat.create.VampirePlayerMixin",
-        "compat.sable.HelperMixin",
-        "compat.sable.VampirePlayerMixin"
+        "compat.create.VampirePlayerMixin"
     ],
     "client": [
         "client.SkillsTabScreenMixin",
