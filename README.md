@@ -23,13 +23,22 @@ players to report any bugs or issues they encounter to help us improve the mod i
 - Engaging quests and missions
 - Additional compatibility with other popular or related mods
 
+## Planned Features
+
+- More abilities and powers
+- Better quests and missions
+- Expand turnable/drinkable mobs from vanilla and modded entities
+
 ## Compatibility Information
 
 - **Guide-API**
+  <br> Will have documentation integrated into the main Vampirism guidebook.
 - **Bloodlines**
+  <br> Makes sure that bat mode related buffs work properly with existing modifications.
 - **Create**
-- **Create Aeronautics**
+  <br> Adds support for Create's moving contraptions, allowing contraptions to block sunlight as intended.
 - **Sable**
+  <br> W.I.P.
 
 ## Installation
 
