@@ -1,6 +1,9 @@
 name: Pull
 
 on:
+    push:
+        branches:
+            - master
     pull_request:
 
 permissions:
