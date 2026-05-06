@@ -12,7 +12,6 @@
         "SkillHandlerMixin",
         "VampirePlayerMixin",
         "compat.bloodlines.BatVampireActionMixin",
-        "compat.create.AbstractContraptionEntityAccessorMixin",
         "compat.create.HelperMixin",
         "compat.create.VampirePlayerMixin"
     ],

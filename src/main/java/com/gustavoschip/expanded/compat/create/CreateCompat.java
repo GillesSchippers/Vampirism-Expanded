@@ -24,7 +24,6 @@
 
 package com.gustavoschip.expanded.compat.create;
 
-import com.gustavoschip.expanded.mixin.compat.create.AbstractContraptionEntityAccessorMixin;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.Contraption;
 import de.teamlapen.vampirism.config.VampirismConfig;
@@ -55,12 +54,12 @@ public class CreateCompat {
             return isUnderContraption(level, entity.getEyePosition());
         }
 
-        Contraption contraption = ((AbstractContraptionEntityAccessorMixin) contraptionEntity).expanded$getContraption();
+        Contraption contraption = contraptionEntity.getContraption();
         if (contraption == null) {
             return isUnderContraption(level, entity.getEyePosition());
         }
 
-        Vec3 localEyePos = entity.getEyePosition().subtract(contraptionEntity.position());
+        Vec3 localEyePos = contraptionEntity.toLocalVector(entity.getEyePosition(), 0);
         if (isContraptionSunBlocked(contraption, localEyePos)) {
             return true;
         }
@@ -76,22 +75,18 @@ public class CreateCompat {
         AABB searchBox = new AABB(eyePos.x - 32.0D, level.getMinBuildHeight(), eyePos.z - 32.0D, eyePos.x + 32.0D, level.getMinBuildHeight() + level.getHeight(), eyePos.z + 32.0D);
 
         for (AbstractContraptionEntity contraptionEntity : level.getEntitiesOfClass(AbstractContraptionEntity.class, searchBox)) {
-            // First try a precise contraption-local check using the contraption's internal world
-            try {
-                Contraption contraption = ((AbstractContraptionEntityAccessorMixin) contraptionEntity).expanded$getContraption();
-                if (contraption != null) {
-                    Vec3 localEyePos = eyePos.subtract(contraptionEntity.position());
+            Contraption contraption = contraptionEntity.getContraption();
+            if (contraption != null) {
+                Vec3 localEyePos = contraptionEntity.toLocalVector(eyePos, 0);
+                try {
                     if (isContraptionSunBlocked(contraption, localEyePos)) {
                         return true;
                     }
+                } catch (Exception e) {
+                    if (isUnderBoundingBox(contraptionEntity.getBoundingBox(), eyePos)) {
+                        return true;
+                    }
                 }
-            } catch (Throwable ignored) {
-                // fall back to bounding-box check below
-            }
-
-            // Fallback: check entity bounding box (coarse). Only used when we can't perform the precise check.
-            if (isUnderBoundingBox(contraptionEntity.getBoundingBox(), eyePos)) {
-                return true;
             }
         }
 
@@ -111,17 +106,12 @@ public class CreateCompat {
      */
 
     private static boolean isContraptionSunBlocked(@NotNull Contraption contraption, @NotNull Vec3 pos) {
-        try {
-            java.lang.reflect.Method method = contraption.getClass().getMethod("getContraptionWorld");
-            Object world = method.invoke(contraption);
-            if (!(world instanceof LevelAccessor levelAccessor)) {
-                return false;
-            }
-
-            return !canBlockSeeSun(levelAccessor, pos);
-        } catch (ReflectiveOperationException e) {
+        LevelAccessor world = contraption.getContraptionWorld();
+        if (world == null) {
             return false;
         }
+
+        return !canBlockSeeSun(world, pos);
     }
 
     /**
