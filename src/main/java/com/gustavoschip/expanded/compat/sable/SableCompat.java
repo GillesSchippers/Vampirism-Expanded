@@ -56,11 +56,9 @@ public class SableCompat {
         Vec3 eyePos = entity.getEyePosition();
         for (SubLevel subLevel : container.getAllSubLevels()) {
             Object bounds = subLevel.boundingBox();
-            if (contains(bounds, eyePos)) {
-                Vec3 localEyePos = transformPositionInverse(subLevel, eyePos);
-                if (localEyePos != null && !canBlockSeeSun(subLevel.getPlot().getEmbeddedLevelAccessor(), localEyePos)) {
-                    return true;
-                }
+            Vec3 localEyePos = transformPositionInverse(subLevel, eyePos);
+            if (localEyePos != null && !canBlockSeeSun(subLevel.getPlot().getEmbeddedLevelAccessor(), localEyePos)) {
+                return true;
             }
 
             if (isUnderBounds(bounds, eyePos)) {
@@ -69,14 +67,6 @@ public class SableCompat {
         }
 
         return false;
-    }
-
-    /**
-     * Returns whether the position lies inside the supplied bounds.
-     */
-
-    private static boolean contains(@NotNull Object bounds, @NotNull Vec3 pos) {
-        return pos.x >= minX(bounds) && pos.x < maxX(bounds) && pos.y >= minY(bounds) && pos.y < maxY(bounds) && pos.z >= minZ(bounds) && pos.z < maxZ(bounds);
     }
 
     /**
@@ -101,14 +91,6 @@ public class SableCompat {
 
     private static double maxX(@NotNull Object bounds) {
         return coordinate(bounds, "maxX");
-    }
-
-    /**
-     * Performs the min y operation.
-     */
-
-    private static double minY(@NotNull Object bounds) {
-        return coordinate(bounds, "minY");
     }
 
     /**
