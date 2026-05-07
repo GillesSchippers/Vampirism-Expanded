@@ -54,7 +54,7 @@ public class CreateCompat {
      * Returns whether the entity is sheltered by a Create contraption or its bounding box.
      */
 
-    public static boolean isInContraption(@NotNull LivingEntity entity, @NotNull Level level) {
+    private static boolean isInContraption(@NotNull LivingEntity entity, @NotNull Level level) {
         Entity vehicle = entity.getVehicle();
         if (!(vehicle instanceof AbstractContraptionEntity contraptionEntity)) {
             return isUnderContraption(level, entity.getEyePosition());
@@ -80,7 +80,6 @@ public class CreateCompat {
     private static boolean isUnderContraption(@NotNull Level level, @NotNull Vec3 eyePos) {
         AABB searchBox = new AABB(eyePos.x - EYE_OFFSET, level.getMinBuildHeight(), eyePos.z - EYE_OFFSET, eyePos.x + EYE_OFFSET, level.getMinBuildHeight() + level.getHeight(), eyePos.z + EYE_OFFSET);
 
-        // TODO: Optimize to prevent checking every contraption for every player.
         for (AbstractContraptionEntity contraptionEntity : level.getEntitiesOfClass(AbstractContraptionEntity.class, searchBox)) {
             Contraption contraption = contraptionEntity.getContraption();
             if (contraption != null) {

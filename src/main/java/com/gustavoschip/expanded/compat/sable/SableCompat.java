@@ -24,17 +24,13 @@
 
 package com.gustavoschip.expanded.compat.sable;
 
-import de.teamlapen.vampirism.config.VampirismConfig;
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
+import dev.ryanhcode.sable.companion.math.BoundingBox3dc;
 import dev.ryanhcode.sable.sublevel.SubLevel;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Sable compatibility helpers that detect whether an entity is sheltered inside a sub-
@@ -45,9 +41,11 @@ public class SableCompat {
 
     /**
      * Returns whether the entity is sheltered by a Sable sub-level.
+     * Sable uses virtual embedded worlds, so we only check bounding boxes
+     * without querying blocks to avoid triggering chunk generation.
      */
 
-    public static boolean isInSubLevel(@NotNull LivingEntity entity, @NotNull Level level) {
+    private static boolean isInSubLevel(@NotNull LivingEntity entity, @NotNull Level level) {
         SubLevelContainer container = SubLevelContainer.getContainer(level);
         if (container == null) {
             return false;
@@ -55,12 +53,7 @@ public class SableCompat {
 
         Vec3 eyePos = entity.getEyePosition();
         for (SubLevel subLevel : container.getAllSubLevels()) {
-            Object bounds = subLevel.boundingBox();
-            Vec3 localEyePos = transformPositionInverse(subLevel, eyePos);
-            if (localEyePos != null && !canBlockSeeSun(subLevel.getPlot().getEmbeddedLevelAccessor(), localEyePos)) {
-                return true;
-            }
-
+            BoundingBox3dc bounds = subLevel.boundingBox();
             if (isUnderBounds(bounds, eyePos)) {
                 return true;
             }
@@ -73,102 +66,8 @@ public class SableCompat {
      * Returns whether the position is under the supplied bounds.
      */
 
-    private static boolean isUnderBounds(@NotNull Object bounds, @NotNull Vec3 pos) {
-        return pos.x >= minX(bounds) && pos.x <= maxX(bounds) && pos.z >= minZ(bounds) && pos.z <= maxZ(bounds) && pos.y <= maxY(bounds);
-    }
-
-    /**
-     * Performs the min x operation.
-     */
-
-    private static double minX(@NotNull Object bounds) {
-        return coordinate(bounds, "minX");
-    }
-
-    /**
-     * Performs the max x operation.
-     */
-
-    private static double maxX(@NotNull Object bounds) {
-        return coordinate(bounds, "maxX");
-    }
-
-    /**
-     * Performs the max y operation.
-     */
-
-    private static double maxY(@NotNull Object bounds) {
-        return coordinate(bounds, "maxY");
-    }
-
-    /**
-     * Performs the min z operation.
-     */
-
-    private static double minZ(@NotNull Object bounds) {
-        return coordinate(bounds, "minZ");
-    }
-
-    /**
-     * Performs the max z operation.
-     */
-
-    private static double maxZ(@NotNull Object bounds) {
-        return coordinate(bounds, "maxZ");
-    }
-
-    /**
-     * Reads a named bound coordinate through reflection.
-     */
-
-    private static double coordinate(@NotNull Object bounds, @NotNull String method) {
-        try {
-            return ((Number) bounds.getClass().getMethod(method).invoke(bounds)).doubleValue();
-        } catch (ReflectiveOperationException e) {
-            return Double.NaN;
-        }
-    }
-
-    /**
-     * Transforms the world eye position into the sub-level's local space.
-     */
-
-    private static @Nullable Vec3 transformPositionInverse(@NotNull SubLevel subLevel, @NotNull Vec3 eyePos) {
-        try {
-            Object pose = subLevel.logicalPose();
-            java.lang.reflect.Method transform = pose.getClass().getMethod("transformPositionInverse", Vec3.class);
-            return (Vec3) transform.invoke(pose, eyePos);
-        } catch (ReflectiveOperationException e) {
-            return null;
-        }
-    }
-
-    /**
-     * Determines whether sunlight reaches the supplied position inside the sub-level world.
-     */
-
-    private static boolean canBlockSeeSun(@NotNull LevelAccessor world, @NotNull Vec3 pos) {
-        int y = (int) Math.floor(pos.y);
-        int maxY = world.getMinBuildHeight() + world.getHeight();
-        int liquidBlocks = 0;
-        BlockPos basePos = new BlockPos((int) Math.floor(pos.x), y, (int) Math.floor(pos.z));
-
-        for (int currentY = y + 1; currentY < maxY; currentY++) {
-            BlockPos checkPos = new BlockPos(basePos.getX(), currentY, basePos.getZ());
-            BlockState state = world.getBlockState(checkPos);
-            if (!state.getFluidState().isEmpty()) {
-                liquidBlocks++;
-                if (liquidBlocks >= VampirismConfig.BALANCE.vpSundamageWaterblocks.get()) {
-                    return false;
-                }
-            } else if (state.canOcclude() && (state.isFaceSturdy(world, checkPos, net.minecraft.core.Direction.DOWN) || state.isFaceSturdy(world, checkPos, net.minecraft.core.Direction.UP))) {
-                return false;
-            } else if (state.getLightBlock(world, checkPos) > 0) {
-                return false;
-            }
-        }
-
-        return true;
+    private static boolean isUnderBounds(@NotNull BoundingBox3dc bounds, @NotNull Vec3 pos) {
+        return pos.x >= bounds.minX() && pos.x <= bounds.maxX() && pos.z >= bounds.minZ() && pos.z <= bounds.maxZ() && pos.y <= bounds.maxY();
     }
 
     public static final class SableSubLevelHelper {

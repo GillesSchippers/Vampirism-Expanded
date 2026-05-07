@@ -38,7 +38,7 @@ players to report any bugs or issues they encounter to help us improve the mod i
 - **Create**
   <br> Adds support for Create's moving contraptions, allowing contraptions to block sunlight as intended.
 - **Sable**
-  <br> W.I.P.
+  <br> (W.I.P.) Adds support for Sable's simulated contraptions, allowing them to block sunlight as intended.
 
 ## Installation
 
