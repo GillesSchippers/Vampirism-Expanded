@@ -137,86 +137,6 @@ public class VampireSkillService extends ModServices {
     }
 
     /**
-     * Returns whether has bat speed skill.
-     */
-
-    public static boolean hasBatSpeedSkill(ServerPlayer player) {
-        return hasSkillEnabled(player, SkillHolders.BAT_SPEED);
-    }
-
-    /**
-     * Returns whether has bat armor skill.
-     */
-
-    public static boolean hasBatArmorSkill(ServerPlayer player) {
-        return hasSkillEnabled(player, SkillHolders.BAT_ARMOR);
-    }
-
-    /**
-     * Returns whether has bat liquid skill.
-     */
-
-    public static boolean hasBatLiquidSkill(ServerPlayer player) {
-        return hasSkillEnabled(player, SkillHolders.BAT_LIQUID);
-    }
-
-    /**
-     * Returns whether has vampiric constitution skill.
-     */
-
-    public static boolean hasVampiricConstitutionSkill(ServerPlayer player) {
-        return hasSkillEnabled(player, SkillHolders.VAMPIRIC_CONSTITUTION);
-    }
-
-    /**
-     * Returns whether has day walker skill.
-     */
-
-    public static boolean hasDayWalkerSkill(ServerPlayer player) {
-        return hasSkillEnabled(player, SkillHolders.DAY_WALKER);
-    }
-
-    /**
-     * Returns whether has bat speed.
-     */
-
-    public static boolean hasBatSpeed(Player player) {
-        return getSharedAttachment(player).batSpeed;
-    }
-
-    /**
-     * Returns whether has bat armor.
-     */
-
-    public static boolean hasBatArmor(Player player) {
-        return getSharedAttachment(player).batArmor;
-    }
-
-    /**
-     * Returns whether has bat liquid.
-     */
-
-    public static boolean hasBatLiquid(Player player) {
-        return getSharedAttachment(player).batLiquid;
-    }
-
-    /**
-     * Returns whether has vampiric constitution.
-     */
-
-    public static boolean hasVampiricConstitution(Player player) {
-        return getSharedAttachment(player).vampiricConstitution;
-    }
-
-    /**
-     * Returns whether has day walker.
-     */
-
-    public static boolean hasDayWalker(Player player) {
-        return getSharedAttachment(player).dayWalker;
-    }
-
-    /**
      * Applies or removes the blood exhaustion reduction modifier.
      */
 
@@ -261,7 +181,7 @@ public class VampireSkillService extends ModServices {
      */
 
     public static boolean canUseBatModeInLiquids(Player player) {
-        return hasBatLiquid(player);
+        return has(player, ExpandedAttachmentHolders.BAT_LIQUID);
     }
 
     /**
@@ -313,11 +233,11 @@ public class VampireSkillService extends ModServices {
      */
 
     private static boolean hasBatSpeedFlight(Player player) {
-        if (hasBatSpeed(player)) {
+        if (has(player, ExpandedAttachmentHolders.BAT_SPEED)) {
             return true;
         }
 
-        return player instanceof ServerPlayer serverPlayer && hasBatSpeedSkill(serverPlayer);
+        return player instanceof ServerPlayer serverPlayer && hasSkill(serverPlayer, SkillHolders.BAT_SPEED);
     }
 
     /**

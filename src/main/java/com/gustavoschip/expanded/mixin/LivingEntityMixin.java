@@ -24,7 +24,9 @@
 
 package com.gustavoschip.expanded.mixin;
 
-import com.gustavoschip.expanded.service.skill.VampireSkillService;
+import static com.gustavoschip.expanded.service.ModServices.has;
+
+import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import de.teamlapen.vampirism.core.ModDamageTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -79,7 +81,7 @@ public abstract class LivingEntityMixin {
 
         LivingEntity self = (LivingEntity) (Object) this;
 
-        if (self instanceof ServerPlayer player && VampireSkillService.hasDayWalker(player)) {
+        if (self instanceof ServerPlayer player && has(player, ExpandedAttachmentHolders.DAY_WALKER)) {
             ci.cancel();
         }
     }

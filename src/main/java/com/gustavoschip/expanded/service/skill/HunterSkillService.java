@@ -29,7 +29,6 @@ import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import com.gustavoschip.expanded.service.ModServices;
-import com.gustavoschip.expanded.skill.holder.SkillHolders;
 import com.mojang.logging.LogUtils;
 import de.teamlapen.vampirism.api.event.BloodDrinkEvent.PlayerDrinkBloodEvent;
 import de.teamlapen.vampirism.core.ModEffects;
@@ -140,91 +139,11 @@ public class HunterSkillService extends ModServices {
     }
 
     /**
-     * Returns whether has innate toughness skill.
-     */
-
-    public static boolean hasInnateToughnessSkill(ServerPlayer player) {
-        return hasSkillEnabled(player, SkillHolders.INNATE_TOUGHNESS);
-    }
-
-    /**
-     * Returns whether has hunters growth skill.
-     */
-
-    public static boolean hasHuntersGrowthSkill(ServerPlayer player) {
-        return hasSkillEnabled(player, SkillHolders.HUNTERS_GROWTH);
-    }
-
-    /**
-     * Returns whether has prepared hunt skill.
-     */
-
-    public static boolean hasPreparedHuntSkill(ServerPlayer player) {
-        return hasSkillEnabled(player, SkillHolders.PREPARED_HUNT);
-    }
-
-    /**
-     * Returns whether has garlic blood skill.
-     */
-
-    public static boolean hasGarlicBloodSkill(ServerPlayer player) {
-        return hasSkillEnabled(player, SkillHolders.GARLIC_BLOOD);
-    }
-
-    /**
-     * Returns whether has poisonous blood skill.
-     */
-
-    public static boolean hasPoisonousBloodSkill(ServerPlayer player) {
-        return hasSkillEnabled(player, SkillHolders.POISONOUS_BLOOD);
-    }
-
-    /**
-     * Returns whether has innate toughness.
-     */
-
-    public static boolean hasInnateToughness(Player player) {
-        return getSharedAttachment(player).innateToughness;
-    }
-
-    /**
-     * Returns whether has hunters growth.
-     */
-
-    public static boolean hasHuntersGrowth(Player player) {
-        return getSharedAttachment(player).huntersGrowth;
-    }
-
-    /**
-     * Returns whether has prepared hunt.
-     */
-
-    public static boolean hasPreparedHunt(Player player) {
-        return getSharedAttachment(player).preparedHunt;
-    }
-
-    /**
-     * Returns whether has poisonous blood.
-     */
-
-    public static boolean hasPoisonousBlood(Player player) {
-        return getSharedAttachment(player).poisonousBlood;
-    }
-
-    /**
-     * Returns whether has garlic blood.
-     */
-
-    public static boolean hasGarlicBlood(Player player) {
-        return getSharedAttachment(player).garlicBlood;
-    }
-
-    /**
      * Returns whether is poisonous blood target.
      */
 
     public static boolean isPoisonousBloodTarget(Entity entity) {
-        return entity instanceof Player player && hasPoisonousBlood(player);
+        return entity instanceof Player player && has(player, ExpandedAttachmentHolders.POISONOUS_BLOOD);
     }
 
     /**
@@ -232,7 +151,7 @@ public class HunterSkillService extends ModServices {
      */
 
     public static boolean isGarlicBloodTarget(Entity entity) {
-        return entity instanceof Player player && hasGarlicBlood(player);
+        return entity instanceof Player player && has(player, ExpandedAttachmentHolders.GARLIC_BLOOD);
     }
 
     /**

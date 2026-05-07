@@ -24,6 +24,9 @@
 
 package com.gustavoschip.expanded.mixin;
 
+import static com.gustavoschip.expanded.service.ModServices.has;
+
+import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import com.gustavoschip.expanded.service.skill.VampireSkillService;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -89,7 +92,7 @@ public abstract class BatVampireActionMixin {
         @Local(argsOnly = true) Player player,
         @Local(argsOnly = true) boolean enabled
     ) {
-        if (enabled && VampireSkillService.hasBatArmor(player) && (instance == player.getAttribute(Attributes.ARMOR) || instance == player.getAttribute(Attributes.ARMOR_TOUGHNESS))) {
+        if (enabled && has(player, ExpandedAttachmentHolders.BAT_ARMOR) && (instance == player.getAttribute(Attributes.ARMOR) || instance == player.getAttribute(Attributes.ARMOR_TOUGHNESS))) {
             return;
         }
 

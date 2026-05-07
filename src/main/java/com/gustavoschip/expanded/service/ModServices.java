@@ -138,10 +138,41 @@ public abstract class ModServices {
      * Returns whether the supplied skill is currently enabled for the player's faction.
      */
 
-    protected static boolean hasSkillEnabled(ServerPlayer player, DeferredHolder<ISkill<?>, ? extends ISkill<? extends IFactionPlayer<?>>> skill) {
+    public static boolean hasSkill(ServerPlayer player, DeferredHolder<ISkill<?>, ? extends ISkill<? extends IFactionPlayer<?>>> skill) {
         return factionPlayerHandler(player)
             .getCurrentFactionPlayer()
             .map(factionPlayer -> factionPlayer.getSkillHandler().isSkillEnabled(skill.get()))
             .orElse(false);
+    }
+
+    /**
+     * Generic access method for reading boolean attachment fields using reflection.
+     */
+
+    public static boolean has(Player player, String fieldName) {
+        return has(getSharedAttachment(player), fieldName);
+    }
+
+    /**
+     * Generic access method for reading boolean attachment fields using reflection.
+     */
+
+    private static boolean has(ExpandedAttachmentHolders attachment, String fieldName) {
+        try {
+            java.lang.reflect.Field field = ExpandedAttachmentHolders.class.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            Object value = field.get(attachment);
+            if (value instanceof Boolean) {
+                return (Boolean) value;
+            }
+            LOGGER.warn("Field '{}' is not a boolean type", fieldName);
+            return false;
+        } catch (NoSuchFieldException e) {
+            LOGGER.warn("Attachment field '{}' not found", fieldName);
+            return false;
+        } catch (IllegalAccessException e) {
+            LOGGER.error("Cannot access attachment field '{}'", fieldName, e);
+            return false;
+        }
     }
 }

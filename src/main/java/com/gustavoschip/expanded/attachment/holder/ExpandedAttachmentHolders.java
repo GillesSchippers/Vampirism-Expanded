@@ -34,43 +34,103 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public final class ExpandedAttachmentHolders {
 
+    /**
+     * Field name constant for innate toughness hunter skill state.
+     */
+    public static final String INNATE_TOUGHNESS = "innateToughness";
+
+    /**
+     * Field name constant for hunters growth skeleton skill state.
+     */
+    public static final String HUNTERS_GROWTH = "huntersGrowth";
+
+    /**
+     * Field name constant for prepared hunt skill state.
+     */
+    public static final String PREPARED_HUNT = "preparedHunt";
+
+    /**
+     * Field name constant for poisonous blood skill state.
+     */
+    public static final String POISONOUS_BLOOD = "poisonousBlood";
+
+    /**
+     * Field name constant for garlic blood skill state.
+     */
+    public static final String GARLIC_BLOOD = "garlicBlood";
+
+    /**
+     * Field name constant for bat speed vampire skill state.
+     */
+    public static final String BAT_SPEED = "batSpeed";
+
+    /**
+     * Field name constant for bat armor vampire skill state.
+     */
+    public static final String BAT_ARMOR = "batArmor";
+
+    /**
+     * Field name constant for bat liquid traversal skill state.
+     */
+    public static final String BAT_LIQUID = "batLiquid";
+
+    /**
+     * Field name constant for vampiric constitution skill state.
+     */
+    public static final String VAMPIRIC_CONSTITUTION = "vampiricConstitution";
+
+    /**
+     * Field name constant for day walker skill state.
+     */
+    public static final String DAY_WALKER = "dayWalker";
+
+    /**
+     * Field name constant for hunter task skill points state.
+     */
+    public static final String HUNTER_TASK_SKILL_POINTS = "hunter_task_skill_points";
+
+    /**
+     * Field name constant for vampire task skill points state.
+     */
+    public static final String VAMPIRE_TASK_SKILL_POINTS = "vampire_task_skill_points";
+
     public static final Codec<ExpandedAttachmentHolders> CODEC = RecordCodecBuilder.create(instance ->
         instance
             .group(
-                Codec.BOOL.fieldOf("innate_toughness")
+                Codec.BOOL.fieldOf(INNATE_TOUGHNESS)
                     .orElse(false)
                     .forGetter(d -> d.innateToughness),
-                Codec.BOOL.fieldOf("hunters_growth")
+                Codec.BOOL.fieldOf(HUNTERS_GROWTH)
                     .orElse(false)
                     .forGetter(d -> d.huntersGrowth),
-                Codec.BOOL.fieldOf("prepared_hunt")
+                Codec.BOOL.fieldOf(PREPARED_HUNT)
                     .orElse(false)
                     .forGetter(d -> d.preparedHunt),
-                Codec.BOOL.fieldOf("poisonous_blood")
+                Codec.BOOL.fieldOf(POISONOUS_BLOOD)
                     .orElse(false)
                     .forGetter(d -> d.poisonousBlood),
-                Codec.BOOL.fieldOf("garlic_blood")
+                Codec.BOOL.fieldOf(GARLIC_BLOOD)
                     .orElse(false)
                     .forGetter(d -> d.garlicBlood),
-                Codec.BOOL.fieldOf("bat_speed")
+                Codec.BOOL.fieldOf(BAT_SPEED)
                     .orElse(false)
                     .forGetter(d -> d.batSpeed),
-                Codec.BOOL.fieldOf("bat_armor")
+                Codec.BOOL.fieldOf(BAT_ARMOR)
                     .orElse(false)
                     .forGetter(d -> d.batArmor),
-                Codec.BOOL.fieldOf("bat_liquid")
+                Codec.BOOL.fieldOf(BAT_LIQUID)
                     .orElse(false)
                     .forGetter(d -> d.batLiquid),
-                Codec.BOOL.fieldOf("vampiric_constitution")
+                Codec.BOOL.fieldOf(VAMPIRIC_CONSTITUTION)
                     .orElse(false)
                     .forGetter(d -> d.vampiricConstitution),
-                Codec.BOOL.fieldOf("day_walker")
+                Codec.BOOL.fieldOf(DAY_WALKER)
                     .orElse(false)
                     .forGetter(d -> d.dayWalker),
-                Codec.INT.fieldOf("hunter_task_skill_points")
+                Codec.INT.fieldOf(HUNTER_TASK_SKILL_POINTS)
                     .orElse(0)
                     .forGetter(d -> d.hunterTaskSkillPoints),
-                Codec.INT.fieldOf("vampire_task_skill_points")
+                Codec.INT.fieldOf(VAMPIRE_TASK_SKILL_POINTS)
                     .orElse(0)
                     .forGetter(d -> d.vampireTaskSkillPoints)
             )

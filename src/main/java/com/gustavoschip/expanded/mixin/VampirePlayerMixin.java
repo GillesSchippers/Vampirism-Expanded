@@ -24,8 +24,10 @@
 
 package com.gustavoschip.expanded.mixin;
 
+import static com.gustavoschip.expanded.service.ModServices.has;
+
+import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import com.gustavoschip.expanded.service.skill.HunterSkillService;
-import com.gustavoschip.expanded.service.skill.VampireSkillService;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import de.teamlapen.vampirism.api.entity.player.vampire.IVampirePlayer;
@@ -70,7 +72,7 @@ public abstract class VampirePlayerMixin {
 
     @WrapOperation(method = "handleSunDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;addEffect(Lnet/minecraft/world/effect/MobEffectInstance;)Z"))
     private boolean wrapEffects(Player player, @NotNull MobEffectInstance effect, Operation<Boolean> original) {
-        if (effect.is(MobEffects.CONFUSION) && VampireSkillService.hasDayWalkerSkill(player instanceof ServerPlayer sp ? sp : null)) {
+        if (effect.is(MobEffects.CONFUSION) && has(player instanceof ServerPlayer sp ? sp : null, ExpandedAttachmentHolders.DAY_WALKER)) {
             return false;
         }
 

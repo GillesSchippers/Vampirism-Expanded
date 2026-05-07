@@ -25,8 +25,9 @@
 package com.gustavoschip.expanded.mixin.client;
 
 import static com.gustavoschip.expanded.service.ModServices.canSyncAttachment;
+import static com.gustavoschip.expanded.service.ModServices.has;
 
-import com.gustavoschip.expanded.service.skill.VampireSkillService;
+import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import de.teamlapen.vampirism.client.gui.overlay.SunOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -79,7 +80,7 @@ public abstract class SunOverlayMixin {
             return false;
         }
 
-        return canSyncAttachment(localPlayer) && VampireSkillService.hasDayWalker(localPlayer);
+        return canSyncAttachment(localPlayer) && has(localPlayer, ExpandedAttachmentHolders.DAY_WALKER);
     }
 
     /**
