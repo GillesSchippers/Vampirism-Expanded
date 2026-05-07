@@ -45,6 +45,12 @@ import org.jetbrains.annotations.NotNull;
 public class CreateCompat {
 
     /**
+     * Value that holds the offsets for handling eye positions.
+     */
+
+    private static final double EYE_OFFSET = 32.0D;
+
+    /**
      * Returns whether the entity is sheltered by a Create contraption or its bounding box.
      */
 
@@ -72,8 +78,9 @@ public class CreateCompat {
      */
 
     private static boolean isUnderContraption(@NotNull Level level, @NotNull Vec3 eyePos) {
-        AABB searchBox = new AABB(eyePos.x - 32.0D, level.getMinBuildHeight(), eyePos.z - 32.0D, eyePos.x + 32.0D, level.getMinBuildHeight() + level.getHeight(), eyePos.z + 32.0D);
+        AABB searchBox = new AABB(eyePos.x - EYE_OFFSET, level.getMinBuildHeight(), eyePos.z - EYE_OFFSET, eyePos.x + EYE_OFFSET, level.getMinBuildHeight() + level.getHeight(), eyePos.z + EYE_OFFSET);
 
+        // TODO: Optimize to prevent checking every contraption for every player.
         for (AbstractContraptionEntity contraptionEntity : level.getEntitiesOfClass(AbstractContraptionEntity.class, searchBox)) {
             Contraption contraption = contraptionEntity.getContraption();
             if (contraption != null) {
