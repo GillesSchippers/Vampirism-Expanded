@@ -69,7 +69,7 @@ public class HunterSkillService extends ModServices {
      * Attribute modifier amount applied to player scale when Hunters Growth is enabled.
      */
 
-    private static final double SCALE_ADDITION_MODIFIER = 0.1D;
+    private static final double SCALE_ADDITION_MODIFIER = 0.05D;
     /**
      * Effect duration in ticks for poisonous blood effect duration.
      */

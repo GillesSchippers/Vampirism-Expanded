@@ -76,8 +76,9 @@ public abstract class ModTasks {
      * Registers this mod's task unlockers, rewards, and reward instances.
      */
 
-    public static final DeferredHolder<MapCodec<? extends TaskUnlocker>, MapCodec<FactionLevelTaskUnlocker>> FACTION_LEVEL_UNLOCKER = TASK_UNLOCKER.register("faction_level", () ->
-        FactionLevelTaskUnlocker.CODEC
+    public static final DeferredHolder<MapCodec<? extends TaskUnlocker>, MapCodec<FactionLevelTaskUnlocker>> FACTION_LEVEL_UNLOCKER = TASK_UNLOCKER.register(
+        "faction_level",
+        () -> FactionLevelTaskUnlocker.CODEC
     );
     /**
      * Registers this mod's task unlockers, rewards, and reward instances.
@@ -88,8 +89,9 @@ public abstract class ModTasks {
      * Registers this mod's task unlockers, rewards, and reward instances.
      */
 
-    public static final DeferredHolder<MapCodec<? extends ITaskRewardInstance>, MapCodec<SkillPointTaskReward>> SKILL_POINT_REWARD_INSTANCE = TASK_REWARD_INSTANCES.register("skill_points", () ->
-        SkillPointTaskReward.CODEC
+    public static final DeferredHolder<MapCodec<? extends ITaskRewardInstance>, MapCodec<SkillPointTaskReward>> SKILL_POINT_REWARD_INSTANCE = TASK_REWARD_INSTANCES.register(
+        "skill_points",
+        () -> SkillPointTaskReward.CODEC
     );
 
     /**

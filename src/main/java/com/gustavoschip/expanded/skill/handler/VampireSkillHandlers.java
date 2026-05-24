@@ -47,7 +47,7 @@ public final class VampireSkillHandlers {
      * Performs the bat speed toggle operation.
      */
 
-    public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> batSpeedToggle(boolean enabled) {
+    public static <T extends IFactionPlayer<T>> Consumer<T> batSpeedToggle(boolean enabled) {
         return createToggleAction("Bat Speed", enabled, VampireSkillService::setBatSpeed);
     }
 
@@ -55,7 +55,7 @@ public final class VampireSkillHandlers {
      * Performs the bat armor toggle operation.
      */
 
-    public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> batArmorToggle(boolean enabled) {
+    public static <T extends IFactionPlayer<T>> Consumer<T> batArmorToggle(boolean enabled) {
         return createToggleAction("Bat Armor", enabled, VampireSkillService::setBatArmor);
     }
 
@@ -63,7 +63,7 @@ public final class VampireSkillHandlers {
      * Performs the bat liquid toggle operation.
      */
 
-    public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> batLiquidToggle(boolean enabled) {
+    public static <T extends IFactionPlayer<T>> Consumer<T> batLiquidToggle(boolean enabled) {
         return createToggleAction("Bat Liquid", enabled, VampireSkillService::setBatLiquid);
     }
 
@@ -71,7 +71,7 @@ public final class VampireSkillHandlers {
      * Performs the vampiric constitution toggle operation.
      */
 
-    public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> vampiricConstitutionToggle(boolean enabled) {
+    public static <T extends IFactionPlayer<T>> Consumer<T> vampiricConstitutionToggle(boolean enabled) {
         return createToggleAction("Vampiric Constitution", enabled, VampireSkillService::setVampiricConstitution);
     }
 
@@ -79,7 +79,7 @@ public final class VampireSkillHandlers {
      * Performs the day walker toggle operation.
      */
 
-    public static <T extends IFactionPlayer<T>> @NotNull Consumer<T> dayWalkerToggle(boolean enabled) {
+    public static <T extends IFactionPlayer<T>> Consumer<T> dayWalkerToggle(boolean enabled) {
         return createToggleAction("Day Walker", enabled, VampireSkillService::setDayWalker);
     }
 }

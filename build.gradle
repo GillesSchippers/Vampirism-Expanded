@@ -151,7 +151,7 @@ dependencies {
     compileOnly("com.simibubi.create:create-${minecraft_version}:${create_version}")
     compileOnly("dev.ryanhcode.sable:sable-common-${minecraft_version}:${sable_version}")
 
-    compileOnly("curse.maven:bloodlines-1073052:7965289") // TODO: Get a better way then using cursemaven.
+    compileOnly("curse.maven:bloodlines-1073052:7965289")
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -165,6 +165,8 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             bloodlines_version_range: bloodlines_version_range,
             create_version_range    : create_version_range,
             sable_version_range     : sable_version_range,
+            mod_author              : mod_author,
+            mod_contributors        : mod_contributors,
             mod_id                  : mod_id,
             mod_name                : mod_name,
             mod_license             : mod_license,
@@ -185,6 +187,18 @@ tasks.withType(JavaCompile).configureEach {
 
 tasks.named('jar', Jar).configure {
     archiveFileName = "VampirismExpanded-${project.version}.jar"
+
+    manifest {
+        attributes(
+            'Specification-Title': mod_name,
+            'Specification-Vendor': mod_author,
+            'Specification-Version': mod_version,
+            'Implementation-Title': mod_name,
+            'Implementation-Version': project.version,
+            'Implementation-Vendor': mod_author,
+            'Implementation-Timestamp': Instant.now().toString()
+        )
+    }
 }
 
 def curseforgeToken = providers.environmentVariable("CURSEFORGE_TOKEN")

@@ -28,6 +28,8 @@ import com.gustavoschip.expanded.compat.sable.SableCompat;
 import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -50,9 +52,13 @@ public abstract class VampirePlayerMixin {
     @Inject(method = "handleSunDamage", at = @At("HEAD"), cancellable = true, remap = false)
     private void expanded$preventSubLevelSunDamageTick(boolean isRemote, CallbackInfo ci) {
         VampirePlayer vp = (VampirePlayer) (Object) this;
-        Level level = vp.getRepresentingPlayer().level();
+        Player player = vp.getRepresentingPlayer();
 
-        if (SableCompat.SableSubLevelHelper.isInSubLevel(vp.getRepresentingPlayer(), level)) {
+        if (player instanceof LocalPlayer) {
+            return;
+        }
+
+        if (SableCompat.SableSubLevelHelper.isInSubLevel(vp.getRepresentingPlayer(), player.level())) {
             ci.cancel();
         }
     }

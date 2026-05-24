@@ -98,18 +98,15 @@ public final class ExpandedCommandHolders {
         final int finalAffected = affected;
         final ServerPlayer finalSingleAffectedPlayer = singleAffectedPlayer;
 
-        source.sendSuccess(
-            () -> {
-                if (finalAffected == 0) {
-                    return Component.literal("No valid players were affected.");
-                } else if (finalAffected == 1) {
-                    return Component.literal("Gave " + points + " points to " + finalSingleAffectedPlayer.getName().getString() + ".");
-                }
+        source.sendSuccess(() -> {
+            if (finalAffected == 0) {
+                return Component.literal("No valid players were affected.");
+            } else if (finalAffected == 1) {
+                return Component.literal("Gave " + points + " points to " + finalSingleAffectedPlayer.getName().getString() + ".");
+            }
 
-                return Component.literal("Gave " + points + " points to " + finalAffected + " player(s).");
-            },
-            true
-        );
+            return Component.literal("Gave " + points + " points to " + finalAffected + " player(s).");
+        }, true);
 
         return affected;
     }
