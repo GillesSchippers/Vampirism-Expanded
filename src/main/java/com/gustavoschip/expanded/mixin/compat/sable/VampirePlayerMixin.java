@@ -54,9 +54,7 @@ public abstract class VampirePlayerMixin {
         VampirePlayer vp = (VampirePlayer) (Object) this;
         Player player = vp.getRepresentingPlayer();
 
-        if (player instanceof LocalPlayer) {
-            return;
-        }
+        if (player.isLocalPlayer()) return;
 
         if (SableCompat.SableSubLevelHelper.isInSubLevel(vp.getRepresentingPlayer(), player.level())) {
             ci.cancel();

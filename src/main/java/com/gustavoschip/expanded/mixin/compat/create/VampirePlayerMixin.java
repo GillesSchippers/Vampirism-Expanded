@@ -54,9 +54,7 @@ public abstract class VampirePlayerMixin {
         VampirePlayer vp = (VampirePlayer) (Object) this;
         Player player = vp.getRepresentingPlayer();
 
-        if (player instanceof LocalPlayer) {
-            return;
-        }
+        if (player.isLocalPlayer()) return;
 
         if (CreateCompat.CreateContraptionHelper.isInContraption(player, player.level())) {
             ci.cancel();
