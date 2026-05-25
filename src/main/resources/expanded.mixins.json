@@ -11,9 +11,7 @@
         "SkillHandlerAccessorMixin",
         "SkillHandlerMixin",
         "VampirePlayerMixin",
-        "compat.bloodlines.BatVampireActionMixin",
-        "compat.create.HelperMixin",
-        "compat.create.VampirePlayerMixin"
+        "compat.bloodlines.BatVampireActionMixin"
     ],
     "client": [
         "client.SkillsTabScreenMixin",
