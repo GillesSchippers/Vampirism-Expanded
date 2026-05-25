@@ -217,6 +217,11 @@ public abstract class ModSkills {
             LOGGER.debug("Applying '{}'={} to {}", label, value, player.getName().getString());
         }
         setter.accept(player, value);
+
+        // Log successful completion of deferred action after sync is ready
+        if (ModServices.shouldLogDebug()) {
+            LOGGER.debug("Deferred action '{}'={} successfully synced for {} and ready for resync", label, value, player.getName().getString());
+        }
     }
 
     public static final class Trees {

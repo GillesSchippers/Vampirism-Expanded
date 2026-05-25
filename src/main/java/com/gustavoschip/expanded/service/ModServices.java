@@ -132,6 +132,36 @@ public abstract class ModServices {
         if (shouldLogDebug()) {
             LOGGER.debug("Synced shared attachment for {}", player.getName().getString());
         }
+
+        // Trigger skill handler sync callback to ensure client and server resyncs after successful attachment update
+        onAttachmentSyncSuccess(player);
+    }
+
+    /**
+     * Callback invoked after successful attachment synchronization to resync skill handlers
+     * on both server and client following Vampirism's synchronization patterns.
+     */
+
+    private static void onAttachmentSyncSuccess(@NotNull ServerPlayer player) {
+        try {
+            if (shouldLogDebug()) {
+                LOGGER.debug("Triggering attachment sync callback for {}", player.getName().getString());
+            }
+
+            // Use Vampirism's canonical sync helper to broadcast the updated faction/player
+            // handler state to the client(s). This mirrors Vampirism's internal behavior and
+            // ensures skill handlers and UI see the updated attachment state.
+            try {
+                de.teamlapen.lib.HelperLib.sync(de.teamlapen.vampirism.entity.factions.FactionPlayerHandler.get(player), player, true);
+                if (shouldLogDebug()) {
+                    LOGGER.debug("Attachment sync callback completed for {} via HelperLib.sync", player.getName().getString());
+                }
+            } catch (Exception e) {
+                LOGGER.error("Failed to trigger Vampirism resync for {}", player.getName().getString(), e);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error during attachment sync callback for {}", player.getName().getString(), e);
+        }
     }
 
     /**
