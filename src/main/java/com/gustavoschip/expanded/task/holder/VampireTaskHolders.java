@@ -34,20 +34,9 @@ import net.minecraft.resources.ResourceKey;
 
 public final class VampireTaskHolders {
 
-    /**
-     * Performs the task operation.
-     */
-
     public static final ResourceKey<Task> VAMPIRE_SKILL_POINTS_1 = ModTasks.TaskHolders.task("vampire_skill_points_1");
-    /**
-     * Performs the task operation.
-     */
 
     public static final ResourceKey<Task> VAMPIRE_SKILL_POINTS_2 = ModTasks.TaskHolders.task("vampire_skill_points_2");
-
-    /**
-     * Creates a new instance of VampireTaskHolders.
-     */
 
     private VampireTaskHolders() {}
 }

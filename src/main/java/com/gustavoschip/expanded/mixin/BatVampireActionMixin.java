@@ -54,10 +54,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = BatVampireAction.class, priority = 1000, remap = false)
 public abstract class BatVampireActionMixin {
 
-    /**
-     * Mixin hook that allow bat mode in liquids.
-     */
-
     @Redirect(
         method = { "canBeUsedBy(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z", "onUpdate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;)Z" },
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isInWater()Z")
@@ -66,20 +62,12 @@ public abstract class BatVampireActionMixin {
         return player.isInWater() && !VampireSkillService.canUseBatModeInLiquids(player);
     }
 
-    /**
-     * Mixin hook that apply bat mode bonuses on activate.
-     */
-
     @Inject(method = "activate(Lde/teamlapen/vampirism/api/entity/player/vampire/IVampirePlayer;Lde/teamlapen/vampirism/api/entity/player/actions/IAction$ActivationContext;)Z", at = @At("TAIL"))
     private void expanded$applyBatModeBonusesOnActivate(IVampirePlayer vampire, IAction.ActivationContext context, @NotNull CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValueZ() && (vampire.asEntity() instanceof ServerPlayer player)) {
             VampireSkillService.onBatActivated(player);
         }
     }
-
-    /**
-     * Mixin hook that sets modifier.
-     */
 
     @WrapOperation(
         method = "setModifier(Lnet/minecraft/world/entity/player/Player;Z)V",

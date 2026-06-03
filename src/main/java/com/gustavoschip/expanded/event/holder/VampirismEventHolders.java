@@ -34,15 +34,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 
 public final class VampirismEventHolders {
 
-    /**
-     * Creates a new instance of VampirismEventHolders.
-     */
-
     public VampirismEventHolders() {}
-
-    /**
-     * Forwards Vampirism blood-drink events into the hunter skill service.
-     */
 
     @SubscribeEvent
     private void onPlayerDrinkBlood(BloodDrinkEvent.PlayerDrinkBloodEvent event) {

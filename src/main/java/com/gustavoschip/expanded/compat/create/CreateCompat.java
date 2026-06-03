@@ -27,7 +27,11 @@ package com.gustavoschip.expanded.compat.create;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.Contraption;
 import de.teamlapen.vampirism.config.VampirismConfig;
+import java.util.Collections;
+import java.util.Map;
+import java.util.WeakHashMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -44,43 +48,64 @@ import org.jetbrains.annotations.NotNull;
 
 public class CreateCompat {
 
-    /**
-     * Value that holds the offsets for handling eye positions.
-     */
-
     private static final double EYE_OFFSET = 32.0D;
 
-    /**
-     * Returns whether the entity is sheltered by a Create contraption or its bounding box.
-     */
+    private static final long CACHE_REFRESH_INTERVAL = 40L;
+
+    private static final double POSITION_REFRESH_DISTANCE_SQ = 0.25D;
+
+    private static final Map<LivingEntity, ShelterCache> SHELTER_CACHE = Collections.synchronizedMap(new WeakHashMap<>());
 
     private static boolean isInContraption(@NotNull LivingEntity entity, @NotNull Level level) {
+        Vec3 eyePos = entity.getEyePosition();
+        int vehicleId = entity.getVehicle() != null ? entity.getVehicle().getId() : -1;
+        long gameTime = level.getGameTime();
+
+        ShelterCache cache = SHELTER_CACHE.get(entity);
+        if (cache != null && cache.canReuse(level, eyePos, vehicleId, gameTime)) {
+            return cache.sheltered;
+        }
+
+        boolean sheltered = computeInContraption(entity, level, eyePos);
+        if (cache == null) {
+            cache = new ShelterCache();
+            SHELTER_CACHE.put(entity, cache);
+        }
+        cache.update(level, eyePos, vehicleId, gameTime, sheltered);
+        return sheltered;
+    }
+
+    private static boolean computeInContraption(@NotNull LivingEntity entity, @NotNull Level level, @NotNull Vec3 eyePos) {
         Entity vehicle = entity.getVehicle();
         if (!(vehicle instanceof AbstractContraptionEntity contraptionEntity)) {
-            return isUnderContraption(level, entity.getEyePosition());
+            return isUnderContraption(level, eyePos);
         }
 
         Contraption contraption = contraptionEntity.getContraption();
         if (contraption == null) {
-            return isUnderContraption(level, entity.getEyePosition());
+            return isUnderContraption(level, eyePos);
         }
 
-        Vec3 localEyePos = contraptionEntity.toLocalVector(entity.getEyePosition(), 0);
+        Vec3 localEyePos = contraptionEntity.toLocalVector(eyePos, 0);
         if (isContraptionSunBlocked(contraption, localEyePos)) {
             return true;
         }
 
-        return isUnderContraption(level, entity.getEyePosition());
+        return isUnderContraption(level, eyePos);
     }
-
-    /**
-     * Checks nearby contraptions around the eye position.
-     */
 
     private static boolean isUnderContraption(@NotNull Level level, @NotNull Vec3 eyePos) {
         AABB searchBox = new AABB(eyePos.x - EYE_OFFSET, level.getMinBuildHeight(), eyePos.z - EYE_OFFSET, eyePos.x + EYE_OFFSET, level.getMinBuildHeight() + level.getHeight(), eyePos.z + EYE_OFFSET);
 
+        // Early filter: only look at contraptions whose bounding box actually contains the eye position
         for (AbstractContraptionEntity contraptionEntity : level.getEntitiesOfClass(AbstractContraptionEntity.class, searchBox)) {
+            AABB contraptionBounds = contraptionEntity.getBoundingBox();
+
+            // Skip contraptions that don't contain the eye position at all
+            if (!isUnderBoundingBox(contraptionBounds, eyePos)) {
+                continue;
+            }
+
             Contraption contraption = contraptionEntity.getContraption();
             if (contraption != null) {
                 Vec3 localEyePos = contraptionEntity.toLocalVector(eyePos, 0);
@@ -89,9 +114,8 @@ public class CreateCompat {
                         return true;
                     }
                 } catch (Exception e) {
-                    if (isUnderBoundingBox(contraptionEntity.getBoundingBox(), eyePos)) {
-                        return true;
-                    }
+                    // Fallback to bounding box check on error
+                    return true;
                 }
             }
         }
@@ -99,17 +123,9 @@ public class CreateCompat {
         return false;
     }
 
-    /**
-     * Returns whether the eye position lies inside the contraption's bounding box.
-     */
-
     private static boolean isUnderBoundingBox(@NotNull AABB box, @NotNull Vec3 eyePos) {
         return eyePos.x >= box.minX && eyePos.x <= box.maxX && eyePos.z >= box.minZ && eyePos.z <= box.maxZ && eyePos.y <= box.maxY;
     }
-
-    /**
-     * Returns whether the contraption world blocks direct sunlight at the local position.
-     */
 
     private static boolean isContraptionSunBlocked(@NotNull Contraption contraption, @NotNull Vec3 pos) {
         LevelAccessor world = contraption.getContraptionWorld();
@@ -119,10 +135,6 @@ public class CreateCompat {
 
         return !canBlockSeeSun(world, pos);
     }
-
-    /**
-     * Determines whether sunlight reaches the supplied position inside a contraption world.
-     */
 
     private static boolean canBlockSeeSun(@NotNull LevelAccessor world, @NotNull Vec3 pos) {
         int y = (int) Math.floor(pos.y);
@@ -152,6 +164,46 @@ public class CreateCompat {
 
         public static boolean isInContraption(@NotNull LivingEntity entity, @NotNull Level level) {
             return CreateCompat.isInContraption(entity, level);
+        }
+    }
+
+    private static final class ShelterCache {
+
+        private long lastSampleTick = Long.MIN_VALUE;
+        private ResourceKey<Level> dimension;
+        private double eyeX;
+        private double eyeY;
+        private double eyeZ;
+        private int vehicleId = Integer.MIN_VALUE;
+        private boolean sheltered;
+
+        private boolean canReuse(@NotNull Level level, @NotNull Vec3 eyePos, int vehicleId, long gameTime) {
+            if (lastSampleTick == Long.MIN_VALUE) {
+                return false;
+            }
+
+            if (gameTime - lastSampleTick >= CACHE_REFRESH_INTERVAL) {
+                return false;
+            }
+
+            if (!dimension.equals(level.dimension()) || this.vehicleId != vehicleId) {
+                return false;
+            }
+
+            double deltaX = eyePos.x - eyeX;
+            double deltaY = eyePos.y - eyeY;
+            double deltaZ = eyePos.z - eyeZ;
+            return deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ <= POSITION_REFRESH_DISTANCE_SQ;
+        }
+
+        private void update(@NotNull Level level, @NotNull Vec3 eyePos, int vehicleId, long gameTime, boolean sheltered) {
+            this.dimension = level.dimension();
+            this.eyeX = eyePos.x;
+            this.eyeY = eyePos.y;
+            this.eyeZ = eyePos.z;
+            this.vehicleId = vehicleId;
+            this.lastSampleTick = gameTime;
+            this.sheltered = sheltered;
         }
     }
 }

@@ -29,7 +29,6 @@ import static com.gustavoschip.expanded.skill.ModSkills.createToggleAction;
 import com.gustavoschip.expanded.service.skill.HunterSkillService;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import java.util.function.Consumer;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Factory methods that bind hunter skill toggles to the hunter skill service.
@@ -37,47 +36,23 @@ import org.jetbrains.annotations.NotNull;
 
 public final class HunterSkillHandlers {
 
-    /**
-     * Creates a new instance of HunterSkillHandlers.
-     */
-
     private HunterSkillHandlers() {}
-
-    /**
-     * Performs the innate toughness toggle operation.
-     */
 
     public static <T extends IFactionPlayer<T>> Consumer<T> innateToughnessToggle(boolean enabled) {
         return createToggleAction("Innate Toughness", enabled, HunterSkillService::setInnateToughness);
     }
 
-    /**
-     * Performs the hunters growth toggle operation.
-     */
-
     public static <T extends IFactionPlayer<T>> Consumer<T> huntersGrowthToggle(boolean enabled) {
         return createToggleAction("Hunters Growth", enabled, HunterSkillService::setHuntersGrowth);
     }
-
-    /**
-     * Performs the prepared hunt toggle operation.
-     */
 
     public static <T extends IFactionPlayer<T>> Consumer<T> preparedHuntToggle(boolean enabled) {
         return createToggleAction("Prepared Hunt", enabled, HunterSkillService::setPreparedHunt); // TODO: Implement this
     }
 
-    /**
-     * Performs the garlic blood toggle operation.
-     */
-
     public static <T extends IFactionPlayer<T>> Consumer<T> garlicBloodToggle(boolean enabled) {
         return createToggleAction("Garlic Blood", enabled, HunterSkillService::setGarlicBlood);
     }
-
-    /**
-     * Performs the poisonous blood toggle operation.
-     */
 
     public static <T extends IFactionPlayer<T>> Consumer<T> poisonousBloodToggle(boolean enabled) {
         return createToggleAction("Poisonous Blood", enabled, HunterSkillService::setPoisonousBlood);

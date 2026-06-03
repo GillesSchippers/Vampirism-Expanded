@@ -46,10 +46,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = Helper.class, priority = 1100, remap = false)
 public abstract class HelperMixin {
 
-    /**
-     * Mixin hook that check sub level sun damage.
-     */
-
     @Inject(method = "gettingSundamge", at = @At("HEAD"), cancellable = true, remap = false)
     private static void expanded$checkSubLevelSunDamage(LivingEntity entity, LevelAccessor world, @Nullable ProfilerFiller profiler, CallbackInfoReturnable<Boolean> cir) {
         if (world instanceof Level level && SableCompat.SableSubLevelHelper.isInSubLevel(entity, level)) {

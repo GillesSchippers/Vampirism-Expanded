@@ -34,15 +34,7 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 public final class NeoForgeEventHolders {
 
-    /**
-     * Creates a new instance of NeoForgeEventHolders.
-     */
-
     public NeoForgeEventHolders() {}
-
-    /**
-     * Forwards NeoForge's command registration event into the mod command bootstrap.
-     */
 
     @SubscribeEvent
     private void onRegisterCommands(RegisterCommandsEvent event) {

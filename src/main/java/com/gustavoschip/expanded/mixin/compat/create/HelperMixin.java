@@ -47,10 +47,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = Helper.class, priority = 1100, remap = false)
 public abstract class HelperMixin {
 
-    /**
-     * Mixin hook that check contraption sun damage.
-     */
-
     @Inject(method = "gettingSundamge", at = @At("HEAD"), cancellable = true, remap = false)
     private static void expanded$checkContraptionSunDamage(LivingEntity entity, LevelAccessor world, @Nullable ProfilerFiller profiler, CallbackInfoReturnable<Boolean> cir) {
         if (world instanceof Level level && CreateCompat.CreateContraptionHelper.isInContraption(entity, level)) {

@@ -34,10 +34,6 @@ import net.neoforged.neoforge.common.NeoForge;
 
 public abstract class ModEvents {
 
-    /**
-     * Registers all runtime event listeners for the mod.
-     */
-
     public static void register() {
         NeoForge.EVENT_BUS.register(new NeoForgeEventHolders());
         NeoForge.EVENT_BUS.register(new VampirismEventHolders());

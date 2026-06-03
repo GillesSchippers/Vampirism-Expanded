@@ -47,30 +47,14 @@ import org.slf4j.Logger;
 
 public abstract class ModServices {
 
-    /**
-     * Logger used by the shared service helpers for sync and debug diagnostics.
-     */
-
     private static final Logger LOGGER = LogUtils.getLogger();
-    /**
-     * System property that enables debug logging without a debugger attached.
-     */
 
     private static final String DEBUG_PROPERTY = "expanded.debug";
 
-    /**
-     * Returns whether debug logging should be emitted for this mod.
-     * <p>
-     * Debug output stays quiet during normal play and only activates when a debugger
-     * is attached, or when the optional -Dexpanded.debug=true override is supplied.
-     */
     public static boolean shouldLogDebug() {
         return LOGGER.isDebugEnabled() && (isDebuggerAttached() || Boolean.getBoolean(DEBUG_PROPERTY));
     }
 
-    /**
-     * Detects the standard JVM debug-agent arguments used by JDWP-based debuggers.
-     */
     private static boolean isDebuggerAttached() {
         return ManagementFactory.getRuntimeMXBean()
             .getInputArguments()
@@ -78,25 +62,13 @@ public abstract class ModServices {
             .anyMatch(arg -> arg.contains("jdwp") || arg.contains("Xrunjdwp"));
     }
 
-    /**
-     * Returns whether the supplied server player is still valid for attachment sync.
-     */
-
     public static boolean canSyncAttachment(ServerPlayer player) {
         return player != null && player.server != null && player.connection != null && !player.hasDisconnected() && !player.isRemoved();
     }
 
-    /**
-     * Returns whether the supplied server player is still valid for attachment sync.
-     */
-
     public static boolean canSyncAttachment(LocalPlayer player) {
         return player != null && player.connection != null && !player.isRemoved();
     }
-
-    /**
-     * Returns the shared Expanded attachment, creating a fresh copy when needed.
-     */
 
     public static @NotNull ExpandedAttachmentHolders getSharedAttachment(@NotNull Player player) {
         if (player.hasData(ModAttachments.SHARED_ATTACHMENT)) {
@@ -105,17 +77,9 @@ public abstract class ModServices {
         return new ExpandedAttachmentHolders();
     }
 
-    /**
-     * Syncs the shared Expanded attachment back to the server player.
-     */
-
     public static void setSharedAttachment(ServerPlayer player, ExpandedAttachmentHolders data) {
         setSharedAttachment(player, data, 0);
     }
-
-    /**
-     * Syncs the shared Expanded attachment back to the server player.
-     */
 
     private static void setSharedAttachment(ServerPlayer player, ExpandedAttachmentHolders data, int attempts) {
         if (!canSyncAttachment(player)) {
@@ -136,11 +100,6 @@ public abstract class ModServices {
         // Trigger skill handler sync callback to ensure client and server resyncs after successful attachment update
         onAttachmentSyncSuccess(player);
     }
-
-    /**
-     * Callback invoked after successful attachment synchronization to resync skill handlers
-     * on both server and client following Vampirism's synchronization patterns.
-     */
 
     private static void onAttachmentSyncSuccess(@NotNull ServerPlayer player) {
         try {
@@ -164,10 +123,6 @@ public abstract class ModServices {
         }
     }
 
-    /**
-     * Returns whether the supplied skill is currently enabled for the player's faction.
-     */
-
     public static boolean hasSkill(ServerPlayer player, DeferredHolder<ISkill<?>, ? extends ISkill<? extends IFactionPlayer<?>>> skill) {
         return factionPlayerHandler(player)
             .getCurrentFactionPlayer()
@@ -175,17 +130,9 @@ public abstract class ModServices {
             .orElse(false);
     }
 
-    /**
-     * Generic access method for reading boolean attachment fields using reflection.
-     */
-
     public static boolean has(Player player, String fieldName) {
         return has(getSharedAttachment(player), fieldName);
     }
-
-    /**
-     * Generic access method for reading boolean attachment fields using reflection.
-     */
 
     private static boolean has(ExpandedAttachmentHolders attachment, String fieldName) {
         try {

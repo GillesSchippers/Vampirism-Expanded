@@ -44,15 +44,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class ExpandedCommandHolders {
 
-    /**
-     * Creates a new instance of ExpandedCommandHolders.
-     */
-
     private ExpandedCommandHolders() {}
-
-    /**
-     * Registers the `/expanded` command tree.
-     */
 
     public static void register(@NotNull CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
@@ -69,11 +61,6 @@ public final class ExpandedCommandHolders {
                 )
         );
     }
-
-    /**
-     * Grants task skill points to the selected faction players and reports how many were
-     * affected.
-     */
 
     private static int givePoints(CommandSourceStack source, @NotNull Collection<ServerPlayer> targets, int points) {
         int affected = 0;

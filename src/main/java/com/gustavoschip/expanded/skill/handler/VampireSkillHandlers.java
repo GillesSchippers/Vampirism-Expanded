@@ -29,7 +29,6 @@ import static com.gustavoschip.expanded.skill.ModSkills.createToggleAction;
 import com.gustavoschip.expanded.service.skill.VampireSkillService;
 import de.teamlapen.vampirism.api.entity.player.IFactionPlayer;
 import java.util.function.Consumer;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Factory methods that bind vampire skill toggles to the vampire skill service.
@@ -37,47 +36,23 @@ import org.jetbrains.annotations.NotNull;
 
 public final class VampireSkillHandlers {
 
-    /**
-     * Creates a new instance of VampireSkillHandlers.
-     */
-
     private VampireSkillHandlers() {}
-
-    /**
-     * Performs the bat speed toggle operation.
-     */
 
     public static <T extends IFactionPlayer<T>> Consumer<T> batSpeedToggle(boolean enabled) {
         return createToggleAction("Bat Speed", enabled, VampireSkillService::setBatSpeed);
     }
 
-    /**
-     * Performs the bat armor toggle operation.
-     */
-
     public static <T extends IFactionPlayer<T>> Consumer<T> batArmorToggle(boolean enabled) {
         return createToggleAction("Bat Armor", enabled, VampireSkillService::setBatArmor);
     }
-
-    /**
-     * Performs the bat liquid toggle operation.
-     */
 
     public static <T extends IFactionPlayer<T>> Consumer<T> batLiquidToggle(boolean enabled) {
         return createToggleAction("Bat Liquid", enabled, VampireSkillService::setBatLiquid);
     }
 
-    /**
-     * Performs the vampiric constitution toggle operation.
-     */
-
     public static <T extends IFactionPlayer<T>> Consumer<T> vampiricConstitutionToggle(boolean enabled) {
         return createToggleAction("Vampiric Constitution", enabled, VampireSkillService::setVampiricConstitution);
     }
-
-    /**
-     * Performs the day walker toggle operation.
-     */
 
     public static <T extends IFactionPlayer<T>> Consumer<T> dayWalkerToggle(boolean enabled) {
         return createToggleAction("Day Walker", enabled, VampireSkillService::setDayWalker);
