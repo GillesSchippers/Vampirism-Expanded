@@ -36,15 +36,7 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class ModCommands {
 
-    /**
-     * Creates a new instance of ModCommands.
-     */
-
     private ModCommands() {}
-
-    /**
-     * Registers the command tree for the mod.
-     */
 
     public static void register(@NotNull RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();

@@ -41,23 +41,10 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public abstract class ModAttachments {
 
-    /**
-     * Deferred register for Expanded attachment types.
-     */
-
     protected static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MOD_ID);
-
-    /**
-     * Registers this mod's attachment types on the supplied event bus.
-     */
-
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<ExpandedAttachmentHolders>> SHARED_ATTACHMENT = ATTACHMENTS.register("shared_data", () ->
         AttachmentType.builder(ExpandedAttachmentHolders::new).serialize(ExpandedAttachmentHolders.CODEC).sync(ByteBufCodecs.fromCodec(ExpandedAttachmentHolders.CODEC)).copyOnDeath().build()
     );
-
-    /**
-     * Registers this mod's attachment types on the supplied event bus.
-     */
 
     public static void register(IEventBus modEventBus) {
         ATTACHMENTS.register(modEventBus);

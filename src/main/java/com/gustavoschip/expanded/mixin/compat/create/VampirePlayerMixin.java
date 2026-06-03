@@ -28,9 +28,7 @@ import com.gustavoschip.expanded.compat.create.CreateCompat;
 import de.teamlapen.vampirism.entity.player.vampire.VampirePlayer;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -44,10 +42,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Restriction(require = @Condition(type = Condition.Type.MOD, value = "create"))
 @Mixin(value = VampirePlayer.class, priority = 1100, remap = false)
 public abstract class VampirePlayerMixin {
-
-    /**
-     * Mixin hook that prevent contraption sun damage tick.
-     */
 
     @Inject(method = "handleSunDamage", at = @At("HEAD"), cancellable = true, remap = false)
     private void expanded$preventContraptionSunDamageTick(boolean isRemote, CallbackInfo ci) {

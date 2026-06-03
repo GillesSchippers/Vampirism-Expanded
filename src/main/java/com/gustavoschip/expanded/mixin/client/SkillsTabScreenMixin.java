@@ -48,25 +48,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = SkillsTabScreen.class, priority = 1000, remap = false)
 public abstract class SkillsTabScreenMixin {
 
-    /**
-     * Cached value for skill tree.
-     */
-
     @Shadow
     @Final
     private Holder<ISkillTree> skillTree;
 
-    /**
-     * Cached value for skill handler.
-     */
-
     @Shadow
     @Final
     private ISkillHandler<?> skillHandler;
-
-    /**
-     * Mixin hook that use expanded remaining points.
-     */
 
     @Inject(method = "getRemainingPoints", at = @At("HEAD"), cancellable = true)
     private void expanded$useExpandedRemainingPoints(CallbackInfoReturnable<Integer> cir) {

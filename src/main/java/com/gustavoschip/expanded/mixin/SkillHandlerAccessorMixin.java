@@ -38,16 +38,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(value = SkillHandler.class, priority = 1000, remap = false)
 public interface SkillHandlerAccessorMixin {
-    /**
-     * Mixin hook that get enabled skills.
-     */
-
     @Accessor("enabledSkills")
     ArrayList<ISkill<?>> expanded$getEnabledSkills();
-
-    /**
-     * Mixin hook that get player.
-     */
 
     @Accessor("player")
     IFactionPlayer<?> expanded$getPlayer();

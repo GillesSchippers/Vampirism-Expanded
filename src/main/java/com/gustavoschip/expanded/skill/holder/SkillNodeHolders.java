@@ -34,70 +34,29 @@ import net.minecraft.resources.ResourceKey;
 
 public final class SkillNodeHolders {
 
-    /**
-     * Performs the node operation.
-     */
-
     public static final ResourceKey<ISkillNode> HUNTER_ROOT = ModSkills.node("hunter_root");
-    /**
-     * Performs the node operation.
-     */
 
     public static final ResourceKey<ISkillNode> HUNTER_1 = ModSkills.node("hunter_1");
-    /**
-     * Performs the node operation.
-     */
 
     public static final ResourceKey<ISkillNode> HUNTER_2 = ModSkills.node("hunter_2");
-    /**
-     * Performs the node operation.
-     */
 
     public static final ResourceKey<ISkillNode> HUNTER_3 = ModSkills.node("hunter_3");
-    /**
-     * Performs the node operation.
-     */
 
     public static final ResourceKey<ISkillNode> HUNTER_4 = ModSkills.node("hunter_4");
-    /**
-     * Performs the node operation.
-     */
 
     public static final ResourceKey<ISkillNode> HUNTER_5 = ModSkills.node("hunter_5");
-    /**
-     * Performs the node operation.
-     */
 
     public static final ResourceKey<ISkillNode> VAMPIRE_ROOT = ModSkills.node("vampire_root");
-    /**
-     * Performs the node operation.
-     */
 
     public static final ResourceKey<ISkillNode> VAMPIRE_1 = ModSkills.node("vampire_1");
-    /**
-     * Performs the node operation.
-     */
 
     public static final ResourceKey<ISkillNode> VAMPIRE_2 = ModSkills.node("vampire_2");
-    /**
-     * Performs the node operation.
-     */
 
     public static final ResourceKey<ISkillNode> VAMPIRE_3 = ModSkills.node("vampire_3");
-    /**
-     * Performs the node operation.
-     */
 
     public static final ResourceKey<ISkillNode> VAMPIRE_4 = ModSkills.node("vampire_4");
-    /**
-     * Performs the node operation.
-     */
 
     public static final ResourceKey<ISkillNode> VAMPIRE_5 = ModSkills.node("vampire_5");
-
-    /**
-     * Creates a new instance of SkillNodeHolders.
-     */
 
     private SkillNodeHolders() {}
 }

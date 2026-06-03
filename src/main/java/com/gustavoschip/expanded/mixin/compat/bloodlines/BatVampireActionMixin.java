@@ -49,10 +49,6 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(value = BatVampireAction.class, priority = 1100, remap = false)
 public abstract class BatVampireActionMixin {
 
-    /**
-     * Mixin hook that block bloodlines armor.
-     */
-
     @TargetHandler(mixin = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin", name = "setNobleBatSpeedMultiplier")
     @Restriction(require = @Condition(type = Condition.Type.MIXIN, value = "com.thedrofdoctoring.bloodlines.mixin.BatVampireActionMixin"))
     @WrapOperation(

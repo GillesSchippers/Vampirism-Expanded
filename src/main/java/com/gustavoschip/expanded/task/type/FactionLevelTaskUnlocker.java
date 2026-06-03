@@ -54,10 +54,6 @@ public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, O
             .apply(instance, FactionLevelTaskUnlocker::new)
     );
 
-    /**
-     * Returns whether the supplied value falls within the lower and optional upper bounds.
-     */
-
     private static boolean isWithinBounds(int value, int minValue, @Nullable Integer maxValue) {
         if (value < minValue) {
             return false;
@@ -66,17 +62,9 @@ public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, O
         return maxValue == null || value <= maxValue;
     }
 
-    /**
-     * Formats the optional upper bound for the human-readable description.
-     */
-
     private static @NotNull String formatUpperBound(@Nullable Integer maxValue) {
         return maxValue == null ? "+" : "-" + maxValue;
     }
-
-    /**
-     * Builds the human-readable unlock description used in task listings.
-     */
 
     @Override
     public @NotNull Component getDescription() {
@@ -84,10 +72,6 @@ public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, O
             "Requires faction: %s, level: %d%s, lord rank: %d%s".formatted(faction, minLevel, formatUpperBound(maxLevel.orElse(null)), minLordRank, formatUpperBound(maxLordRank.orElse(null)))
         );
     }
-
-    /**
-     * Returns whether the player satisfies the faction, level, and lord-rank requirements.
-     */
 
     @Override
     public boolean isUnlocked(@NotNull IFactionPlayer<?> playerEntity) {
@@ -102,10 +86,6 @@ public record FactionLevelTaskUnlocker(ResourceLocation faction, int minLevel, O
         int lordRank = FactionPlayerHandler.get(playerEntity.asEntity()).getLordLevel();
         return isWithinBounds(lordRank, minLordRank, maxLordRank.orElse(null));
     }
-
-    /**
-     * Returns the codec used to serialize and deserialize this unlocker.
-     */
 
     @Override
     public @NotNull MapCodec<? extends TaskUnlocker> codec() {

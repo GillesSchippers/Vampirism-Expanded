@@ -30,6 +30,8 @@ import com.gustavoschip.expanded.attachment.holder.ExpandedAttachmentHolders;
 import de.teamlapen.vampirism.core.ModDamageTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -46,34 +48,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = LivingEntity.class, priority = 1000, remap = true)
 public abstract class LivingEntityMixin {
 
-    /**
-     * Cached value for last damage was sun.
-     */
-
     @Unique
     private boolean expanded$lastDamageWasSun;
-
-    /**
-     * Mixin hook that capture damage source.
-     */
 
     @Inject(method = "hurt", at = @At("HEAD"))
     private void expanded$captureDamageSource(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         this.expanded$lastDamageWasSun = source != null && source.is(ModDamageTypes.SUN_DAMAGE);
     }
 
-    /**
-     * Mixin hook that clear damage source.
-     */
-
     @Inject(method = "hurt", at = @At("RETURN"))
     private void expanded$clearDamageSource(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         this.expanded$lastDamageWasSun = false;
     }
-
-    /**
-     * Mixin hook that cancel sun knockback.
-     */
 
     @Inject(method = "knockback", at = @At("HEAD"), cancellable = true)
     private void expanded$cancelSunKnockback(double strength, double x, double z, CallbackInfo ci) {
@@ -83,6 +69,28 @@ public abstract class LivingEntityMixin {
 
         if (self instanceof ServerPlayer player && has(player, ExpandedAttachmentHolders.DAY_WALKER)) {
             ci.cancel();
+        }
+    }
+
+    @Inject(method = "canBeAffected", at = @At("HEAD"), cancellable = true)
+    private void expanded$canBeAffected(MobEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity self = (LivingEntity) (Object) this;
+
+        if (!(self instanceof ServerPlayer player) || !has(player, ExpandedAttachmentHolders.VAMPIRIC_CONSTITUTION)) {
+            return;
+        }
+
+        if (effect.is(MobEffects.POISON)) {
+            cir.setReturnValue(false);
+        }
+    }
+
+    @Inject(method = "isInvertedHealAndHarm", at = @At("HEAD"), cancellable = true)
+    private void expanded$isInvertedHealAndHarm(CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity self = (LivingEntity) (Object) this;
+
+        if (self instanceof ServerPlayer player && has(player, ExpandedAttachmentHolders.VAMPIRIC_CONSTITUTION)) {
+            cir.setReturnValue(true);
         }
     }
 }

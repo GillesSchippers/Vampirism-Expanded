@@ -34,64 +34,17 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public final class ExpandedAttachmentHolders {
 
-    /**
-     * Field name constant for innate toughness hunter skill state.
-     */
     public static final String INNATE_TOUGHNESS = "innateToughness";
-
-    /**
-     * Field name constant for hunters growth skeleton skill state.
-     */
     public static final String HUNTERS_GROWTH = "huntersGrowth";
-
-    /**
-     * Field name constant for prepared hunt skill state.
-     */
     public static final String PREPARED_HUNT = "preparedHunt";
-
-    /**
-     * Field name constant for poisonous blood skill state.
-     */
     public static final String POISONOUS_BLOOD = "poisonousBlood";
-
-    /**
-     * Field name constant for garlic blood skill state.
-     */
     public static final String GARLIC_BLOOD = "garlicBlood";
-
-    /**
-     * Field name constant for bat speed vampire skill state.
-     */
     public static final String BAT_SPEED = "batSpeed";
-
-    /**
-     * Field name constant for bat armor vampire skill state.
-     */
     public static final String BAT_ARMOR = "batArmor";
-
-    /**
-     * Field name constant for bat liquid traversal skill state.
-     */
     public static final String BAT_LIQUID = "batLiquid";
-
-    /**
-     * Field name constant for vampiric constitution skill state.
-     */
     public static final String VAMPIRIC_CONSTITUTION = "vampiricConstitution";
-
-    /**
-     * Field name constant for day walker skill state.
-     */
     public static final String DAY_WALKER = "dayWalker";
-
-    /**
-     * Field name constant for hunter task skill points state.
-     */
     public static final String HUNTER_TASK_SKILL_POINTS = "hunter_task_skill_points";
-
-    /**
-     * Field name constant for vampire task skill points state.
-     */
     public static final String VAMPIRE_TASK_SKILL_POINTS = "vampire_task_skill_points";
 
     public static final Codec<ExpandedAttachmentHolders> CODEC = RecordCodecBuilder.create(instance ->
@@ -136,70 +89,19 @@ public final class ExpandedAttachmentHolders {
             )
             .apply(instance, ExpandedAttachmentHolders::new)
     );
-    /**
-     * Cached value for innate toughness.
-     */
 
     public boolean innateToughness;
-    /**
-     * Cached value for hunters growth.
-     */
-
     public boolean huntersGrowth;
-    /**
-     * Cached value for prepared hunt.
-     */
-
     public boolean preparedHunt;
-    /**
-     * Cached value for poisonous blood.
-     */
-
     public boolean poisonousBlood;
-    /**
-     * Cached value for garlic blood.
-     */
-
     public boolean garlicBlood;
-    /**
-     * Cached value for bat speed.
-     */
-
     public boolean batSpeed;
-    /**
-     * Cached value for bat armor.
-     */
-
     public boolean batArmor;
-    /**
-     * Cached value for bat liquid.
-     */
-
     public boolean batLiquid;
-    /**
-     * Cached value for vampiric constitution.
-     */
-
     public boolean vampiricConstitution;
-    /**
-     * Cached value for day walker.
-     */
-
     public boolean dayWalker;
-    /**
-     * Cached value for hunter task skill points.
-     */
-
     public int hunterTaskSkillPoints;
-    /**
-     * Cached value for vampire task skill points.
-     */
-
     public int vampireTaskSkillPoints;
-
-    /**
-     * Creates a new instance of ExpandedAttachmentHolders.
-     */
 
     public ExpandedAttachmentHolders() {
         // defaults

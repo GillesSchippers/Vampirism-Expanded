@@ -40,17 +40,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class ActionFactionSkill<T extends IFactionPlayer<T>> extends FactionSkillBase<T> {
 
-    /**
-     * Creates a new instance of ActionFactionSkill.
-     */
-
     public ActionFactionSkill(Either<ResourceKey<ISkillTree>, TagKey<ISkillTree>> tree, ResourceLocation factionId, int skillPointCost, boolean hasDefaultDescription) {
         super(tree, factionId, skillPointCost, hasDefaultDescription);
     }
-
-    /**
-     * Sets toggle actions.
-     */
 
     @Override
     public @NotNull ActionFactionSkill<T> setToggleActions(Consumer<T> activate, Consumer<T> deactivate) {

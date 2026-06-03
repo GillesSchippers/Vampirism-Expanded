@@ -42,15 +42,7 @@ import net.neoforged.fml.loading.FMLEnvironment;
 @Mod(Expanded.MOD_ID)
 public class Expanded {
 
-    /**
-     * Mod namespace used for all Expanded registry entries.
-     */
-
     public static final String MOD_ID = "expanded";
-
-    /**
-     * Initializes the mod and registers its runtime content.
-     */
 
     @SuppressWarnings("unused")
     public Expanded(IEventBus modEventBus) {
