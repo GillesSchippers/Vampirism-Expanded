@@ -4,7 +4,7 @@ plugins {
     id 'idea'
     id 'net.neoforged.moddev' version '2.0.141'
     id 'fr.pierrickrouxel.prettier' version '1.0.5'
-    id 'me.modmuss50.mod-publish-plugin' version '2.0.0-beta.2'
+    id 'me.modmuss50.mod-publish-plugin' version '2.0.1'
 }
 
 tasks.named('wrapper', Wrapper).configure {
